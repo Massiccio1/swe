@@ -55,6 +55,7 @@ router.post('', async (req, res) => {
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when studentId cannot be casted to mongoose ObjectId")
     }
 
     if(student == null) {

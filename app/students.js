@@ -3,7 +3,6 @@ const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
 
 
-
 router.get('/me', async (req, res) => {
     if(!req.loggedUser) {
         return;
@@ -43,6 +42,8 @@ router.post('', async (req, res) => {
         email: req.body.email,
         password: req.body.password
     });
+
+    console.log("creating with email: ",student.email," password: ",student.password)
 
     if (!student.email || typeof student.email != 'string' || !checkIfEmailInString(student.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
