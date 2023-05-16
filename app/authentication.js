@@ -13,13 +13,9 @@ router.post('', async function(req, res) {
 	let user = await Student.findOne({
 		email: req.body.email
 	}).exec();
-
-	console.log("student found: ",user)
-	console.log("email requested: ",req.body.email)
-	console.log("body requested: ",req.body)
 	
 	// user not found
-	if (!user || user == null) {
+	if (!user) {
 		res.json({ success: false, message: 'Authentication failed. User not found.' });
 		return;
 	}
