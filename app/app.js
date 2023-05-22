@@ -92,6 +92,7 @@ app.use('/api/v1/debug', debug);
 
 /* Default 404 handler */
 app.use((req, res) => {
+    console.log(req.url,req.body,req.params);
     res.status(404);
     res.json({ error: 'Not found' });
 });

@@ -28,9 +28,11 @@ router.post('', async function(req, res) {
 	// if user is found and password is right create a token
 	var payload = {
 		email: user.email,
-		id: user._id
+		id: user._id,
+		type: user.type
 		// other data encrypted in the token	
 	}
+	
 	var options = {
 		expiresIn: 86400 // expires in 24 hours
 	}
@@ -42,6 +44,7 @@ router.post('', async function(req, res) {
 		token: token,
 		email: user.email,
 		id: user._id,
+		type: user.type,
 		self: "api/v1/" + user._id
 	});
 

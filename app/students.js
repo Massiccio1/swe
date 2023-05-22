@@ -29,7 +29,8 @@ router.get('', async (req, res) => {
     students = students.map( (entry) => {
         return {
             self: '/api/v1/students/' + entry.id,
-            email: entry.email
+            email: entry.email,
+            type: entry.type
         }
     });
 

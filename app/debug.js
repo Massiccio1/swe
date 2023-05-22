@@ -13,7 +13,7 @@ const Book = require('./models/book'); // get our mongoose model
 router.get('', async (req, res) => {
     let booklendings;
 
-    console.log("richiesta di debug con: ",req);
+    console.log("richiesta di debug con: ",req.body, req.params,req.url);
 
     if ( req.query.studentId )
         booklendings = await Booklending.find({
@@ -32,6 +32,50 @@ router.get('', async (req, res) => {
     });
 
     res.status(200).json(booklendings);
+});
+
+router.get('/token', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+        console.log("result debug/token: ",req.url,req.body,req.params);
+        res.status(200).json({"status":"return from degub/token"});
+});
+
+router.get('/reset_users', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+        console.log("resetting users: ",req.url,req.body,req.params);
+        let students = await Student.find({});
+        console.log(students);
+
+        Student.deleteMany({}).then(function(){
+            console.log("Data deleted"); // Success
+        }).catch(function(error){
+            console.log(error); // Failure
+        });
+
+        console.log("users deleted");
+
+        //res.status(200).json(Student);
+
+        let student1 = new Student({
+            email: "e1@gmail.com",
+            password: "p1",
+            type: "student"
+        });
+        let student2 = new Student({
+            email: "e2@gmail.com",
+            password: "p2",
+            type: "student"
+        });
+        let student3 = new Student({
+            email: "e3@gmail.com",
+            password: "p3",
+            type: "tutor"
+        });
+        await student1.save();
+        await student2.save();
+        await student3.save();
+
+        res.status(200).json({"status":"users resetted"});
 });
 
 
