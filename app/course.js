@@ -37,6 +37,17 @@ router.get('', async (req, res) => {
     res.status(200).json(courses);
 });
 
+router.get('/:id', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+    let course = await Course.findById(req.params.id);
+    res.status(200).json({
+        self: '/api/v1/course/' + dbEntry.id,
+        tutor: '/api/v1/students/' + dbEntry.TutorId,
+        desc: dbEntry.desc,
+        price: dbEntry.price
+    });
+});
+
 
 
 router.post('', async (req, res) => {
