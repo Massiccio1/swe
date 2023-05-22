@@ -37,6 +37,17 @@ router.get('', async (req, res) => {
     res.status(200).json(students);
 });
 
+router.get('/:id', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+    let student = await Student.findById(req.params.id);
+    console.log("searched for student id: ", req.params.id);
+    res.status(200).json({
+        self: '/api/v1/students/' + student.id,
+        email: student.email,
+        type: student.type
+    });
+});
+
 router.post('', async (req, res) => {
     
 	let student = new Student({

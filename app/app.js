@@ -12,6 +12,7 @@ const books = require('./books.js');
 const booklendings = require('./booklendings.js');
 const debug = require('./debug.js');
 const course = require('./course.js');
+const prenotation = require('./prenotation.js');
 
 
 /**
@@ -77,6 +78,7 @@ app.use('/api/v1/authentications', authentication);
 // a valid token must be provided in the request
 app.use('/api/v1/booklendings', tokenChecker);
 app.use('/api/v1/students/me', tokenChecker);
+//app.use('/api/v1/prenotations', tokenChecker); //da aggiungere
 
 
 
@@ -89,6 +91,7 @@ app.use('/api/v1/students', students);
 app.use('/api/v1/booklendings', booklendings);
 app.use('/api/v1/debug', debug);
 app.use('/api/v1/course', course);
+app.use('/api/v1/prenotations', prenotation);
 
 
 /* Default 404 handler */

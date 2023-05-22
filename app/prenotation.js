@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-//const Booklending = require('./models/booklending'); // get our mongoose model
+const Booklending = require('./models/booklending'); // get our mongoose model
 const Student = require('./models/student'); // get our mongoose model
-//const Book = require('./models/book'); // get our mongoose model
-const Course = require('./models/course'); // get our mongoose model
+const Book = require('./models/book'); // get our mongoose model
+const Prenotation = require('./models/prenotation'); // get our mongoose model
 
 
 
@@ -12,40 +12,25 @@ const Course = require('./models/course'); // get our mongoose model
  * https://cloud.google.com/blog/products/application-development/api-design-why-you-should-use-links-not-keys-to-represent-relationships-in-apis
  */
 router.get('', async (req, res) => {
-    let courses;
-    console.log("courses: ",req.url,req.body,req.params);
-
+    let Prenotation;
 
     if ( req.query.studentId )
-        booklendings = await Booklending.find({
+    Prenotation = await Prenotation.find({
             studentId: req.query.studentId
         }).exec();
     
     else
-        courses = await Course.find({}).exec();
+        booklendings = await Booklending.find({}).exec();
 
-    
-    courses = courses.map( (dbEntry) => {
+    booklendings = booklendings.map( (dbEntry) => {
         return {
-            self: '/api/v1/course/' + dbEntry.id,
-            tutor: '/api/v1/students/' + dbEntry.TutorId,
-            desc: dbEntry.desc,
-            price: dbEntry.price
+            self: '/api/v1/booklendings/' + dbEntry.id,
+            student: '/api/v1/students/' + dbEntry.studentId,
+            book: '/api/v1/books/' + dbEntry.bookId
         };
     });
 
-    res.status(200).json(courses);
-});
-
-router.get('/:id', async (req, res) => {
-    // https://mongoosejs.com/docs/api.html#model_Model.findById
-    let course = await Course.findById(req.params.id);
-    res.status(200).json({
-        self: '/api/v1/course/' + course.id,
-        tutor: '/api/v1/students/' + course.TutorId,
-        desc: course.desc,
-        price: course.price
-    });
+    res.status(200).json(booklendings);
 });
 
 

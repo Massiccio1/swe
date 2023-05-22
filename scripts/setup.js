@@ -3,6 +3,7 @@ var Student   = require('../app/models/student'); // get our mongoose model
 
 var mongoose    = require('mongoose');
 // connect to database
+console.log("connecting to mongo....")
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 .then ( () => {
 	console.log("Connected to Database")
