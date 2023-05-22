@@ -3,6 +3,7 @@ const router = express.Router();
 const Booklending = require('./models/debug'); // get our mongoose model
 const Student = require('./models/student'); // get our mongoose model
 const Book = require('./models/book'); // get our mongoose model
+const Course = require('./models/course'); // get our mongoose model
 
 
 
@@ -71,11 +72,63 @@ router.get('/reset_users', async (req, res) => {
             password: "p3",
             type: "tutor"
         });
+        let student4 = new Student({
+            email: "e4@gmail.com",
+            password: "p4",
+            type: "tutor"
+        });
         await student1.save();
         await student2.save();
         await student3.save();
+        await student4.save();
 
         res.status(200).json({"status":"users resetted"});
+});
+
+router.get('/reset_courses', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+        console.log("resetting courses: ",req.url,req.body,req.params);
+        let courses = await Course.find({});
+        console.log(courses);
+
+        Course.deleteMany({}).then(function(){
+            console.log("Data deleted"); // Success
+        }).catch(function(error){
+            console.log(error); // Failure
+        });
+
+        let tutors = await Student.find({type: "tutor"});
+
+        console.log("courses deleted");
+
+        //res.status(200).json(Student);
+
+        let course1 = new Course({
+            TutorId: tutors[0].id,
+            desc: "corso in materia 1",
+            price: 11
+        });
+        let course2 = new Course({
+            TutorId: tutors[1].id,
+            desc: "corso in materia 1",
+            price: 22
+        });        
+        let course3 = new Course({
+            TutorId: tutors[0].id,
+            desc: "corso in materia 1",
+            price: 33
+        });        
+        let course4 = new Course({
+            TutorId: tutors[1].id,
+            desc: "corso in materia 1",
+            price: 44
+        });
+        await course1.save();
+        await course2.save();
+        await course3.save();
+        await course4.save();
+
+        res.status(200).json(courses);
 });
 
 

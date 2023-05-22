@@ -11,6 +11,7 @@ const students = require('./students.js');
 const books = require('./books.js');
 const booklendings = require('./booklendings.js');
 const debug = require('./debug.js');
+const course = require('./course.js');
 
 
 /**
@@ -87,7 +88,7 @@ app.use('/api/v1/books', books);
 app.use('/api/v1/students', students);
 app.use('/api/v1/booklendings', booklendings);
 app.use('/api/v1/debug', debug);
-
+app.use('/api/v1/course', course);
 
 
 /* Default 404 handler */
