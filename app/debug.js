@@ -13,7 +13,7 @@ const Book = require('./models/book'); // get our mongoose model
 router.get('', async (req, res) => {
     let booklendings;
 
-    console.log("richiesta di debug");
+    console.log("richiesta di debug con: ",req);
 
     if ( req.query.studentId )
         booklendings = await Booklending.find({
