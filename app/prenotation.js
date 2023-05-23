@@ -12,27 +12,40 @@ const Prenotation = require('./models/prenotation'); // get our mongoose model
  * https://cloud.google.com/blog/products/application-development/api-design-why-you-should-use-links-not-keys-to-represent-relationships-in-apis
  */
 router.get('', async (req, res) => {
-    let Prenotation;
+    let prenotations;
 
     if ( req.query.studentId )
-    Prenotation = await Prenotation.find({
+    prenotations = await Prenotation.find({
             studentId: req.query.studentId
         }).exec();
     
     else
-        booklendings = await Booklending.find({}).exec();
+        prenotations = await Prenotation.find({}).exec();
 
-    booklendings = booklendings.map( (dbEntry) => {
+    prenotations = prenotations.map( (dbEntry) => {
         return {
-            self: '/api/v1/booklendings/' + dbEntry.id,
-            student: '/api/v1/students/' + dbEntry.studentId,
-            book: '/api/v1/books/' + dbEntry.bookId
+            self: '/api/v1/prenotations/' + dbEntry.id,
+            course: '/api/v1/students/' + dbEntry.CourseId,
+            tutor: '/api/v1/students/' + dbEntry.TutorId,
+            student: '/api/v1/students/' + dbEntry.StudentId,
+            timeslot: '/api/v1/books/' + dbEntry.timeslot
         };
     });
 
-    res.status(200).json(booklendings);
+    res.status(200).json(prenotations);
 });
 
+router.get('/:id', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+    let prenotations = await Prenotation.findById(req.params.id);
+    res.status(200).json({
+        self: '/api/v1/prenotations/' + prenotations.id,
+        course: '/api/v1/students/' + prenotations.CourseId,
+        tutor: '/api/v1/students/' + prenotations.TutorId,
+        student: '/api/v1/students/' + prenotations.StudentId,
+        timeslot: '/api/v1/books/' + prenotations.timeslot
+    });
+});
 
 
 router.post('', async (req, res) => {

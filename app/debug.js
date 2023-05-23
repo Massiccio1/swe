@@ -7,9 +7,6 @@ const Course = require('./models/course'); // get our mongoose model
 const Prenotation = require('./models/prenotation');
 
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
 
   
 /**
@@ -133,6 +130,7 @@ router.get('/reset_courses', async (req, res) => {
         await course3.save();
         await course4.save();
 
+        courses = await Course.find({});
         res.status(200).json(courses);
 });
 
@@ -140,40 +138,40 @@ router.get('/reset_courses', async (req, res) => {
 router.get('/reset_prenotations', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
         
-    // console.log("resetting prenotations: ",req.url,req.body,req.params);
-    // let prenotaions = await Prenotation.find({});
-    // console.log(Prenotation);
+    console.log("resetting prenotations: ",req.url,req.body,req.params);
+    let prenotations = await Prenotation.find({});
+    //console.log(Prenotation);
 
-    // prenotaions.deleteMany({}).then(function(){
-    //     console.log("Prenotations deleted"); // Success
-    // }).catch(function(error){
-    //     console.log(error); // Failure
-    // });
+    Prenotation.deleteMany({}).then(function(){
+        console.log("Prenotations deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
 
-    // console.log("courses deleted");
+    console.log("courses deleted");
 
 
 
-    let courses = await Course.find();
+    let courses = await Course.find({});
     let students = await Student.find({type: "student"});
-    let dim_c = courses.lenght;
-    let dim_s = students.lenght;
+    let dim_c = Object.keys(courses).length
+    let dim_s = Object.keys(students).length
 
     let num = 10;
 
-    console.log("courses: ",courses[0]);
 
-    
+    console.log("all courses: ",courses);
+    console.log("course1: ",courses[0]);
     
     let prenotation_list = [];
     for(let i = 0; i < num; i++){
-        let rand1 = getRandomInt(dim_c);
-        let rand2 = getRandomInt(dim_s);
-        let rand3 = getRandomInt(num);
+        let rand1 = Math.floor(Math.random() * dim_c);
+        let rand2 = Math.floor(Math.random() * dim_s);
+        let rand3 = Math.floor(Math.random() * num);
         let pren = new Prenotation({
-            CourseId: courses[rand1]._id,
+            CourseId: courses[rand1].id,
             TutorId: courses[rand1].TutorId,
-            StudentId: students[rand2]._id,
+            StudentId: students[rand2].id,
             timeslot: rand3
         });
         prenotation_list.push(pren);
@@ -185,10 +183,10 @@ router.get('/reset_prenotations', async (req, res) => {
         await prenotation_list[i].save();
     }
 
+    prenotations = await Prenotation.find({});
+    res.status(200).json(prenotations);
 
-    //res.status(200).json(Student);
-
-    res.status(200).json({});
+    //res.status(200).json({});
 });
 
 router.get('/tutors', async (req, res) => {
