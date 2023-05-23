@@ -38,6 +38,9 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     let prenotations = await Prenotation.findById(req.params.id);
+    if(req.loggedUser != prenotations.StudentId){
+        console.log("[from prenotation.js] logged user is: ",req.loggedUser, "but request was for: ",prenotations.StudentId )
+    }
     res.status(200).json({
         self: '/api/v1/prenotations/' + prenotations.id,
         course: '/api/v1/students/' + prenotations.CourseId,

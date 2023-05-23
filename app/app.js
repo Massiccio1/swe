@@ -78,6 +78,7 @@ app.use('/api/v1/authentications', authentication);
 // a valid token must be provided in the request
 app.use('/api/v1/booklendings', tokenChecker);
 app.use('/api/v1/students/me', tokenChecker);
+app.use('/api/v1/prenotations', tokenChecker);
 //app.use('/api/v1/prenotations', tokenChecker); //da aggiungere
 
 

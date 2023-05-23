@@ -47,7 +47,6 @@ router.post('', async function(req, res) {
 		type: user.type,
 		self: "api/v1/" + user._id
 	});
-
 });
 
 
