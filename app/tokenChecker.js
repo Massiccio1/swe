@@ -9,9 +9,12 @@ const tokenChecker = function(req, res, next) {
 	if (!token) {
 		return res.status(401).send({ 
 			success: false,
-			message: 'No token provided.'
+			message: 'No token provided.',
+			extra: 'url: ' + req.url +"   body: " + req.body + "   param: " + req.params
 		});
 	}
+
+	console.log("[from token checker] req: " ,req.url,req.body,req.params);
 
 	// decode token, verifies secret and checks exp
 	jwt.verify(token, process.env.SUPER_SECRET, function(err, decoded) {			
