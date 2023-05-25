@@ -265,6 +265,13 @@ router.post('', async (req, res) => {
 });
 
 
+router.get('/hook', async (req, res) => {
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+        .then((res) => res.json())
+        .then((json) => console.log(json));
+});
+
+
 
 router.delete('/:id', async (req, res) => {
     let lending = await Booklending.findById(req.params.id).exec();
