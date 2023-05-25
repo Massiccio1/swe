@@ -4,6 +4,7 @@ const Booklending = require('./models/booklending'); // get our mongoose model
 const Student = require('./models/student'); // get our mongoose model
 const Book = require('./models/book'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
+const Course = require('./models/course'); // get our mongoose model
 
 
 
@@ -11,6 +12,7 @@ const Prenotation = require('./models/prenotation'); // get our mongoose model
  * Resource representation based on the following the pattern: 
  * https://cloud.google.com/blog/products/application-development/api-design-why-you-should-use-links-not-keys-to-represent-relationships-in-apis
  */
+
 router.get('', async (req, res) => {
     let prenotations;
 
@@ -57,62 +59,79 @@ router.get('/:id', async (req, res) => {
 
 
 router.post('', async (req, res) => {
-    let studentUrl = req.body.student;
-    let bookUrl = req.body.book;
 
-    if (!studentUrl){
-        res.status(400).json({ error: 'Student not specified' });
+    console.log("POST prenotation: ",req.url,req.body,req.params);
+
+    let studentId = req.body.student;
+    let courseId = req.body.course;
+    let tutorId = req.body.tutor;
+    let timeslot = req.body.timeslot;
+
+    if (!studentId){
+        res.status(400).json({ error: 'Student id not specified' });
         return;
     };
     
-    if (!bookUrl) {
-        res.status(400).json({ error: 'Book not specified' });
+    if (!courseId) {
+        res.status(400).json({ error: 'course id not specified' });
         return;
     };
-    
-    let studentId = studentUrl.substring(studentUrl.lastIndexOf('/') + 1);
-    let student = null;
+    if (!tutorId) {
+        res.status(400).json({ error: 'tutor id not specified' });
+        return;
+    };
+    if (!timeslot) {
+        res.status(400).json({ error: 'timeslot not specified' });
+        return;
+    };
+
+    let course = null;
     try {
-        student = await Student.findById(studentId);
+        course = await Course.findById(courseId);
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
-        console.log("This catch CastError when studentId cannot be casted to mongoose ObjectId")
+        console.log("This catch CastError when course cannot be casted to mongoose ObjectId")
     }
 
-    if(student == null) {
-        res.status(400).json({ error: 'Student does not exist' });
-        return;
-    };
-    
-    let bookId = bookUrl.substring(bookUrl.lastIndexOf('/') + 1);
-    let book = null;
+    let student = null;
     try {
-        book = await Book.findById(bookId).exec();
+        student = await Student.findById(studentId);
+        if(student.type!="student"){
+            res.status(400).json({ error: 'student id is not a real student' });
+            return;
+        }
     } catch (error) {
-        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Book"
+        // This catch CastError when studentId cannot be casted to mongoose ObjectId
+        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when student cannot be casted to mongoose ObjectId")
     }
-    
-    if(book == null) {
-        res.status(400).json({ error: 'Book does not exist' });
-        return; 
-    };
 
-    if( ( await Booklending.find({bookId: bookId}).exec() ).lenght > 0) {
-        res.status(409).json({ error: 'Book already out' });
-        return
+    let tutor = null;
+    try {
+        tutor = await Student.findById(tutorId);
+        if(tutor.type!="tutor"){
+            res.status(400).json({ error: 'tutor id is not a real tutor' });
+            return;
+        }
+    } catch (error) {
+        // This catch CastError when studentId cannot be casted to mongoose ObjectId
+        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when student cannot be casted to mongoose ObjectId")
     }
     
-	let booklending = new Booklending({
-        studentId: studentId,
-        bookId: bookId,
+	let prenotation = new Prenotation({
+        StudentId: studentId,
+        TutorId: tutorId,
+        CourseId: courseId,
+        timeslot: timeslot
     });
     
-	booklending = await booklending.save();
+	prenotation = await Prenotation.save();
     
-    let booklendingId = booklending.id;
+    let prenotationId = prenotation.id;
     
-    res.location("/api/v1/booklendings/" + booklendingId).status(201).send();
+    res.location("/api/v1/prenotations/" + prenotationId).status(201).send();
 });
 
 

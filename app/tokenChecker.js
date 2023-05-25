@@ -14,7 +14,7 @@ const tokenChecker = function(req, res, next) {
 		});
 	}
 
-	console.log("[from token checker] req: " ,req.url,req.body,req.params);
+	//console.log("[from token checker] req: " ,req.url,req.body,req.params);
 
 	// decode token, verifies secret and checks exp
 	jwt.verify(token, process.env.SUPER_SECRET, function(err, decoded) {			
