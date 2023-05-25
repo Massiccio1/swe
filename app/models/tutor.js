@@ -6,5 +6,6 @@ module.exports = mongoose.model('Tutor', new Schema({
 	email: String,
 	password: String,
     name: String,
-    desc: String
+    desc: String,
+    slot:[Date]
 }));

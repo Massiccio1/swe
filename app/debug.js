@@ -104,25 +104,29 @@ router.get('/reset_tutors', async (req, res) => {
             email: "t1@gmail.com",
             password: "p1",
             name: "name 1",
-            desc: "desc 1"
+            desc: "desc 1",
+            slot:[]
         });
         let tutor2 = new Tutor({
             email: "t2@gmail.com",
             password: "p2",
             name: "name 2",
-            desc: "desc 2"
+            desc: "desc 2",
+            slot:[]
         });
         let tutor3 = new Tutor({
             email: "t3@gmail.com",
             password: "p3",
             name: "name 3",
-            desc: "desc 3"
+            desc: "desc 3",
+            slot:[]
         });
         let tutor4 = new Tutor({
             email: "t4@gmail.com",
             password: "p4",
             name: "name 4",
-            desc: "desc 4"
+            desc: "desc 4",
+            slot:[]
         });
         await tutor1.save();
         await tutor2.save();
