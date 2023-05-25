@@ -269,6 +269,8 @@ router.get('/hook', async (req, res) => {
     fetch("https://api.render.com/deploy/srv-chhjmml269v0od74on50?key=AL5xkxjwZYI")
         .then((res) => res.json())
         .then((json) => console.log(json));
+
+        res.status(200).json({from:'/debug/hook'});
 });
 
 
