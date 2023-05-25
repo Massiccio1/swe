@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Booklending = require('./models/debug'); // get our mongoose model
 const Student = require('./models/student'); // get our mongoose model
+const Tutor = require('./models/tutor'); // get our mongoose model
 const Book = require('./models/book'); // get our mongoose model
 const Course = require('./models/course'); // get our mongoose model
 const Prenotation = require('./models/prenotation');
@@ -43,7 +44,7 @@ router.get('/token', async (req, res) => {
         res.status(200).json({"status":"return from degub/token"});
 });
 
-router.get('/reset_users', async (req, res) => {
+router.get('/reset_stuents', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
         console.log("resetting users: ",req.url,req.body,req.params);
         let students = await Student.find({});
@@ -62,22 +63,18 @@ router.get('/reset_users', async (req, res) => {
         let student1 = new Student({
             email: "e1@gmail.com",
             password: "p1",
-            type: "student"
         });
         let student2 = new Student({
             email: "e2@gmail.com",
             password: "p2",
-            type: "student"
         });
         let student3 = new Student({
             email: "e3@gmail.com",
             password: "p3",
-            type: "tutor"
         });
         let student4 = new Student({
             email: "e4@gmail.com",
             password: "p4",
-            type: "tutor"
         });
         await student1.save();
         await student2.save();
@@ -86,6 +83,55 @@ router.get('/reset_users', async (req, res) => {
 
         res.status(200).json({"status":"users resetted"});
 });
+
+router.get('/reset_tutors', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+        console.log("resetting users: ",req.url,req.body,req.params);
+        let tutors = await Tutor.find({});
+        console.log(tutors);
+
+        Tutor.deleteMany({}).then(function(){
+            console.log("Data deleted"); // Success
+        }).catch(function(error){
+            console.log(error); // Failure
+        });
+
+        console.log("users deleted");
+
+        //res.status(200).json(Student);
+
+        let tutor1 = new Tutor({
+            email: "t1@gmail.com",
+            password: "p1",
+            name: "name 1",
+            desc: "desc 1"
+        });
+        let tutor2 = new Tutor({
+            email: "t2@gmail.com",
+            password: "p2",
+            name: "name 2",
+            desc: "desc 2"
+        });
+        let tutor3 = new Tutor({
+            email: "t3@gmail.com",
+            password: "p3",
+            name: "name 3",
+            desc: "desc 3"
+        });
+        let tutor4 = new Tutor({
+            email: "t4@gmail.com",
+            password: "p4",
+            name: "name 4",
+            desc: "desc 4"
+        });
+        await tutor1.save();
+        await tutor2.save();
+        await tutor3.save();
+        await tutor4.save();
+
+        res.status(200).json({"status":"tutors resetted"});
+});
+
 
 router.get('/reset_courses', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById

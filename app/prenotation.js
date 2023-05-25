@@ -13,6 +13,7 @@ const Course = require('./models/course'); // get our mongoose model
  * https://cloud.google.com/blog/products/application-development/api-design-why-you-should-use-links-not-keys-to-represent-relationships-in-apis
  */
 
+
 router.get('', async (req, res) => {
     let prenotations;
 
@@ -147,7 +148,5 @@ router.delete('/:id', async (req, res) => {
     console.log('lending removed')
     res.status(204).send()
 });
-
-
 
 module.exports = router;
