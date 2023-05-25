@@ -3,6 +3,6 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model
 module.exports = mongoose.model('Timeslot', new Schema({ 
-	time: Number,
+	date: Date,
 	taken: Boolean
 }));
