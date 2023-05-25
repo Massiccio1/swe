@@ -38,17 +38,21 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     let prenotations = await Prenotation.findById(req.params.id);
-    console.log("[from prenotation.js] logged user is: ",req.loggedUser.id, "but request was for: ",prenotations.StudentId )
-    if(req.loggedUser.id != prenotations.StudentId){
-        console.log("[from prenotation.js] logged user id in request id: ")
+    // console.log("[from prenotation.js] logged user is: ",req.loggedUser.id, "but request was for: ",prenotations.StudentId )
+    if(req.loggedUser.id == prenotations.StudentId || req.loggedUser.id == prenotations.TutorId){
+        console.log("[from prenotation.js] token matches request");
+        res.status(200).json({
+            self: '/api/v1/prenotations/' + prenotations.id,
+            course: '/api/v1/students/' + prenotations.CourseId,
+            tutor: '/api/v1/students/' + prenotations.TutorId,
+            student: '/api/v1/students/' + prenotations.StudentId,
+            timeslot: '/api/v1/books/' + prenotations.timeslot
+        });
+    }else{
+        res.status(400).json({ error: 'token doesnt match student or tutor' });
+        return;
     }
-    res.status(200).json({
-        self: '/api/v1/prenotations/' + prenotations.id,
-        course: '/api/v1/students/' + prenotations.CourseId,
-        tutor: '/api/v1/students/' + prenotations.TutorId,
-        student: '/api/v1/students/' + prenotations.StudentId,
-        timeslot: '/api/v1/books/' + prenotations.timeslot
-    });
+
 });
 
 
