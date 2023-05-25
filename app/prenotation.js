@@ -127,7 +127,7 @@ router.post('', async (req, res) => {
         timeslot: timeslot
     });
     
-	prenotation = await Prenotation.save();
+	prenotation = await prenotation.save();
     
     let prenotationId = prenotation.id;
     

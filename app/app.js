@@ -13,6 +13,7 @@ const booklendings = require('./booklendings.js');
 const debug = require('./debug.js');
 const course = require('./course.js');
 const prenotation = require('./prenotation.js');
+const status = require('./status.js');
 
 
 /**
@@ -72,6 +73,7 @@ app.use((req,res,next) => {
  * Authentication routing and middleware
  */
 app.use('/api/v1/authentications', authentication);
+app.use('/api/v1/status', status);
 
 // Protect booklendings endpoint
 // access is restricted only to authenticated users
