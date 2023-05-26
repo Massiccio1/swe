@@ -4,9 +4,12 @@ const Student = require('./models/student'); // get our mongoose model
 const Course = require('./models/course'); // get our mongoose model
 const Tutor = require('./models/tutor'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
+const { app_features } = require('moongose/models');
+const tutor = require('./models/tutor');
 
 
 router.get('/me', async (req, res) => {
+    
     if(!req.loggedUser) {
         return;
     }
@@ -90,7 +93,22 @@ router.post('', async (req, res) => {
     res.location("/api/v1/tutors/" + tutorID).status(201).send();
 });
 
+router.delete('/tutor/me', function(req, res) {
 
+    if(!req.loggedUser) {return;} //controlla che l'utente sia loggato
+
+    const tutorEmail = req.loggedUser.email; // prende l'email associata alla richiesta
+
+      tutor.deleteOne({ email: tutorEmail }) //cancella il tutor con l'email associata
+    .then(() => {
+      //res.redirect('/api/v1/authentications_tutor'); //non so se ha senso
+      return res.json({ message: 'Tutor eliminato con successo.' });
+    }) //se la cancellazione è andata a buon fine manda un messaggio di conferma
+    .catch ((err) => {
+      console.error(err);
+      return res.status(500).json({ error: 'Errore nell\'eliminazione' });
+    })} // se la cancellazione è andata male manda un messaggio di errore
+  );
 
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 function checkIfEmailInString(text) {
