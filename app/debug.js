@@ -149,7 +149,7 @@ router.get('/reset_courses', async (req, res) => {
             console.log(error); // Failure
         });
 
-        let tutors = await Student.find({type: "tutor"});
+        let tutors = await Tutor.find();
 
         console.log("courses deleted");
 

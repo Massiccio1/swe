@@ -18,7 +18,7 @@ router.get('', async (req, res) => {
 
 
     if ( req.query.studentId )
-        courses = await Courses.find({
+        courses = await Course.find({
             studentId: req.query.studentId
         }).exec();
     
@@ -29,7 +29,7 @@ router.get('', async (req, res) => {
     courses = courses.map( (dbEntry) => {
         return {
             self: '/api/v1/course/' + dbEntry.id,
-            tutor: '/api/v1/students/' + dbEntry.TutorId,
+            tutor: '/api/v1/tutors/' + dbEntry.TutorId,
             desc: dbEntry.desc,
             price: dbEntry.price
         };

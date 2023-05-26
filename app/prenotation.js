@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Booklending = require('./models/booklending'); // get our mongoose model
 const Student = require('./models/student'); // get our mongoose model
+const Tutor = require('./models/tutor'); // get our mongoose model
 const Book = require('./models/book'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
 const Course = require('./models/course'); // get our mongoose model
@@ -98,10 +99,7 @@ router.post('', async (req, res) => {
     let student = null;
     try {
         student = await Student.findById(studentId);
-        if(student.type!="student"){
-            res.status(400).json({ error: 'student id is not a real student' });
-            return;
-        }
+
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
@@ -110,11 +108,8 @@ router.post('', async (req, res) => {
 
     let tutor = null;
     try {
-        tutor = await Student.findById(tutorId);
-        if(tutor.type!="tutor"){
-            res.status(400).json({ error: 'tutor id is not a real tutor' });
-            return;
-        }
+        tutor = await Tutor.findById(tutorId);
+
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
