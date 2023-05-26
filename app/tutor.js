@@ -12,7 +12,7 @@ router.get('/me', async (req, res) => {
 
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let tutor = await Tutor.findOne({email: req.loggedUser.email});
-    let courses = await Course.findOne({TutorId: req.loggedUser.id});
+    let courses = await Course.find({TutorId: req.loggedUser.id});
 
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
