@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors')
 
 const authentication = require('./authentication.js');
+const authentication_tutor = require('./authentication_tutor.js');
 const tokenChecker = require('./tokenChecker.js');
 
 const students = require('./students.js');
@@ -72,6 +73,7 @@ app.use((req,res,next) => {
  * Authentication routing and middleware
  */
 app.use('/api/v1/authentications', authentication);
+app.use('/api/v1/authentications_tutor', authentication_tutor);
 app.use('/api/v1/status', status);
 
 // Protect booklendings endpoint
@@ -80,6 +82,7 @@ app.use('/api/v1/status', status);
 app.use('/api/v1/booklendings', tokenChecker);
 app.use('/api/v1/students/me', tokenChecker);
 app.use('/api/v1/prenotations', tokenChecker);
+app.use('/api/v1/tutors', tokenChecker);
 //app.use('/api/v1/prenotations', tokenChecker); //da aggiungere
 
 
@@ -94,6 +97,7 @@ app.use('/api/v1/booklendings', booklendings);
 app.use('/api/v1/debug', debug);
 app.use('/api/v1/course', course);
 app.use('/api/v1/prenotations', prenotation);
+//app.use('/api/v1/prenotations_tutor', prenotation_tutor);
 
 
 /* Default 404 handler */

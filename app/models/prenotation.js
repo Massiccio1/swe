@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-const timeslot = require('./models/timeslot'); // get our mongoose model
 
 var Schema = mongoose.Schema;
 

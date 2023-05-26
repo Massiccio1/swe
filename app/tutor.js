@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
+const Tutor = require('./models/tutor'); // get our mongoose model
 
 
 router.get('/me', async (req, res) => {
@@ -9,66 +10,75 @@ router.get('/me', async (req, res) => {
     }
 
     // https://mongoosejs.com/docs/api.html#model_Model.find
-    let student = await Student.findOne({email: req.loggedUser.email});
+    let tutor = await Tutor.findOne({email: req.loggedUser.email});
 
     res.status(200).json({
-        self: '/api/v1/students/' + student.id,
-        email: student.email
+        self: '/api/v1/tutors/' + tutor.id,
+        email: tutor.email
     });
 });
 
 router.get('', async (req, res) => {
-    let students;
+    let tutors;
 
     if (req.query.email)
         // https://mongoosejs.com/docs/api.html#model_Model.find
-        students = await Student.find({email: req.query.email}).exec();
+        tutors = await Tutor.find({email: req.query.email}).exec();
     else
-        students = await Student.find().exec();
+        tutors = await Tutor.find().exec();
 
-    students = students.map( (entry) => {
+    tutors = tutors.map( (entry) => {
         return {
-            self: '/api/v1/students/' + entry.id,
-            email: entry.email,
+            self: '/api/v1/tutors/' + entry.id,
+            email: entry.email, 
+            name: entry.nam,
+            desc: ntry.esc,
+            slot:entry.slot
         }
     });
 
-    res.status(200).json(students);
+    res.status(200).json(tutors);
 });
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-    let student = await Student.findById(req.params.id);
+    let tutor = await Tutors.findById(req.params.id);
     console.log("searched for student id: ", req.params.id);
     res.status(200).json({
-        self: '/api/v1/students/' + student.id,
-        email: student.email,
+        self: '/api/v1/tutors/' + tutor.id,
+        email: tutor.email,
+        name: tutor.name,
+        esc: tutor.desc,
+        slot: tutor.slot
     });
 });
 
 router.post('', async (req, res) => {
     
-	let student = new Student({
+	let tutor = new Tutor({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        name: req.body.name,
+        desc: req.body.desc,
+        slot: req.body.slot
     });
 
-    console.log("creating with email: ",student.email," password: ",student.password)
+    console.log("creating with email: ",tutor.email," password: ",tutor.password, " name: ", tutor.name, " desc: ", tutor.desc, "slots: ", tutor.slot);
 
-    if (!student.email || typeof student.email != 'string' || !checkIfEmailInString(student.email)) {
+    if (!tutor.email || typeof tutor.email != 'string' || !checkIfEmailInString(tutor.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
         return;
     }
     
-	student = await student.save();
+	tutor = await tutor.save();
     
-    let studentId = student.id;
+    let tutorID = tutor.id;
 
     /**
      * Link to the newly created resource is returned in the Location header
      * https://www.restapitutorial.com/lessons/httpmethods.html
      */
-    res.location("/api/v1/students/" + studentId).status(201).send();
+    res.location("/api/v1/tutors/" + tutorID).status(201).send();
 });
 
 

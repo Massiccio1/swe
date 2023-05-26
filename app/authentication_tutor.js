@@ -10,23 +10,23 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 router.post('', async function(req, res) {
 	
 	// find the user
-	let user = await Student.findOne({
+	let tutor = await Tutor.findOne({
 		email: req.body.email
 	}).exec();
 	
 	
 	// user not found
-	if (!user) {
-		res.json({ success: false, message: 'Authentication failed. User not found.' });
+	if (!tutor) {
+		res.json({ success: false, message: 'Authentication failed. Tutor not found.' });
 		return;
 	}
 	
 	// check if password matches
-	if (user.password != req.body.password) {
+	if (tutor.password != req.body.password) {
 		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
 	}
 
-	let account_type = "student";
+	let account_type = "tutor";
 	
 	// if user is found and password is right create a token
 	var payload = {
@@ -51,7 +51,5 @@ router.post('', async function(req, res) {
 		self: "api/v1/" + user._id
 	});
 });
-
-
 
 module.exports = router;
