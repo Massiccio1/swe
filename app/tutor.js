@@ -7,7 +7,7 @@ const Prenotation = require('./models/prenotation'); // get our mongoose model
 const { app_features } = require('moongose/models');
 const tutor = require('./models/tutor');
 
-
+//METODI GET
 router.get('/me', async (req, res) => {
     
     if(!req.loggedUser) {
@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
 
     let tutor = await Tutor.findById(req.params.id);
-    console.log("searched for tutor id id: ", req.params.id);
+    console.log("searched for tutor id: ", req.params.id);
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
         email: tutor.email,
@@ -65,6 +65,7 @@ router.get('/:id', async (req, res) => {
     });
 });
 
+//METODI POST
 router.post('', async (req, res) => {
     
 	let tutor = new Tutor({
@@ -93,6 +94,31 @@ router.post('', async (req, res) => {
     res.location("/api/v1/tutors/" + tutorID).status(201).send();
 });
 
+//crea slot in cui sarà disponibile per far prenotare lo studente
+router.post('/me/slot/:slotId',(req,res) => {
+
+    const {slotId} = req.params;
+    const {slotDate} = req.body;
+
+    const tutorId = tutor.TutorId;
+
+    tutor.updateOne(TutorId, {slot: { slotId, slotDate }})
+
+    .then(() =>{
+        res.status(201).send.json("slot creata con successo");
+    })
+    .catch((err) => {
+        res.status(500).json({err:"errore nella creazione"});
+    })
+    
+
+});
+
+//METODO PUT
+
+
+
+//METODI DELETE
 router.delete('/tutor/me', function(req, res) {
 
     if(!req.loggedUser) {return;} //controlla che l'utente sia loggato
