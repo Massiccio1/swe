@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
+const Course = require('./models/course'); // get our mongoose model
 const Tutor = require('./models/tutor'); // get our mongoose model
 
 
@@ -11,10 +12,14 @@ router.get('/me', async (req, res) => {
 
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let tutor = await Tutor.findOne({email: req.loggedUser.email});
+    let courses = await Course.findOne({TutorId: req.loggedUser.id});
 
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
-        email: tutor.email
+        email: tutor.email,
+        name: tutor.name,
+        desc: tutor.desc,
+        courses: courses
     });
 });
 
@@ -32,8 +37,8 @@ router.get('', async (req, res) => {
             self: '/api/v1/tutors/' + entry.id,
             email: entry.email, 
             name: entry.nam,
-            desc: ntry.esc,
-            slot:entry.slot
+            desc: entry.esc,
+            slot: entry.slot
         }
     });
 
