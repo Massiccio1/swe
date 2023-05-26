@@ -50,8 +50,9 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
+
     let tutor = await Tutor.findById(req.params.id);
-    console.log("searched for student id: ", req.params.id);
+    console.log("searched for tutor id id: ", req.params.id);
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
         email: tutor.email,
