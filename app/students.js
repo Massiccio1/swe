@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
+const Prenotation = require('./models/prenotation'); // get our mongoose model
 
 
 router.get('/me', async (req, res) => {
@@ -10,10 +11,12 @@ router.get('/me', async (req, res) => {
 
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let student = await Student.findOne({email: req.loggedUser.email});
+    let prenotations = await Prenotation.findOne({StudentId: req.loggedUser.id});
 
     res.status(200).json({
         self: '/api/v1/students/' + student.id,
-        email: student.email
+        email: student.email,
+        prenotations: prenotations
     });
 });
 

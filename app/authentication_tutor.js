@@ -21,17 +21,17 @@ router.post('', async function(req, res) {
 		return;
 	}
 	
-	// check if password matches
-	if (tutor.password != req.body.password) {
-		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+	// check if password matches5
+	if (tutor.password != req.body.password) {+
+		res.json({ success: false, message: 'Authentication failed for tutor.. Wrong password.' });
 	}
 
 	let account_type = "tutor";
 	
 	// if user is found and password is right create a token
 	var payload = {
-		email: user.email,
-		id: user._id,
+		email: tutor.email,
+		id: tutor._id,
 		type: account_type
 		// other data encrypted in the token	
 	}
@@ -45,10 +45,13 @@ router.post('', async function(req, res) {
 		success: true,
 		message: 'Enjoy your token!',
 		token: token,
-		email: user.email,
-		id: user._id,
+		email: tutor.email,
+		id: tutor._id,
 		type: account_type,
-		self: "api/v1/" + user._id
+		self: "api/v1/" + tutor._id,
+		name: tutor.name,
+		desc: tutor.desc,
+		slot: tutor.slot
 	});
 });
 

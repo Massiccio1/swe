@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 //const Booklending = require('./models/booklending'); // get our mongoose model
 const Student = require('./models/student'); // get our mongoose model
+const Tutor = require('./models/tutor'); // get our mongoose model
 //const Book = require('./models/book'); // get our mongoose model
 const Course = require('./models/course'); // get our mongoose model
 
@@ -17,7 +18,7 @@ router.get('', async (req, res) => {
 
 
     if ( req.query.studentId )
-        booklendings = await Booklending.find({
+        courses = await Courses.find({
             studentId: req.query.studentId
         }).exec();
     
