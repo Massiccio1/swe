@@ -29,7 +29,7 @@ router.get('', async (req, res) => {
         return {
             self: '/api/v1/prenotations/' + dbEntry.id,
             course: '/api/v1/students/' + dbEntry.CourseId,
-            tutor: '/api/v1/students/' + dbEntry.TutorId,
+            tutor: '/api/v1/tutors/' + dbEntry.TutorId,
             student: '/api/v1/students/' + dbEntry.StudentId,
             timeslot: '/api/v1/books/' + dbEntry.timeslot
         };

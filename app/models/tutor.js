@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-const timeslot = require('./models/timeslot'); // get our mongoose model
 
 var Schema = mongoose.Schema;
 
@@ -9,5 +8,5 @@ module.exports = mongoose.model('Tutor', new Schema({
 	password: String,
     name: String,
     desc: String,
-    slot:[timeslot]
+    slot:[Number]
 }));

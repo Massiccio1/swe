@@ -5,5 +5,4 @@ var Schema = mongoose.Schema;
 module.exports = mongoose.model('Student', new Schema({ 
 	email: String,
 	password: String,
-	type: String
 }));
