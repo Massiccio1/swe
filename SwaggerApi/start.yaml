@@ -1,0 +1,54 @@
+
+  /Calendar:
+    post:
+      description: >-
+        Creates a new booklending.
+      summary: Borrow a book
+      responses:
+        '201':
+          description: 'Booklending created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created booklending.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booklending'
+         
+    
+    Event:
+      type: object
+      required:
+        - title
+        - author
+        - ISBN
+        - status
+      properties:
+        title:
+          type: string
+          description: 'Title of the book'
+        author:
+          type: string
+          description: 'Author of the book'
+        ISBN:
+          type: string
+          description: 'ISBN of the book'
+        status:
+          type: string
+          enum: [available, lended]
+          description: 'Tells whether the book is currently available or not'
+    Calendar:
+      type: object
+      required:
+      - student
+      - book
+      properties:
+        user:
+          type: string
+          description: 'Link to the user'
+        book:
+          type: integer
+          description: 'Link to the book'

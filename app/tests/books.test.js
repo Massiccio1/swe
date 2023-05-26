@@ -2,7 +2,7 @@
  * https://www.npmjs.com/package/supertest
  */
 const request = require('supertest');
-const app     = require('./app');
+const app     = require('../app');
 
 describe('GET /api/v1/books', () => {
 
@@ -12,7 +12,7 @@ describe('GET /api/v1/books', () => {
   let bookSpyFindById;
 
   beforeAll( () => {
-    const Book = require('./models/book');
+    const Book = require('../models/book');
     bookSpy = jest.spyOn(Book, 'find').mockImplementation((criterias) => {
       return [{
         id: 1010,

@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: "EasyLib OpenAPI 3.0"
+  description: API for managing TutorMe.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+paths:
+  /students:
+    get:
+      description: >-
+        Ottiene una lista degli studenti iscritti al sito.
+      responses:
+        '200':
+          description: 'Collection of students'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '404':
+          description: 'Students not founded.'
+    post:
+      tags:
+        - studente
+      description: >-
+        Creates a new student in the system.
+      summary: Register a new student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - username
+              unique:
+                - email
+                - password
+                - username  
+              properties:
+                email:
+                  type: string
+                  description: 'Email address of the student'
+                username:
+                  type: string
+                  description : 'Username of the student'
+                password:
+                  type: string
+                  description: 'password of the student'
+      responses:
+        '201':
+          description: 'Student created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created student.
+        components:
+            schemas:
+    Student:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - username
+      properties:
+        id:
+          type: integer
+          description: 'ID of the Student'
+        email:
+          type: string
+          description: 'Email address of the Student'
+        password:
+          type: string
+          description: 'Password  of the Student'
+        username:
+          type: string
+          description: 'Username of the Student'
+    

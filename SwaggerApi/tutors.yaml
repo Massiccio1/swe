@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: "EasyLib OpenAPI 3.0"
+  description: API for managing TutorMe.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+  /Tutors:
+    get:
+      description: >-
+        Gets the list of tutors.
+      summary: View all the tutors.
+      responses:
+        '200':
+          description: 'Collection of tutors'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tutor'
+    post:
+      tags:
+        - tutor
+      description: >-
+        Create a new tutor.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - username
+              unique:
+                - email
+                - password
+                - username  
+              properties:
+                email:
+                  type: string
+                  description: 'Email address of the tutor'
+                username:
+                  type: string
+                  description : 'Username of the tutor'
+                password:
+                  type: string
+                  description: 'password of the tutor'
+      responses:
+        '201':
+          description: 'tutor created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created tutor.
+        components:
+          schemas:
+            Tutor:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - username
+      properties:
+        id:
+          type: integer
+          description: 'ID of the Tutor'
+        email:
+          type: string
+          description: 'Email address of the Tutor'
+        password:
+          type: string
+          description: 'Password  of the Tutor'
+        username:
+          type: string
+          description: 'Username of the Tutor'
