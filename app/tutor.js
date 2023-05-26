@@ -3,6 +3,7 @@ const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
 const Course = require('./models/course'); // get our mongoose model
 const Tutor = require('./models/tutor'); // get our mongoose model
+const Prenotation = require('./models/prenotation'); // get our mongoose model
 
 
 router.get('/me', async (req, res) => {
@@ -13,13 +14,15 @@ router.get('/me', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let tutor = await Tutor.findOne({email: req.loggedUser.email});
     let courses = await Course.find({TutorId: req.loggedUser.id});
+    let prenotations = await Prenotation.find({TutorId: req.loggedUser.id});
 
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
         email: tutor.email,
         name: tutor.name,
         desc: tutor.desc,
-        courses: courses
+        courses: courses,
+        prenotations: prenotations
     });
 });
 
@@ -47,7 +50,7 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-    let tutor = await Tutors.findById(req.params.id);
+    let tutor = await Tutor.findById(req.params.id);
     console.log("searched for student id: ", req.params.id);
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
