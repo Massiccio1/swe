@@ -11,7 +11,7 @@ router.get('/me', async (req, res) => {
 
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let student = await Student.findOne({email: req.loggedUser.email});
-    let prenotations = await Prenotation.findOne({StudentId: req.loggedUser.id});
+    let prenotations = await Prenotation.find({StudentId: req.loggedUser.id});
 
     res.status(200).json({
         self: '/api/v1/students/' + student.id,
