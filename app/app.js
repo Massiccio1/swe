@@ -9,6 +9,7 @@ const authentication_tutor = require('./authentication_tutor.js');
 const tokenChecker = require('./tokenChecker.js');
 
 const students = require('./students.js');
+const tutors = require('./tutor.js');
 const books = require('./books.js');
 const booklendings = require('./booklendings.js');
 const debug = require('./debug.js');
@@ -81,6 +82,7 @@ app.use('/api/v1/status', status);
 // a valid token must be provided in the request
 app.use('/api/v1/booklendings', tokenChecker);
 app.use('/api/v1/students/me', tokenChecker);
+app.use('/api/v1/tutors/me', tokenChecker);
 app.use('/api/v1/prenotations', tokenChecker);
 app.use('/api/v1/tutors', tokenChecker);
 //app.use('/api/v1/prenotations', tokenChecker); //da aggiungere
@@ -93,6 +95,7 @@ app.use('/api/v1/tutors', tokenChecker);
 
 app.use('/api/v1/books', books);
 app.use('/api/v1/students', students);
+app.use('/api/v1/tutors', tutors);
 app.use('/api/v1/booklendings', booklendings);
 app.use('/api/v1/debug', debug);
 app.use('/api/v1/course', course);
