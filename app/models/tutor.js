@@ -15,8 +15,5 @@ module.exports = mongoose.model('Tutor', new Schema({
     },
     name: String,
     desc: String,
-    slot: [{
-        slotId: String,
-        slotDate: Number
-    }]
+    slot: [Number]
 }));

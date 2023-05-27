@@ -95,14 +95,11 @@ router.post('', async (req, res) => {
 });
 
 //crea slot in cui sarà disponibile per far prenotare lo studente
-router.post('/me/slot/:slotId',(req,res) => {
+router.post('/me/slot',(req,res) => {
 
-    const {slotId} = req.params;
-    const {slotDate} = req.body;
+    const newSlot = req.body.slot;
 
-    const tutorId = tutor.TutorId;
-
-    tutor.updateOne(TutorId, {slot: { slotId, slotDate }})
+    tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}})
 
     .then(() =>{
         res.status(201).send.json("slot creata con successo");
@@ -111,14 +108,32 @@ router.post('/me/slot/:slotId',(req,res) => {
         res.status(500).json({err:"errore nella creazione"});
     })
     
+});
+
+//METODI DELETE
+
+//Metodo per cancellare una slot
+router.delete('/me/slot',(req,res) =>{
+
+    if(!req.loggedUser) {return;}
+
+    const slotToDelete = req.body.slot;
+
+    tutor.deleteOne({email:req.loggedUser.email},{$pull: {slot:slotToDelete}})
+    .then(() => {
+        res.send("Slot cancellata")
+    })
+    .catch((err) => {
+        console.error(err);
+        res.json({error:"Slot non cancellata"});
+    });
+    
 
 });
 
-//METODO PUT
 
 
-
-//METODI DELETE
+//metodo per cancellare il proprio account
 router.delete('/tutor/me', function(req, res) {
 
     if(!req.loggedUser) {return;} //controlla che l'utente sia loggato
