@@ -22,7 +22,7 @@ router.post('', async function(req, res) {
 	}
 	
 	// check if password matches5
-	if (tutor.password != req.body.password) {+
+	if (tutor.password != req.body.password) { 
 		res.json({ success: false, message: 'Authentication failed for tutor.. Wrong password.' });
 	}
 
