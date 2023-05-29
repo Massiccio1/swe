@@ -86,6 +86,7 @@ app.use('/api/v1/tutors/me', tokenChecker);
 app.use('/api/v1/prenotations', tokenChecker);
 app.use('/api/v1/tutors', tokenChecker);
 app.use('/api/v1/course/new', tokenChecker);
+app.use('/api/v1/course/delete', tokenChecker);
 //app.use('/api/v1/prenotations', tokenChecker); //da aggiungere
 
 
