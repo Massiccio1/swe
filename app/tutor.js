@@ -4,7 +4,7 @@ const Student = require('./models/student'); // get our mongoose model
 const Course = require('./models/course'); // get our mongoose model
 const Tutor = require('./models/tutor'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
-const { app_features } = require('moongose/models');
+//const { app_features } = require('mongoose/models'); //????
 const tutor = require('./models/tutor');
 
 //METODI GET
