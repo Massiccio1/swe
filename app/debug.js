@@ -136,7 +136,6 @@ router.get('/reset_tutors', async (req, res) => {
         res.status(200).json({"status":"tutors resetted"});
 });
 
-
 router.get('/reset_courses', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
         console.log("resetting courses: ",req.url,req.body,req.params);
@@ -183,7 +182,6 @@ router.get('/reset_courses', async (req, res) => {
         courses = await Course.find({});
         res.status(200).json(courses);
 });
-
 
 router.get('/reset_prenotations', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
@@ -313,7 +311,6 @@ router.post('', async (req, res) => {
     res.location("/api/v1/booklendings/" + booklendingId).status(201).send();
 });
 
-
 router.get('/hook', async (req, res) => {
     fetch("https://api.render.com/deploy/srv-chhjmml269v0od74on50?key=AL5xkxjwZYI")
         .then((res) => res.json())
@@ -321,8 +318,6 @@ router.get('/hook', async (req, res) => {
 
         res.status(200).json({from:'/debug/hook'});
 });
-
-
 
 router.delete('/:id', async (req, res) => {
     let lending = await Booklending.findById(req.params.id).exec();
@@ -336,6 +331,63 @@ router.delete('/:id', async (req, res) => {
     res.status(204).send()
 });
 
+router.get('/test', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+        console.log("start testing: ",req.url,req.body,req.params);
+
+        const request = require('supertest');
+        let student_e="test@gmail.com"
+        let student_p="test"
+
+        test('GET /api/v1/students/me with no token should return 401', async () => {
+            const response = await request(app).get('/api/v1/students/me');
+            expect(response.statusCode).toBe(401);
+        });
+
+
+        let courses = await Course.find({});
+        console.log(courses);
+
+        Course.deleteMany({}).then(function(){
+            console.log("Data deleted"); // Success
+        }).catch(function(error){
+            console.log(error); // Failure
+        });
+
+        let tutors = await Tutor.find();
+
+        console.log("courses deleted");
+
+        //res.status(200).json(Student);
+
+        let course1 = new Course({
+            TutorId: tutors[0].id,
+            desc: "corso in materia 1",
+            price: 11
+        });
+        let course2 = new Course({
+            TutorId: tutors[1].id,
+            desc: "corso in materia 2",
+            price: 22
+        });        
+        let course3 = new Course({
+            TutorId: tutors[0].id,
+            desc: "corso in materia 3",
+            price: 33
+        });        
+        let course4 = new Course({
+            TutorId: tutors[1].id,
+            desc: "corso in materia 4",
+            price: 44
+        });
+        await course1.save();
+        await course2.save();
+        await course3.save();
+        await course4.save();
+
+        courses = await Course.find({});
+        res.status(200).json(courses);
+});
 
 
 module.exports = router;
