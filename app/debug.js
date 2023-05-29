@@ -15,12 +15,12 @@ function httpsPost(met, {body, ...options}) {
         const req = https.request({
             method: met,
             ...options,
-        }, res => {
+        }, resposnse => {
             const chunks = [];
-            res.on('data', data => chunks.push(data))
-            res.on('end', () => {
+            resposnse.on('data', data => chunks.push(data))
+            resposnse.on('end', () => {
                 let resBody = Buffer.concat(chunks);
-                switch(res.headers['content-type']) {
+                switch(resposnse.headers['content-type']) {
                     case 'application/json':
                         resBody = JSON.parse(resBody);
                         break;
@@ -381,7 +381,7 @@ router.get('/test', async (req, res) => {
             
         })
     });
-    ret+=test1;
+    ret+=test1+"\n";
     res.status(200).json(ret);
         
 });
