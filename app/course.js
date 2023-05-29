@@ -124,4 +124,66 @@ router.delete('/:id', async (req, res) => {
 
 */
 
+router.post('/new', async (req, res) => {
+    
+
+    let TutorId = req.body.TutorId;
+    let desc = req.body.desc;
+    let price = req.body.number;
+
+    if(req.loggedUser.id != prenotations.TutorId){ //tutor A is making a course for tutor B, not good
+        res.status(401).json({ error: 'token and course tutor dont match' });
+        return;
+    }
+
+    if (!TutorId){
+        res.status(400).json({ error: 'tutor not specified' });
+        return;
+    };
+    
+    if (!desc) {
+        res.status(400).json({ error: 'description not specified' });
+        return;
+    };
+
+    if (!price) {
+        res.status(400).json({ error: 'price not specified' });
+        return;
+    };
+    
+    let tutor = null;
+    try {
+        tutor = await Tutor.findById(TutorId);
+    } catch (error) {
+        // This catch CastError when studentId cannot be casted to mongoose ObjectId
+        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when studentId cannot be casted to mongoose ObjectId")
+    }
+
+    if(tutor == null) {
+        res.status(402).json({ error: 'Tutor does not exist' });
+        return;
+    };
+
+    //------------------------------------
+    //
+
+    //------------------------------------
+    
+    
+    
+	let course   = new Course({
+        TutorId: TutorId,
+        desc: desc,
+        price: price
+    });
+    
+	course = await course.save();
+    
+    let courseId = course.id;
+    
+    res.location("/api/v1/course/" + courseId).status(201).send();
+});
+
+
 module.exports = router;
