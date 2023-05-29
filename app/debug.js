@@ -373,10 +373,6 @@ router.get('/test', async (req, res) => {
     const test1 = await httpsPost("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
-        headers: {
-            'test header1': `1`,
-            'test header 2': '2',
-        },
         body: JSON.stringify({
             
         })
