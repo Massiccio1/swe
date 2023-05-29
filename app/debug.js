@@ -240,19 +240,18 @@ router.get('/reset_prenotations', async (req, res) => {
 });
 
 router.get('/tutors', async (req, res) => {
-    let students;
+    let tutors;
 
-    students = await Student.find({type:"tutor"}).exec();
+    tutors = await Tutor.find().exec();
 
     students = students.map( (entry) => {
         return {
-            self: '/api/v1/students/' + entry.id,
+            self: '/api/v1/tutors/' + entry.id,
             email: entry.email,
-            type: entry.type
         }
     });
 
-    res.status(200).json(students);
+    res.status(200).json(tutors);
 });
 
 router.post('', async (req, res) => {
