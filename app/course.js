@@ -129,7 +129,7 @@ router.post('/new', async (req, res) => {
 
     let TutorId = req.body.TutorId;
     let desc = req.body.desc;
-    let price = req.body.number;
+    let price = req.body.price;
 
     if(req.loggedUser.id != TutorId){ //tutor A is making a course for tutor B, not good
         res.status(401).json({ error: 'token and course tutor dont match' });
@@ -189,16 +189,18 @@ router.delete('/delete/:id', async (req, res) => {
 
     let courses = await Course.findById(req.params.id).exec();
 
-    if(req.loggedUser.id != courses.TutorId){ //tutor A is deleting a course for tutor B, not good
-        res.status(401).json({ error: 'token and course tutor dont match' });
-        return;
-    }
-
     if (!courses) {
         res.status(405).send()
         console.log('course doesnt exist');
         return;
     }
+
+    if(req.loggedUser.id != courses.TutorId){ //tutor A is deleting a course for tutor B, not good
+        res.status(401).json({ error: 'token and course tutor dont match' });
+        return;
+    }
+
+
 
     await courses.deleteOne();
     console.log('course ', courses, ' removed');
