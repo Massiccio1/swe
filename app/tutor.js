@@ -99,7 +99,8 @@ router.post('/me/slot',(req,res) => {
                                             
     const newSlot = req.body.slot;
 
-    tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
+    //tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
+    tutor.updateOne({email: req.loggedUser.email}, {slot:newSlot}) //inserisce la data all'interno dell'array di date(slot)
 
     .then(() =>{
         res.status(201).send.json("slot creata con successo");
@@ -109,23 +110,26 @@ router.post('/me/slot',(req,res) => {
     })
     
 });
+
 //metodo per la creazione di un corso
 router.post('/me/course', async (req,res) =>{
 
     if(!req.loggedUser){ 
         res.status(401).send('Bisogna autenticarsi');
-            return;}
- try {
+            return;
+    }
+    
+    try {
 
-    const TutorId = req.loggedUser.id
+        const TutorId = req.loggedUser.id
 
-    let course = new Course({
+        let course = new Course({
 
-        TutorId: [TutorId],
-        desc: req.body.desc,
-        price: req.body.price
+            TutorId: TutorId,
+            desc: req.body.desc,
+            price: req.body.price
 
-    })
+        })
 
     course = await course.save();
          res.status(201).json(course);
