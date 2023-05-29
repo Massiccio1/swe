@@ -36,6 +36,31 @@ function httpsPost(met, {body, ...options}) {
     })
 }
 
+function custom_http(method, custom_data){
+    let data =  custom_data.body;
+
+    let req = https.request({
+    hostname: 'https://tutor-me.onrender.com',
+    port: 10000,
+    path: custom_data.path,
+    method: method,
+    headers: {
+        'Content-Length': data.length,
+        'Content-type': 'application/json'
+    }
+    }, (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => { data += chunk; });
+
+        resp.on('end', () => {
+            console.log(data);
+        });
+    });
+
+    req.write(data);
+    return req;
+}
+
 
 
   
@@ -560,35 +585,35 @@ router.get('/test/auth', async (req, res) => {
     let student_e="test@gmail.com"
     let student_p="test"
 
-    const test0 = await httpsPost("GET",{
+    const test0 =  custom_http("GET",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/authentications`,
         body: JSON.stringify({
             placeholder: "1"
         })
     });
-    const test1 = await httpsPost("POST",{
+    const test1 =  custom_http("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/authentications`,
         body: JSON.stringify({
             placeholder: "1"
         })
     });
-    const test2 = await httpsPost("POST",{
+    const test2 =  custom_http("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
         body: JSON.stringify({
             email:"e1@gmail.com"
         })
     });
-    const test3 = await httpsPost("POST",{
+    const test3 =  custom_http("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
         body: JSON.stringify({
             email:"1@gmail.com"
         })
     });
-    const test4 = await httpsPost("POST",{
+    const test4 =  custom_http("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
         body: JSON.stringify({
@@ -596,7 +621,7 @@ router.get('/test/auth', async (req, res) => {
             passowrd: "p1"
         })
     });
-    const test5 = await httpsPost("POST",{
+    const test5 =  custom_http("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
         body: JSON.stringify({
@@ -604,7 +629,7 @@ router.get('/test/auth', async (req, res) => {
             passowrd: "p2"
         })
     });
-    const test6 = await httpsPost("POST",{
+    const test6 =  custom_http("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
         body: JSON.stringify({
@@ -627,7 +652,7 @@ router.get('/test/status', async (req, res) => {
     console.log("start testing status: ",req.url,req.body,req.params);
 
     let ret = "";
-    const test0 = await httpsPost("GET",{
+    const test0 =  custom_http("GET",{
         hostname: 'http://localhost:8080',
         path: `/api/v1/status`,
         body: JSON.stringify({
