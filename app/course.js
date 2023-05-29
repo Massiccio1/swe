@@ -40,7 +40,23 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-    let course = await Course.findById(req.params.id);
+    let course = null;
+    try {
+        course = await Course.findById(req.params.id).exec();
+    } catch (error) {
+        // This catch CastError when studentId cannot be casted to mongoose ObjectId
+        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when course id cannot be casted to mongoose ObjectId");
+        res.status(406).send()
+        console.log('id incorrect');
+        return;
+    }
+
+    if(!course) {
+        res.status(402).json({ error: 'Course does not exist' });
+        return;
+    };
+
     res.status(200).json({
         self: '/api/v1/course/' + course.id,
         tutor: '/api/v1/students/' + course.TutorId,
@@ -187,7 +203,17 @@ router.post('/new', async (req, res) => {
 
 router.delete('/delete/:id', async (req, res) => {
 
-    let courses = await Course.findById(req.params.id).exec();
+    let courses = null;
+    try {
+        courses = await Course.findById(req.params.id).exec();
+    } catch (error) {
+        // This catch CastError when studentId cannot be casted to mongoose ObjectId
+        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when course id cannot be casted to mongoose ObjectId");
+        res.status(406).send()
+        console.log('id incorrect');
+        return;
+    }
 
     if (!courses) {
         res.status(405).send()
