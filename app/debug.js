@@ -8,6 +8,35 @@ const Course = require('./models/course'); // get our mongoose model
 const Prenotation = require('./models/prenotation');
 
 
+const https = require('https');
+
+function httpsPost(met, {body, ...options}) {
+    return new Promise((resolve,reject) => {
+        const req = https.request({
+            method: met,
+            ...options,
+        }, res => {
+            const chunks = [];
+            res.on('data', data => chunks.push(data))
+            res.on('end', () => {
+                let resBody = Buffer.concat(chunks);
+                switch(res.headers['content-type']) {
+                    case 'application/json':
+                        resBody = JSON.parse(resBody);
+                        break;
+                }
+                resolve(resBody)
+            })
+        })
+        req.on('error',reject);
+        if(body) {
+            req.write(body);
+        }
+        req.end();
+    })
+}
+
+
 
   
 /**
@@ -333,60 +362,28 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/test', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-        console.log("start testing: ",req.url,req.body,req.params);
+    console.log("start testing: ",req.url,req.body,req.params);
 
-        const request = require('supertest');
-        let student_e="test@gmail.com"
-        let student_p="test"
+    let ret = "";
 
-        test('GET /api/v1/students/me with no token should return 401', async () => {
-            const response = await request(app).get('/api/v1/students/me');
-            expect(response.statusCode).toBe(401);
-        });
+    const request = require('supertest');
+    let student_e="test@gmail.com"
+    let student_p="test"
 
-
-        let courses = await Course.find({});
-        console.log(courses);
-
-        Course.deleteMany({}).then(function(){
-            console.log("Data deleted"); // Success
-        }).catch(function(error){
-            console.log(error); // Failure
-        });
-
-        let tutors = await Tutor.find();
-
-        console.log("courses deleted");
-
-        //res.status(200).json(Student);
-
-        let course1 = new Course({
-            TutorId: tutors[0].id,
-            desc: "corso in materia 1",
-            price: 11
-        });
-        let course2 = new Course({
-            TutorId: tutors[1].id,
-            desc: "corso in materia 2",
-            price: 22
-        });        
-        let course3 = new Course({
-            TutorId: tutors[0].id,
-            desc: "corso in materia 3",
-            price: 33
-        });        
-        let course4 = new Course({
-            TutorId: tutors[1].id,
-            desc: "corso in materia 4",
-            price: 44
-        });
-        await course1.save();
-        await course2.save();
-        await course3.save();
-        await course4.save();
-
-        courses = await Course.find({});
-        res.status(200).json(courses);
+    const res = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        headers: {
+            'test header1': `1`,
+            'test header 2': '2',
+        },
+        body: JSON.stringify({
+            
+        })
+    });
+    ret+=res;
+    res.status(200).json(ret);
+        
 });
 
 
