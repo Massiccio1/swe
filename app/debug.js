@@ -370,7 +370,7 @@ router.get('/test', async (req, res) => {
     let student_e="test@gmail.com"
     let student_p="test"
 
-    const res = await httpsPost("POST",{
+    const test1 = await httpsPost("POST",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
         headers: {
@@ -381,7 +381,7 @@ router.get('/test', async (req, res) => {
             
         })
     });
-    ret+=res;
+    ret+=test1;
     res.status(200).json(ret);
         
 });
