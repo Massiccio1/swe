@@ -44,7 +44,7 @@ router.get('/token', async (req, res) => {
         res.status(200).json({"status":"return from degub/token"});
 });
 
-router.get('/reset_stuents', async (req, res) => {
+router.get('/reset_students', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
         console.log("resetting users: ",req.url,req.body,req.params);
         let students = await Student.find({});
@@ -203,7 +203,7 @@ router.get('/reset_prenotations', async (req, res) => {
 
 
     let courses = await Course.find({});
-    let students = await Student.find({type: "student"});
+    let students = await Student.find();
     let dim_c = Object.keys(courses).length
     let dim_s = Object.keys(students).length
 

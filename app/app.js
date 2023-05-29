@@ -109,7 +109,7 @@ app.use('/api/v1/prenotations', prenotation);
 app.use((req, res) => {
     console.log(req.url,req.body,req.params);
     res.status(404);
-    res.json({ error: 'Not found',url: req.url });
+    res.json({ error: 'Not found, default handler',url: req.url });
 });
 
 
