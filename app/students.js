@@ -51,6 +51,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('', async (req, res) => {
+
+    if(!req.body.email){ 
+        res.status(401).send('no email in body');
+        return;
+    }
+    if(!req.body.password){ 
+        res.status(401).send('no password in body');
+        return;
+    }
     
 	let student = new Student({
         email: req.body.email,
