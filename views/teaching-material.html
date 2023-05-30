@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teaching material</title>
+    <style>
+      .form-field {
+        margin-bottom: 20px;
+      }
+
+      .form-container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="form-field">
+        <select name="select" id="course-id">
+          <option value="first-course-id">First Course</option>
+          <option value="second-course-id">Second Course</option>
+          <option value="third-course-id">Third Course</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <input
+          id="material-name"
+          type="text"
+          name="name"
+          placeholder="Name"
+          required
+        />
+      </div>
+      <div class="form-field">
+        <input id="file-input" type="file" />
+      </div>
+      <div class="form-field">
+        <button id="upload-btn">Upload</button>
+      </div>
+    </div>
+
+    <script>
+      var request = {
+        files: FormData,
+        name: String,
+        courseId: String,
+        loggedUser: {
+          email: "my-email@test.com"
+        }
+      };
+
+      document
+        .getElementById("material-name")
+        .addEventListener("input", function(e) {
+          request.name = e.target.value;
+        });
+
+      document
+        .getElementById("file-input")
+        .addEventListener("change", function(e) {
+          if (!request.name) {
+            alert("Input course name first!");
+            return;
+          }
+
+          if (e.target.files[0]) {
+            request.files = new FormData();
+            request.files.append(request.name, e.target.files[0]);
+          }
+        });
+
+      document.getElementById("upload-btn").addEventListener("click", upload);
+
+      function upload() {
+        if (!request.name) {
+          alert("Validation failed. Input teaching material name!");
+        }
+
+        if (request.files.length == 0) {
+          alert("Validation failed. Choose teaching material file!");
+        }
+
+        request.courseId = document.getElementById("course-id").value;
+
+        fetch("/me/teaching-material/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(request)
+        })
+          .then(function(response) {
+            if (response.ok) {
+              console.log("Material has been uploaded");
+              return;
+            }
+            throw new Error("Upload failed.");
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    </script>
+  </body>
+</html>
