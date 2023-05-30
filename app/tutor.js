@@ -6,6 +6,8 @@ const Tutor = require('./models/tutor'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
 //const { app_features } = require('mongoose/models'); //????
 const tutor = require('./models/tutor');
+const TeachingMaterial = require('./models/teachingMaterial')
+
 
 //METODI GET
 router.get('/me', async (req, res) => {
@@ -191,6 +193,42 @@ function checkIfEmailInString(text) {
     return re.test(text);
 }
 
+router.get('/me/teaching-material', (req, res) => {
+    res.sendFile(__dirname + "/views/teaching-material.html");
+});
 
+router.post('/me/teaching-material/upload', async(req, res) => {
+    if(!req.body.loggedUser){ 
+        res.status(401).send('Unauthorized');
+        return;
+    }
+
+    if(!req.body.courseId) {
+        res.status(400).send('Bad request. CourseId is required.');
+        return;
+    }
+
+    const course = await Course.findById(req.courseId);
+    if(!course) {
+        res.status(404).send('Not Found. Provided course does not exist.');
+        return;
+    }
+
+    try {
+        const teachingMaterial = new TeachingMaterial({
+            courseId: req.body.courseId,
+            name: req.body.name
+        });
+        
+        const savedMaterial = await teachingMaterial.save();
+        res.status(201).json(savedMaterial);
+
+    } catch(error) {
+        console.error('Error ocurred while uploading a teaching material:', error);
+        res.status(500).send('Internal server error');
+    }
+});
 
 module.exports = router;
+
+
