@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: Course API
-  description: API for managing courses.
+  description: API for managing TutorMe.
 servers:
   - url: http://localhost:8000/api/v1
     description: Localhost
