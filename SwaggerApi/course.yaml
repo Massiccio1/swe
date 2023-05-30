@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Course API
+  description: API for managing courses.
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+paths:
+  /courses:
+    get:
+      summary: Retrieve courses
+      parameters:
+        - in: query
+          name: studentId
+          description: Optional. Filter courses by studentId.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response. Returns an array of courses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: URL for accessing the course.
+                    tutor:
+                      type: string
+                      description: URL for accessing the tutor associated with the course.
+                    desc:
+                      type: string
+                      description: Course description.
+                    price:
+                      type: number
+                      description: Course price.
+  /courses/{id}:
+    get:
+      summary: Get a course by ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the course to retrieve.
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response. Returns the course details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: URL for accessing the course.
+                  tutor:
+                    type: string
+                    description: URL for accessing the tutor associated with the course.
+                  desc:
+                    type: string
+                    description: Course description.
+                  price:
+                    type: number
+                    description: Course price.
+        '402':
+          description: Course not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating that the course does not exist.
+        '406':
+          description: Invalid course ID.
+  /courses/new:
+    post:
+      summary: Create a new course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                TutorId:
+                  type: string
+                  description: ID of the tutor associated with the course.
+                desc:
+                  type: string
+                  description: Course description.
+                price:
+                  type: number
+                  description: Course price.
+      responses:
+        '201':
+          description: Successful response. Course created.
+        '400':
+          description: Bad request. Missing or invalid parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating the missing or invalid parameter.
+        '401':
+          description: Unauthorized. Token and course tutor do not match.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating a mismatch between the token and course tutor.
+        '402':
+          description: Tutor not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating that the tutor does not exist.     
+  /courses/delete/{id}:
+    delete:
+      summary: Delete a course
+      parameters:
+        - in: path
+          name: id
+          description: ID of the course to delete.
+          schema:
+            type: string
+          required: true
+      responses:
+        '204':
+          description: Successful response. Course deleted.
+        '405':
+          description: Course not found.
+        '406':
+          description: Invalid course ID.
+        '401':
+          description: Unauthorized. Token and course tutor do not match.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating a mismatch between the token and course tutor.                                         
