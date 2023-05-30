@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
+const Admin = require('./models/admin')
 
 
 router.get('/me', async (req, res) => {
@@ -83,6 +84,28 @@ function checkIfEmailInString(text) {
     return re.test(text);
 }
 
+router.post('/ban', async(req, res)=>{
+    if(!req.body.loggedUser){ 
+        res.status(401).send('Unauthorized');
+        return;
+    }
+
+    let admin = await Admin.findOne({email: req.body.loggedUser.email});
+    if(!admin){
+        res.status(403).send('Forbidden');
+        return; 
+    }
+
+    let student = await Student.findOne({name: req.body.email}).exec();
+
+    if (!student) {
+        res.status(404).send()
+        console.log('student not found')
+        return;
+    }
+
+    student.updateOne({email: req.body.email}, {isBanned:true})
+})
 
 
 module.exports = router;

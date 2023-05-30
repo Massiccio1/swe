@@ -11,5 +11,9 @@ module.exports = mongoose.model('Student', new Schema({
 	password: {
 		type: String,
 		required: true
-	}
+	},
+	isBanned: {
+        type: Boolean,
+        default: false
+    }
 }));
