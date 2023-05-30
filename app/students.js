@@ -57,6 +57,13 @@ router.post('', async (req, res) => {
         password: req.body.password
     });
 
+    student = await Student.findOne({name: req.body.email}).exec();
+    if (student) {
+        res.status(409).send()
+        console.log('student with the same email already exists')
+        return;
+    }
+
     console.log("creating with email: ",student.email," password: ",student.password)
 
     if (!student.email || typeof student.email != 'string' || !checkIfEmailInString(student.email)) {
