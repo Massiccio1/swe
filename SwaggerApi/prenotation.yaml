@@ -122,16 +122,16 @@ paths:
           description: Token doesn't match student or tutor
     
     delete:
-      summary: Delete a book lending
+      summary: Delete prenotation
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: string
-          description: ID of the book lending to delete
+          description: ID of prenotation to delete
       responses:
         '204':
-          description: Book lending deleted successfully
+          description: Prenotation deleted successfully
         '404':
-          description: Book lending not found                                      
+          description: Prenotation not found                                      
