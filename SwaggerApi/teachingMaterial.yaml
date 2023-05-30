@@ -1,0 +1,17 @@
+components:
+  schemas:
+  TeachingMaterial:
+    type: object
+    properties:
+    CourseId:
+      type: string
+    name:
+      type: string
+    content: 
+      type: string
+    materialType:
+      type: string
+      enum:
+        - presentation
+        - movie
+        - article

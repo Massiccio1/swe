@@ -13,7 +13,13 @@ module.exports = mongoose.model('Tutor', new Schema({
         type: String,
         required: true
     },
-    name: String,
-    desc: String,
+    name: {
+        type: String,
+        required: true
+    },
+    desc: {
+        type: String,
+        required: true
+    },
     slot: [Number]
 }));
