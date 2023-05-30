@@ -17,7 +17,7 @@ servers:
           application/json:
             schema:
               type: array
-               $ref: '#/components/schemas'
+               $ref: '#/components/schemas/Tutor'
   post:
   tags:
     - tutor
@@ -114,6 +114,21 @@ tutor/me/slot/{date}:
     responses:
       '200':
         description: 'Slot deleted.'
+tutor/me/teaching-material:
+  get:
+    responses: 
+      '200':
+        content:
+          application/json:
+            $ref: '#/component/schemas/TeachingMaterial'
+  post:
+    tags:
+      - tutor
+    requestBody:
+      content:
+        application/json:
+          schema:
+          $ref: '#/component/schemas/TeachingMaterial'
 components:
   schemas:
      Tutor:
@@ -146,3 +161,5 @@ components:
         items:
           type: integer
           uniqueItems: true
+   TeachingMaterial:
+      $ref: 'teachingMaterial.yaml#/components/schemas/TeachingMaterial'
