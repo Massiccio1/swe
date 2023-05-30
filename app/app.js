@@ -82,6 +82,7 @@ app.use('/api/v1/status', status);
 // a valid token must be provided in the request
 app.use('/api/v1/booklendings', tokenChecker);
 app.use('/api/v1/students/me', tokenChecker);
+app.use('/api/v1/students/ban', tokenChecker);
 app.use('/api/v1/tutors/me', tokenChecker);
 app.use('/api/v1/prenotations', tokenChecker);
 app.use('/api/v1/tutors', tokenChecker);
