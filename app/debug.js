@@ -61,7 +61,24 @@ function custom_http(method, custom_data){
     return req;
 }
 
-
+function custom_http2(method, custom_data){
+    let url = "https://tutor-me.onrender.com";
+    request({
+        url: url,
+        method: method,
+        json: custom_data.body,
+    }, function (error, response, body) {
+         if (!error && response.statusCode === 200) {
+             console.log(body)
+         }
+         else {
+    
+             console.log("error: " + error)
+             console.log("response.statusCode: " + response.statusCode)
+             console.log("response.statusText: " + response.statusText)
+         }
+     })
+}
 
   
 /**
