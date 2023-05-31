@@ -24,7 +24,7 @@ router.get('', async (req, res) => {
         }).exec();
     
     else
-        prenotations = await Prenotation.find({}).exec();
+        prenotations = await Prenotation.findById(req.loggedUser.id).exec();
 
     prenotations = prenotations.map( (dbEntry) => {
         return {
@@ -32,7 +32,7 @@ router.get('', async (req, res) => {
             course: '/api/v1/students/' + dbEntry.CourseId,
             tutor: '/api/v1/tutors/' + dbEntry.TutorId,
             student: '/api/v1/students/' + dbEntry.StudentId,
-            timeslot: '/api/v1/books/' + dbEntry.timeslot
+            timeslot: dbEntry.date
         };
     });
 
