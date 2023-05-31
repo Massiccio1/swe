@@ -401,7 +401,7 @@ router.delete('/:id', async (req, res) => {
     console.log('lending removed')
     res.status(204).send()
 });
-
+/*
 router.get('/test/student', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     console.log("start testing student: ",req.url,req.body,req.params);
@@ -594,6 +594,8 @@ router.get('/test/student', async (req, res) => {
         
 });
 
+*/
+/*
 router.get('/test/auth', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     console.log("start testing authentication: ",req.url,req.body,req.params);
@@ -664,7 +666,7 @@ router.get('/test/auth', async (req, res) => {
     res.status(200).json(ret);
         
 });
-
+*/
 router.get('/test/status', async (req, res) => {
     console.log("start testing status: ",req.url,req.body,req.params);
 
