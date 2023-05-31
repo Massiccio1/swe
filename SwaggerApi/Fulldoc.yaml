@@ -1,12 +1,43 @@
 openapi: 3.0.0
 info:
-  version: '1.0'
+  version: 1.0.0
   title: TutorMe API
   description: API for managing TutorMe.
 servers:
-  - url: http://localhost:8000/api/v1
-    description: Localhost
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
+  - url: https://tutor-me.onrender.com/api/v1
+    description: tutor me app
 paths:
+  /authentications:
+    post:
+      tags:
+        - studente
+      description: returns a token in case email and password match the database
+      summary: Log in a student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: status of the login and eventually the token
+  /authentications_tutor:
+    post:
+      tags:
+        - tutor
+      description: returns a token in case email and password match the database
+      summary: Log in a tutor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tutor'
+      responses:
+        '200':
+          description: status of the login and eventually the token
   /students:
     get:
       description: Ottiene una lista degli studenti iscritti al sito.
@@ -54,6 +85,7 @@ paths:
       description: return the info of the logged student
       responses:
         '200':
+          description: Student sees all prenotations made
           content:
             application/json:
               schema:
@@ -69,6 +101,7 @@ paths:
             type: integer
       responses:
         '200':
+          description: Checks the existance of the student and returns the email
           content:
             application/json:
               schema:
@@ -111,43 +144,25 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-              student:
+              $ref: '#/components/schemas/Prenotation'
+      responses:
+        '201':
+          description: Prenotation created successfully
+          headers:
+            Location:
+              schema:
                 type: string
-                description: ID of the student for the prenotation
-              course:
-                type: string
-                description: ID of the course for the prenotation
-              tutor:
-                type: string
-                description: ID of the tutor for the prenotation
-              timeslot:
-                type: string
-                description: Timeslot for the prenotation
-            required:
-              - student
-              - course
-              - tutor
-              - timeslot
-    responses:
-      '201':
-        description: Prenotation created successfully
-        headers:
-          Location:
-            schema:
-              type: string
-            description: URL of the created prenotation resource
-      '400':
-        description: Bad request
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string
-                  description: Error message indicating the reason for the bad request
+              description: URL of the created prenotation resource
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating the reason for the bad request
   /prenotations/{id}:
     get:
       summary: Get a prenotation by ID
@@ -351,7 +366,7 @@ paths:
           description: Invalid course ID.
   /tutor:
     get:
-      description: Gets the list of tutors.
+      description: Gets the list of tutors, requires token of tutor in the body
       summary: View all the tutors.
       responses:
         '200':
@@ -411,7 +426,7 @@ paths:
       responses:
         '204':
           description: Tutor deleted.
-  /{id}:
+  /tutor/{id}:
     get:
       tags:
         - tutor
@@ -430,11 +445,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Tutor'
-  tutor/me/slot:
+  /tutor/me/slot:
     post:
+      description: Enters a date indicating its availability
       tags:
         - slot
-      description: Enters a date indicating its availability
       requestBody:
         required: true
         content:
@@ -444,7 +459,10 @@ paths:
               properties:
                 slot:
                   type: integer
-  tutor/me/slot/{date}:
+      responses:
+        '200':
+          description: "Success"
+  /tutor/me/slot/{date}:
     delete:
       description: Delete a slot
       tags:
@@ -459,14 +477,19 @@ paths:
       responses:
         '200':
           description: Slot deleted.
-  tutor/me/teaching-material:
+  /tutor/me/teaching-material:
     get:
       responses:
         '200':
+          description: Student created. Link in the Location header
           content:
             application/json:
-              $ref: '#/components/schemas/TeachingMaterial'
+              schema:
+                $ref: '#/components/schemas/TeachingMaterial'
     post:
+      responses:
+        '200':
+          description: html with the resources uploaded
       tags:
         - tutor
       requestBody:
@@ -474,81 +497,81 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TeachingMaterial'
-  components:
-    schemas:
-      Student:
-        type: object
-        required:
-          - id
-          - email
-          - password
-          - isBanned
-        properties:
-          id:
+components:
+  schemas:
+    Student:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - isBanned
+      properties:
+        id:
+          type: integer
+          description: ID of the Student
+        email:
+          type: string
+          description: Email address of the Student
+        password:
+          type: string
+          description: Password of the Student
+        isBanned:
+          type: boolean
+          default: false
+    TeachingMaterial:
+      type: object
+      properties:
+        CourseId:
+          type: string
+        name:
+          type: string
+        content:
+          type: string
+        materialType:
+          type: string
+          enum:
+            - presentation
+            - movie
+            - article
+    Tutor:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - name
+        - desc
+      properties:
+        id:
+          type: integer
+          description: ID of the Tutor, unique
+        email:
+          type: string
+          description: Email address of the Tutor, unique
+        password:
+          type: string
+          description: Password of the Tutor
+        name:
+          type: string
+          description: Name and surname of the Tutor
+        desc:
+          type: string
+          description: Tutor presentation
+        slot:
+          type: array
+          description: Array of available slot to reserve this tutor
+          items:
             type: integer
-            description: ID of the Student
-          email:
-            type: string
-            description: Email address of the Student
-          password:
-            type: string
-            description: Password of the Student
-          isBanned:
-            type: boolean
-            default: false
-      TeachingMaterial:
-        type: object
-        properties:
-          CourseId:
-            type: string
-          name:
-            type: string
-          content:
-            type: string
-          materialType:
-            type: string
-            enum:
-              - presentation
-              - movie
-              - article
-      Tutor:
-        type: object
-        required:
-          - id
-          - email
-          - password
-          - name
-          - desc
-        properties:
-          id:
-            type: integer
-            description: ID of the Tutor, unique
-          email:
-            type: string
-            description: Email address of the Tutor, unique
-          password:
-            type: string
-            description: Password of the Tutor
-          name:
-            type: string
-            description: Name and surname of the Tutor
-          desc:
-            type: string
-            description: Tutor presentation
-          slot:
-            type: array
-            description: Array of available slot to reserve this tutor
-            items:
-              type: integer
-              uniqueItems: true
-      Prenotation:
-        type: object
-        properties:
-          CourseId: 
-            type: string
-          TutorId:
-            type: string
-          StudentId: 
-            type: string
-          date:
-            type: number
+            uniqueItems: true
+    Prenotation:
+      type: object
+      properties:
+        CourseId: 
+          type: string
+        TutorId:
+          type: string
+        StudentId: 
+          type: string
+        date:
+          type: number
