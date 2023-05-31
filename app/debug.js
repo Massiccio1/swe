@@ -15,12 +15,12 @@ function httpsPost(met, {body, ...options}) {
         const req = https.request({
             method: met,
             ...options,
-        }, res => {
+        }, resposnse => {
             const chunks = [];
-            res.on('data', data => chunks.push(data))
-            res.on('end', () => {
+            resposnse.on('data', data => chunks.push(data))
+            resposnse.on('end', () => {
                 let resBody = Buffer.concat(chunks);
-                switch(res.headers['content-type']) {
+                switch(resposnse.headers['content-type']) {
                     case 'application/json':
                         resBody = JSON.parse(resBody);
                         break;
@@ -36,7 +36,49 @@ function httpsPost(met, {body, ...options}) {
     })
 }
 
+function custom_http(method, custom_data){
+    let data =  custom_data.body;
 
+    let req = https.request({
+    hostname: 'https://tutor-me.onrender.com',
+    port: 10000,
+    path: custom_data.path,
+    method: method,
+    headers: {
+        'Content-Length': data.length,
+        'Content-type': 'application/json'
+    }
+    }, (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => { data += chunk; });
+
+        resp.on('end', () => {
+            console.log(data);
+        });
+    });
+
+    req.write(data);
+    return req;
+}
+
+function custom_http2(method, custom_data){
+    let url = "https://tutor-me.onrender.com";
+    request({
+        url: url,
+        method: method,
+        json: custom_data.body,
+    }, function (error, response, body) {
+         if (!error && response.statusCode === 200) {
+             console.log(body)
+         }
+         else {
+    
+             console.log("error: " + error)
+             console.log("response.statusCode: " + response.statusCode)
+             console.log("response.statusText: " + response.statusText)
+         }
+     })
+}
 
   
 /**
@@ -359,32 +401,290 @@ router.delete('/:id', async (req, res) => {
     console.log('lending removed')
     res.status(204).send()
 });
-
-router.get('/test', async (req, res) => {
+/*
+router.get('/test/student', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-    console.log("start testing: ",req.url,req.body,req.params);
+    console.log("start testing student: ",req.url,req.body,req.params);
+
+    let students = await Student.find({}).exec();
 
     let ret = "";
-
-    const request = require('supertest');
     let student_e="test@gmail.com"
     let student_p="test"
 
-    const res = await httpsPost("POST",{
+    const tmp1 = await httpsPost("GET",{
         hostname: 'https://tutor-me.onrender.com',
         path: `/api/v1/students`,
-        headers: {
-            'test header1': `1`,
-            'test header 2': '2',
-        },
         body: JSON.stringify({
-            
+            email:"e1@gmail.com",
+            passowrd: "p1"
         })
     });
-    ret+=res;
+    const tmp2 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e2@gmail.com",
+            passowrd: "p2"
+        })
+    });
+
+    //
+    //prendo il token
+    //
+    //let token=tmp2.token;
+    let token="1";
+
+    const test1 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"1@gmail.com",
+            passowrd: "p1"
+        })
+    });
+    const test1_2 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:12,
+            passowrd: "p1"
+        })
+    });
+    const test1_3 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"1@gmail.com",
+            passowrd: 15
+        })
+    });
+    const test2 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"1@gmail.com"
+        })
+    });
+    const test3 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            passowrd: "p1"
+        })
+    });
+    const test4 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2"
+        })
+    });
+    let s1=students[0].id;
+    let s2=students[1].id;
+    const test5 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students/`+s1,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2"
+        })
+    });
+    const test6 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students/me`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2",
+            token: t1
+        })
+    });
+    const test7 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students/me`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2",
+            token: t2
+        })
+    });
+    const test8 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students/me`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2"
+        })
+    });
+    const test9 = await httpsPost("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students/rewrwerw`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2",
+        })
+    });
+    const test10 = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            palceholder: "1"
+        })
+    });
+    const test11 = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e1@gmail.com"
+        })
+    });
+    const test12 = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            passowrd: "p2"
+        })
+    });
+    const test13 = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email: 12,
+            passowrd: "p2"
+        })
+    });
+    const test14 = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e1",
+            password: "p1"
+        })
+    });
+    const test15 = await httpsPost("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e5@gmail.com",
+            password: "p5"
+        })
+    });
+
+    ret+="tmp1: " + tmp1+"\n";
+    ret+="tmp2: " + tmp2+"\n";
+    ret+="test1: " + test1+"\n";
+    ret+="test1_2: " + test1_2+"\n";
+    ret+="test1_3: " + test1_3+"\n";
+    ret+="test2: " + test2+"\n";
+    ret+="test3: " + test3+"\n";
+    ret+="test4: " + test4+"\n";
+    ret+="test5: " + test5+"\n";
+    ret+="test6: " + test6+"\n";
+    ret+="test7: " + test7+"\n";
+    ret+="test8: " + test8+"\n";
+    ret+="test9: " + test9+"\n";
+    ret+="test10: " + test10+"\n";
+    ret+="test11: " + test11+"\n";
+    ret+="test12: " + test12+"\n";
+    ret+="test13: " + test13+"\n";
+    ret+="test14: " + test14+"\n";
+    ret+="test15: " + test15+"\n";
     res.status(200).json(ret);
         
 });
 
+*/
+/*
+router.get('/test/auth', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+    console.log("start testing authentication: ",req.url,req.body,req.params);
 
+    let ret = "";
+    let student_e="test@gmail.com"
+    let student_p="test"
+
+    const test0 =  custom_http("GET",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/authentications`,
+        body: JSON.stringify({
+            placeholder: "1"
+        })
+    });
+    const test1 =  custom_http("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/authentications`,
+        body: JSON.stringify({
+            placeholder: "1"
+        })
+    });
+    const test2 =  custom_http("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e1@gmail.com"
+        })
+    });
+    const test3 =  custom_http("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"1@gmail.com"
+        })
+    });
+    const test4 =  custom_http("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"1@gmail.com",
+            passowrd: "p1"
+        })
+    });
+    const test5 =  custom_http("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p2"
+        })
+    });
+    const test6 =  custom_http("POST",{
+        hostname: 'https://tutor-me.onrender.com',
+        path: `/api/v1/students`,
+        body: JSON.stringify({
+            email:"e1@gmail.com",
+            passowrd: "p1"
+        })
+    });
+    ret+="test0: " + test0+"\n";
+    ret+="test1: " + test1+"\n";
+    ret+="test2: " + test2+"\n";
+    ret+="test3: " + test3+"\n";
+    ret+="test4: " + test4+"\n";
+    ret+="test5: " + test5+"\n";
+    ret+="test6: " + test6+"\n";
+    res.status(200).json(ret);
+        
+});
+*/
+router.get('/test/status', async (req, res) => {
+    console.log("start testing status: ",req.url,req.body,req.params);
+
+    let ret = "";
+    const test0 =  custom_http("GET",{
+        hostname: 'http://localhost:8080',
+        path: `/api/v1/status`,
+        body: JSON.stringify({
+            placeholder: "1"
+        })
+    });
+    ret+="test0: " + test0+"\n";
+    res.status(200).json(ret);
+});
+
+/*
+todo students id non existing
+new student post already exists
+new student senza body
+*/
 module.exports = router;

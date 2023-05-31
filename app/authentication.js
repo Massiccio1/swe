@@ -10,6 +10,15 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 router.post('', async function(req, res) {
 	
 	// find the user
+	if (!req.body.email) {
+		res.json({ success: false, message: 'Authentication failed. no email given.' });
+		return;
+	}
+	if (!req.body.password) {
+		res.json({ success: false, message: 'Authentication failed. no password given.' });
+		return;
+	}
+
 	let user = await Student.findOne({
 		email: req.body.email
 	}).exec();
