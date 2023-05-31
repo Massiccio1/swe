@@ -5,10 +5,11 @@ info:
   description: API for managing TutorMe.
 servers:
   # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
   - url: https://tutor-me.onrender.com/api/v1
-    description: tutor me app
+    description: render hosted site
 paths:
   /authentications:
     post:
@@ -80,7 +81,7 @@ paths:
               schema:
                 type: string
               description: Link to the newly created student.
-  /student/me:
+  /students/me:
     get:
       description: return the info of the logged student
       responses:
@@ -90,7 +91,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Student'
-  /student/{id}:
+  /students/{id}:
     get:
       parameters:
         - name: id
@@ -106,7 +107,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Student'
-  /studenti/ban:
+  /students/ban:
     post:
       description: ban the student
       requestBody:
@@ -212,15 +213,9 @@ paths:
           description: Prenotation deleted successfully
         '404':
           description: Prenotation not found
-  /courses:
+  /course:
     get:
-      summary: Retrieve courses
-      parameters:
-        - in: query
-          name: studentId
-          description: Optional. Filter courses by studentId.
-          schema:
-            type: string
+      summary: Retrieve all courses available
       responses:
         '200':
           description: Successful response. Returns an array of courses.
@@ -243,7 +238,7 @@ paths:
                     price:
                       type: number
                       description: Course price.
-  /courses/{id}:
+  /course/{id}:
     get:
       summary: Get a course by ID
       parameters:
@@ -285,7 +280,7 @@ paths:
                     description: Error message indicating that the course does not exist.
         '406':
           description: Invalid course ID.
-  /courses/new:
+  /course/new:
     post:
       summary: Create a new course
       requestBody:
@@ -337,7 +332,7 @@ paths:
                   error:
                     type: string
                     description: Error message indicating that the tutor does not exist.
-  /courses/delete/{id}:
+  /course/delete/{id}:
     delete:
       summary: Delete a course
       parameters:
@@ -364,7 +359,7 @@ paths:
           description: Course not found.
         '406':
           description: Invalid course ID.
-  /tutor:
+  /tutors:
     get:
       description: Gets the list of tutors, requires token of tutor in the body
       summary: View all the tutors.
@@ -409,7 +404,7 @@ paths:
               schema:
                 type: string
               description: Link to the newly created tutor.
-  /tutor/me:
+  /tutors/me:
     get:
       description: if I am logged as a tutor return my information
       responses:
@@ -426,7 +421,7 @@ paths:
       responses:
         '204':
           description: Tutor deleted.
-  /tutor/{id}:
+  /tutors/{id}:
     get:
       tags:
         - tutor
@@ -445,7 +440,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Tutor'
-  /tutor/me/slot:
+  /tutors/me/slot:
     post:
       description: Enters a date indicating its availability
       tags:
@@ -462,7 +457,7 @@ paths:
       responses:
         '200':
           description: "Success"
-  /tutor/me/slot/{date}:
+  /tutors/me/slot/{date}:
     delete:
       description: Delete a slot
       tags:
@@ -477,7 +472,7 @@ paths:
       responses:
         '200':
           description: Slot deleted.
-  /tutor/me/teaching-material:
+  /tutors/me/teaching-material:
     get:
       responses:
         '200':
