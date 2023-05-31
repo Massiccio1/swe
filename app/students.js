@@ -51,11 +51,27 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('', async (req, res) => {
+
+    if(!req.body.email){ 
+        res.status(401).send('no email in body');
+        return;
+    }
+    if(!req.body.password){ 
+        res.status(401).send('no password in body');
+        return;
+    }
     
 	let student = new Student({
         email: req.body.email,
         password: req.body.password
     });
+
+    student = await Student.findOne({name: req.body.email}).exec();
+    if (student) {
+        res.status(409).send()
+        console.log('student with the same email already exists')
+        return;
+    }
 
     console.log("creating with email: ",student.email," password: ",student.password)
 

@@ -133,14 +133,14 @@ router.post('', async (req, res) => {
 
 
 router.delete('/:id', async (req, res) => {
-    let lending = await Booklending.findById(req.params.id).exec();
-    if (!lending) {
+    let prenotation = await Prenotation.findById(req.params.id).exec();
+    if (!prenotation) {
         res.status(404).send()
-        console.log('lending not found')
+        console.log('prenotation not found')
         return;
     }
-    await lending.deleteOne()
-    console.log('lending removed')
+    await prenotation.deleteOne()
+    console.log('prenotation removed')
     res.status(204).send()
 });
 

@@ -197,7 +197,7 @@ router.get('/me/teaching-material', (req, res) => {
     res.sendFile(__dirname + "/views/teaching-material.html");
 });
 
-router.post('/me/teaching-material/upload', async(req, res) => {
+router.post('/me/teaching-material', async(req, res) => {
     if(!req.body.loggedUser){ 
         res.status(401).send('Unauthorized');
         return;

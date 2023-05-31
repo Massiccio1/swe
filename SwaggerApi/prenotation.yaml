@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Prenotation API
+  description: API for managing TutorMe.
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+paths:
+  /prenotations:
+    get:
+      summary: Retrieve prenotations
+      parameters:
+        - in: query
+          name: studentId
+          description: Optional student ID to filter prenotations.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response. Returns a list of prenotations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: URL of the prenotation resource.
+                    course:
+                      type: string
+                      description: URL of the associated course resource.
+                    tutor:
+                      type: string
+                      description: URL of the associated tutor resource.
+                    student:
+                      type: string
+                      description: URL of the associated student resource.
+                    timeslot:
+                      type: string
+                      description: URL of the associated timeslot resource.
+    post:
+      summary: Create a new prenotation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student:
+                  type: string
+                  description: ID of the student for the prenotation
+                course:
+                  type: string
+                  description: ID of the course for the prenotation
+                tutor:
+                  type: string
+                  description: ID of the tutor for the prenotation
+                timeslot:
+                  type: string
+                  description: Timeslot for the prenotation
+              required:
+                - student
+                - course
+                - tutor
+                - timeslot
+      responses:
+        '201':
+          description: Prenotation created successfully
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the created prenotation resource
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating the reason for the bad request      
+  /prenotations/{id}:
+    get:
+      summary: Get a prenotation by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the prenotation to retrieve
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: URL of the prenotation resource.
+                  course:
+                    type: string
+                    description: URL of the associated course resource.
+                  tutor:
+                    type: string
+                    description: URL of the associated tutor resource.
+                  student:
+                    type: string
+                    description: URL of the associated student resource.
+                  timeslot:
+                    type: string
+                    description: URL of the associated timeslot resource.
+        '400':
+          description: Token doesn't match student or tutor
+    
+    delete:
+      summary: Delete prenotation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of prenotation to delete
+      responses:
+        '204':
+          description: Prenotation deleted successfully
+        '404':
+          description: Prenotation not found                                      
