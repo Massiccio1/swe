@@ -1,0 +1,554 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: TutorMe API
+  description: API for managing TutorMe.
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+paths:
+  /students:
+    get:
+      description: Ottiene una lista degli studenti iscritti al sito.
+      responses:
+        '200':
+          description: Collection of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '404':
+          description: Students not found.
+    post:
+      tags:
+        - studente
+      description: Creates a new student in the system.
+      summary: Register a new student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  description: Email address of the student
+                password:
+                  type: string
+                  description: password of the student
+      responses:
+        '201':
+          description: Student created. Link in the Location header
+          headers:
+            Location:
+              schema:
+                type: string
+              description: Link to the newly created student.
+  /student/me:
+    get:
+      description: return the info of the logged student
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+  /student/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: ID of the student
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+  /studenti/ban:
+    post:
+      description: ban the student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                isBanned:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+  /prenotations:
+    get:
+      summary: Retrieve prenotations
+      parameters:
+        - in: query
+          name: studentId
+          description: Optional student ID to filter prenotations.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response. Returns a list of prenotations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prenotation'
+  post:
+    summary: Create a new prenotation
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+            student:
+              type: string
+              description: ID of the student for the prenotation
+            course:
+              type: string
+              description: ID of the course for the prenotation
+            tutor:
+              type: string
+              description: ID of the tutor for the prenotation
+            timeslot:
+              type: string
+              description: Timeslot for the prenotation
+          required:
+            - student
+            - course
+            - tutor
+            - timeslot
+  responses:
+    '201':
+      description: Prenotation created successfully
+      headers:
+        Location:
+          schema:
+            type: string
+          description: URL of the created prenotation resource
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating the reason for the bad request
+/prenotations/{id}:
+  get:
+    summary: Get a prenotation by ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: ID of the prenotation to retrieve
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL of the prenotation resource.
+                course:
+                  type: string
+                  description: URL of the associated course resource.
+                tutor:
+                  type: string
+                  description: URL of the associated tutor resource.
+                student:
+                  type: string
+                  description: URL of the associated student resource.
+                timeslot:
+                  type: string
+                  description: URL of the associated timeslot resource.
+      '400':
+        description: Token doesn't match student or tutor
+  delete:
+    summary: Delete prenotation
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: ID of prenotation to delete
+    responses:
+      '204':
+        description: Prenotation deleted successfully
+      '404':
+        description: Prenotation not found
+/courses:
+  get:
+    summary: Retrieve courses
+    parameters:
+      - in: query
+        name: studentId
+        description: Optional. Filter courses by studentId.
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Successful response. Returns an array of courses.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: URL for accessing the course.
+                  tutor:
+                    type: string
+                    description: URL for accessing the tutor associated with the course.
+                  desc:
+                    type: string
+                    description: Course description.
+                  price:
+                    type: number
+                    description: Course price.
+/courses/{id}:
+  get:
+    summary: Get a course by ID
+    parameters:
+      - in: path
+        name: id
+        description: ID of the course to retrieve.
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response. Returns the course details.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL for accessing the course.
+                tutor:
+                  type: string
+                  description: URL for accessing the tutor associated with the course.
+                desc:
+                  type: string
+                  description: Course description.
+                price:
+                  type: number
+                  description: Course price.
+      '402':
+        description: Course not found.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  description: Error message indicating that the course does not exist.
+      '406':
+        description: Invalid course ID.
+/courses/new:
+  post:
+    summary: Create a new course
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              TutorId:
+                type: string
+                description: ID of the tutor associated with the course.
+              desc:
+                type: string
+                description: Course description.
+              price:
+                type: number
+                description: Course price.
+    responses:
+      '201':
+        description: Successful response. Course created.
+      '400':
+        description: Bad request. Missing or invalid parameters.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  description: Error message indicating the missing or invalid parameter.
+      '401':
+        description: Unauthorized. Token and course tutor do not match.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  description: Error message indicating a mismatch between the token and course tutor.
+      '402':
+        description: Tutor not found.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  description: Error message indicating that the tutor does not exist.
+/courses/delete/{id}:
+  delete:
+    summary: Delete a course
+    parameters:
+      - in: path
+        name: id
+        description: ID of the course to delete.
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: Successful response. Course deleted.
+      '401':
+        description: Unauthorized. Token and course tutor do not match.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  description: Error message indicating a mismatch between the token and course tutor.
+      '405':
+        description: Course not found.
+      '406':
+        description: Invalid course ID.
+/Tutors:
+  get:
+    description: Gets the list of tutors.
+    summary: View all the tutors.
+    responses:
+      '200':
+        description: Collection of tutors
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tutor'
+  post:
+    tags:
+      - tutor
+    description: Create a new tutor.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - username
+            properties:
+              email:
+                type: string
+                description: Email address of the tutor.
+              username:
+                type: string
+                description: Username of the tutor.
+              password:
+                type: string
+                description: Password of the tutor.
+    responses:
+      '201':
+        description: tutor created. Link in the Location header
+        headers:
+          Location:
+            schema:
+              type: string
+            description: Link to the newly created tutor.
+/tutor/me:
+  get:
+    description: if I am logged as a tutor return my information
+    responses:
+      '200':
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tutor'
+  delete:
+    tags:
+      - tutor
+    description: Delete a tutor if is logged-in
+    responses:
+      '204':
+        description: Tutor deleted.
+/{id}:
+  get:
+    tags:
+      - tutor
+    description: Get a tutor by his ID
+    parameters:
+      - name: id
+        in: path
+        description: ID of the tutor to return
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tutor'
+tutor/me/slot:
+  post:
+    tags:
+      - slot
+    description: Enters a date indicating its availability
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              slot:
+                type: integer
+tutor/me/slot/{date}:
+  delete:
+    description: Delete a slot
+    tags:
+      - slot
+    parameters:
+      - name: date
+        in: path
+        description: Date equal to slot
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Slot deleted.
+tutor/me/teaching-material:
+  get:
+    responses:
+      '200':
+        content:
+          application/json:
+            $ref: '#/components/schemas/TeachingMaterial'
+  post:
+    tags:
+      - tutor
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TeachingMaterial'
+components:
+  schemas:
+    Student:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - isBanned
+      properties:
+        id:
+          type: integer
+          description: ID of the Student
+        email:
+          type: string
+          description: Email address of the Student
+        password:
+          type: string
+          description: Password of the Student
+        isBanned:
+          type: boolean
+          default: false
+    TeachingMaterial:
+      type: object
+      properties:
+        CourseId:
+          type: string
+        name:
+          type: string
+        content:
+          type: string
+        materialType:
+          type: string
+          enum:
+            - presentation
+            - movie
+            - article
+    Tutor:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - name
+        - desc
+      properties:
+        id:
+          type: integer
+          description: ID of the Tutor, unique
+        email:
+          type: string
+          description: Email address of the Tutor, unique
+        password:
+          type: string
+          description: Password of the Tutor
+        name:
+          type: string
+          description: Name and surname of the Tutor
+        desc:
+          type: string
+          description: Tutor presentation
+        slot:
+          type: array
+          description: Array of available slot to reserve this tutor
+          items:
+            type: integer
+            uniqueItems: true
+    Prenotation:
+      type: object
+      properties:
+        CourseId: 
+          type: string
+        TutorId:
+          type: string
+        StudentId: 
+          type: string
+        date:
+          type: number
