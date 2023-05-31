@@ -1,0 +1,111 @@
+* e016383 (HEAD -> main, origin/main, origin/HEAD) final touches
+* 6f50aac .env changed
+* 71d5209 Transferring API Description file from Apiary.io
+* a198752 swaggre api upates
+* 0670376 swagger api and tutor clear
+* 0d98237 api update
+* 4686c03 insert all the modules in one doc.yaml  
+* a2f325c frontend fix
+*   766944b Merge branch 'dev'
+|\
+| * ccd122b (origin/dev) debug changes
+| * cb1f8e2 tet 4
+| * bcf7cae http request 2
+| * 74f4d05 test students
+| * 6b8b572 test n
+| * 2ee459e test n
+| * 44b4e0c test n
+* |   85007b7 Merge branch 'main' of github.com:Massiccio1/swe
+|\ \
+| * \   f85e69d Merge branch 'main' of https://github.com/Massiccio1/swe
+| |\ \
+| | * | 0caf136 api changement 2
+| * | | d0808af Prenotation api documentation update
+| |/ /
+| * |   c5389f5 Merge branch 'main' of https://github.com/Massiccio1/swe
+| |\ \
+| | * | 5922de7 Prenotation api documentation     
+| | * | 4827718 Course api documentation
+| * | | c272ef8 changement on api
+| |/ /
+| * | 1a187e6 new student check
+| * | a1e67f7 Checking if an email already exists 
+* | | 0b6cec5 Merge branch 'main' of github.com:Massiccio1/swe
+|\| |
+| |/
+|/|
+| * 953f92f Ban user
+| * cba70f0 added view
+| * 2655044 TeachingMaterials
+* | e08d967 test 4
+|/
+* 8fbf7a6 testing 2
+* 1ebabbb testing part 1
+* 2d6c615 tutor/me/slot
+* da03e6d fix debug reset courses and prenotations* 65ef2cd fix debug reset courses and prenotations* 3192150 course get id check delete check post id check
+* fe75695 tetsing course delete
+* 959281e stable course wip
+* ad66004 course/deelte/:id
+* 99de36c added course/new and post
+* 113c25f modificato modello course aggiunto metodo creazione corsi all'endpoint tutor
+* dc20acf metodo delete slot rivisto e revisione d
+egli altri metodi in tutor.js
+* d603c81 metodo post per creazione di slot,è ancora da testare
+* 88824ea creazione del metodo delete per tutor,co
+sì il tutor potrà cancellare l'account
+*   c51454f Merge branch 'main' of https://github.com/Massiccio1/swe
+|\
+| * 0de80b5 tutor post correct
+| * b2015e8 tutor/id
+| * 512d2ab tutor/me
+* | 11c769a sistemato schema utenti,tutor e admin 
+|/
+* 9aeecae debug courses + courses7
+* c3077e1 tutor/me e tutor
+* 11ea97d auth tutors wip
+* 5de487c toket tutor + students/me
+* 95c94b0 toket tutor + students/me
+* db74cd4 definizione admin
+* f3437f1 tst deploy 1
+* 98374bb prenotation. tutor and student models up
+dated
+* c1f4cd2 tutor and timeslot
+* 3e68553 tutor table part 2
+* e61ddf5 starting updating tutor table
+* b9e568c test4
+*   1a5e917 Merge branch 'main' of https://github.com/Massiccio1/swe
+|\
+| * 7a9b07a documentazione api da finire
+* | d04bef1 test3
+|/
+* 28bf9ac first commit
+*   d980fa0 Merge branch 'main' of https://github.com/Massiccio1/swe
+|\
+| * 50eae50 prenotation post fix + status
+| * cc1ae9c prenotation post
+| * d72ae2a prenotations token return and student/
+tutor matching
+| * f77bb63 debug/hook
+| * a4c7aed prenotation with token checker        
+| * 186074f C:/Programmi pcie/git/debug/hook part 
+2
+| * 996096d C:/Programmi pcie/git/debug/hook      
+| * c732b61 token checker with logs
+| * b34dfa6 wip token for different users
+| * 639aeae debug reset prenotation finito, prenotation get vuoto e get id fatto, manca post        
+| * 585491b wip for debug/reset_prenotations      
+| * 2863747 course by id
+| * 70e4af3 courses added, debug/reset_courses    
+| * ce9dda4 login token, tutor token, reset accounts
+| * 1c8ab0b testing debug
+| * ba7dae3 funziona in localhost:8080 collegato a mongo su internet
+| * 0ec2b80 aggiunto timeslot e tutor model       
+| * c30e7f6 aggiunto debug
+| * dce11ef env privato
+| * bebcb12 update con reference repo
+| * 9729796 -env test
+| * a27f0c1 (origin/bak) project works, .env pubblic for now
+| * 4b22e3f copy da robol
+| * cfa62e3 Transferring API Description file from Apiary.io
+| * 12c86c2 Initial commit
+* c85e135 (origin/master) just a try
