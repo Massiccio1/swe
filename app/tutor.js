@@ -134,11 +134,11 @@ router.post('/me/slot',async (req,res) => {
     tutor.updateOne({email: req.loggedUser.email}, {slot:newSlot}) //inserisce la data all'interno dell'array di date(slot)
 
     .then(() =>{
-        res.status(201).send.json("slot creata con successo");
+        res.status(201).json("slot creata con successo").send();
     })
     .catch((err) => {
         console.log("errore: ",err);
-        res.status(500).json({err:"errore nella creazione",errcode: err});
+        res.status(500).json({err:"errore nella creazione",errcode: err}).send();
     })
     
 });
@@ -178,20 +178,41 @@ router.post('/me/course', async (req,res) =>{
 //METODI DELETE
 
 //Metodo per cancellare una slot
-router.delete('/me/slot/:date',(req,res) =>{
+router.delete('/me/slot/:date',async (req,res) =>{
 
-    if(!req.loggedUser) {return;}
+    // if(!req.loggedUser) {return;}
 
-    const slotToDelete = req.params.date;
+    // const slotToDelete = req.params.date;
 
-    tutor.deleteOne({email:req.loggedUser.email},{$pull: {slot:slotToDelete}})
-    .then(() => {
-        res.send("Slot cancellata")
+    // tutor.deleteOne({email:req.loggedUser.email},{$pull: {slot:slotToDelete}})
+    // .then(() => {
+    //     res.send("Slot cancellata")
+    // })
+    // .catch((err) => {
+    //     console.error(err);
+    //     res.json({error:"Slot non cancellata"});
+    // });
+    //     //----------------------
+    let newSlot = req.body.slot;
+
+    console.log("[update slot tutor] got slot: ", newSlot);
+
+    if(!newSlot){
+        res.status(400).json({ error: 'no slot in body' });
+        return;
+    }
+    let tutor_check = await Tutor.findOne({email: req.loggedUser.email}).exec();
+    console.log("tutor check: ",tutor_check);
+    //tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
+    await tutor.deleteOne({email:req.loggedUser.email},{$pull: {slot:slotToDelete}}).exec() //inserisce la data all'interno dell'array di date(slot)
+
+    .then(() =>{
+        res.status(201).json("correctly removed").send();
     })
     .catch((err) => {
-        console.error(err);
-        res.json({error:"Slot non cancellata"});
-    });
+        console.log("errore: ",err);
+        res.status(500).json({err:"error in deletion",errcode: err}).send();
+    })
     
 
 });
