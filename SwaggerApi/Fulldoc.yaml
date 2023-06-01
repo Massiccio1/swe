@@ -4,12 +4,12 @@ info:
   title: TutorMe API
   description: API for managing TutorMe.
 servers:
-  # Added by API Auto Mocking Plugin
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
-  - url: https://tutor-me.onrender.com/api/v1
-    description: render hosted site
+    # Added by API Auto Mocking Plugin
+    # Added by API Auto Mocking Plugin
+    - description: SwaggerHub API Auto Mocking
+      url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
+    - description: render hosted site
+      url: https://tutor-me.onrender.com/api/v1
 paths:
   /authentications:
     post:
@@ -148,6 +148,12 @@ paths:
           description: Optional student ID to filter prenotations.
           schema:
             type: string
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Successful response. Returns a list of prenotations.
@@ -161,6 +167,13 @@ paths:
       tags:
         - prenotation
       summary: Create a new prenotation
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -197,29 +210,18 @@ paths:
           schema:
             type: string
           description: ID of the prenotation to retrieve
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  self:
-                    type: string
-                    description: URL of the prenotation resource.
-                  course:
-                    type: string
-                    description: URL of the associated course resource.
-                  tutor:
-                    type: string
-                    description: URL of the associated tutor resource.
-                  student:
-                    type: string
-                    description: URL of the associated student resource.
-                  timeslot:
-                    type: string
-                    description: URL of the associated timeslot resource.
+                $ref: '#/components/schemas/Prenotation'
         '400':
           description: Token doesn't match student or tutor
     delete:
@@ -314,6 +316,13 @@ paths:
       tags:
         - course
       summary: Create a new course
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -375,6 +384,12 @@ paths:
           schema:
             type: string
           required: true
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       responses:
         '204':
           description: Successful response. Course deleted.
@@ -525,8 +540,15 @@ paths:
           description: Slot deleted.
   /tutors/me/teaching-material:
     get:
+      description: return the teaching material
       tags:
         - tutor
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Student created. Link in the Location header
@@ -535,11 +557,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/TeachingMaterial'
     post:
+      description: create teaching material
+      tags:
+        - tutor
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: html with the resources uploaded
-      tags:
-        - tutor
       requestBody:
         content:
           application/json:
@@ -552,6 +581,7 @@ paths:
       responses:
         '200':
           description: status of server
+          
 components:
   schemas:
     Student:
