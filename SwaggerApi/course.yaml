@@ -1,11 +1,15 @@
 openapi: 3.0.0
 info:
-  version: '1.0'
+  version: 1.0.0
   title: Course API
   description: API for managing TutorMe.
 servers:
-  - url: http://localhost:8000/api/v1
-    description: Localhost
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
+  - url: https://tutor-me.onrender.com/api/v1
+    description: render hosted site
 paths:
   /courses:
     get:
