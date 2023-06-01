@@ -65,29 +65,29 @@ router.post('', async (req, res) => {
         return;
     }
     
-	let student = new Student({
+	let new_student = new Student({
         email: req.body.email,
         password: req.body.password
     });
 
     console.log("about to create student: ",student)
 
-    student = await Student.findOne({name: req.body.email}).exec();
+    let student = await Student.findOne({name: req.body.email}).exec();
     if (student) {
         res.status(409).send()
         console.log('student with the same email already exists')
         return;
     }
 
-    if (!student.email || typeof student.email != 'string' || !checkIfEmailInString(student.email)) {
+    if (!new_student.email || typeof new_student.email != 'string' || !checkIfEmailInString(new_student.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
         return;
     }
-    console.log("creating with email: ",req.body.email," password: ",req.body.password);
+    console.log("creating with email: ",new_student.email," password: ",new_student.password);
     
-	student = await student.save();
+	new_student = await new_student.save();
     
-    let studentId = student.id;
+    let studentId = new_student.id;
 
     /**
      * Link to the newly created resource is returned in the Location header
