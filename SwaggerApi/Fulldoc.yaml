@@ -41,6 +41,8 @@ paths:
           description: status of the login and eventually the token
   /students:
     get:
+      tags:
+        - student
       description: Ottiene una lista degli studenti iscritti al sito.
       responses:
         '200':
@@ -55,7 +57,7 @@ paths:
           description: Students not found.
     post:
       tags:
-        - studente
+        - student
       description: Creates a new student in the system.
       summary: Register a new student
       requestBody:
@@ -85,6 +87,8 @@ paths:
           description: Unexpected error
   /students/me:
     get:
+      tags:
+        - student
       parameters:
         - name: token
           in: query
@@ -102,6 +106,8 @@ paths:
                 $ref: '#/components/schemas/Student'
   /students/{id}:
     get:
+      tags:
+        - student
       parameters:
         - name: id
           in: path
@@ -118,6 +124,8 @@ paths:
                 $ref: '#/components/schemas/Student'
   /students/ban:
     post:
+      tags:
+        - student
       description: ban the student
       requestBody:
         content:
@@ -131,6 +139,8 @@ paths:
           description: Success
   /prenotations:
     get:
+      tags:
+        - prenotation
       summary: Retrieve prenotations
       parameters:
         - in: query
@@ -148,6 +158,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Prenotation'
     post:
+      tags:
+        - prenotation
       summary: Create a new prenotation
       requestBody:
         required: true
@@ -175,6 +187,8 @@ paths:
                     description: Error message indicating the reason for the bad request
   /prenotations/{id}:
     get:
+      tags:
+        - prenotation
       summary: Get a prenotation by ID
       parameters:
         - in: path
@@ -209,6 +223,8 @@ paths:
         '400':
           description: Token doesn't match student or tutor
     delete:
+      tags:
+        - prenotation
       summary: Delete prenotation
       parameters:
         - in: path
@@ -224,6 +240,8 @@ paths:
           description: Prenotation not found
   /course:
     get:
+      tags:
+        - course
       summary: Retrieve courses
       responses:
         '200':
@@ -249,6 +267,8 @@ paths:
                       description: Course price.
   /course/{id}:
     get:
+      tags:
+        - course
       summary: Get a course by ID
       parameters:
         - in: path
@@ -291,6 +311,8 @@ paths:
           description: Invalid course ID.
   /course/new:
     post:
+      tags:
+        - course
       summary: Create a new course
       requestBody:
         required: true
@@ -343,6 +365,8 @@ paths:
                     description: Error message indicating that the tutor does not exist.
   /course/delete/{id}:
     delete:
+      tags:
+        - course
       summary: Delete a course
       parameters:
         - in: path
@@ -461,7 +485,7 @@ paths:
           schema:
             type: string
       tags:
-        - slot
+        - tutor
       requestBody:
         content:
           application/json:
@@ -481,9 +505,8 @@ paths:
   /tutors/me/slot/{date}:
     delete:
       description: Delete a slot
-      
       tags:
-        - slot
+        - tutor
       parameters:
         - name: date
           in: path
@@ -502,6 +525,8 @@ paths:
           description: Slot deleted.
   /tutors/me/teaching-material:
     get:
+      tags:
+        - tutor
       responses:
         '200':
           description: Student created. Link in the Location header
@@ -520,6 +545,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TeachingMaterial'
+  /status:
+    get:
+      tags:
+        - tools
+      responses:
+        '200':
+          description: status of server
 components:
   schemas:
     Student:
