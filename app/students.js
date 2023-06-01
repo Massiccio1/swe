@@ -67,7 +67,7 @@ router.post('', async (req, res) => {
     
 
 
-    let student = await Student.findOne({name: req.body.email}).exec();
+    let student = await Student.findOne({email: req.body.email}).exec();
     if (student) {
         res.status(409).send()
         console.log('student with the same email already exists')
