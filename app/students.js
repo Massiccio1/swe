@@ -79,7 +79,6 @@ router.post('', async (req, res) => {
         return;
     }
 
-
     if (!student.email || typeof student.email != 'string' || !checkIfEmailInString(student.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
         return;
