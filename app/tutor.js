@@ -105,7 +105,7 @@ router.post('', async (req, res) => {
      * Link to the newly created resource is returned in the Location header
      * https://www.restapitutorial.com/lessons/httpmethods.html
      */
-    res.location("/api/v1/tutors/" + tutorID).status(201).send();
+    res.location("/api/v1/tutors/" + tutorID).status(201).json(tutor).send();
 });
 
 //crea slot in cui sarà disponibile per far prenotare lo studente
