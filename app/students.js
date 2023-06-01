@@ -52,6 +52,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
+    console.log("request to new student with: ",req.body, req.params,req.url);
+
+
     if(!req.body.email){ 
         res.status(401).send('no email in body');
         return;

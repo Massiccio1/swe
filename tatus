@@ -1,0 +1,107 @@
+* [33m6f50aac[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m .env changed
+* [33m71d5209[m Transferring API Description file from Apiary.io
+* [33ma198752[m swaggre api upates
+* [33m0670376[m swagger api and tutor clear
+* [33m0d98237[m api update
+* [33m4686c03[m insert all the modules in one doc.yaml
+* [33ma2f325c[m frontend fix
+*   [33m766944b[m Merge branch 'dev'
+[32m|[m[33m\[m  
+[32m|[m * [33mccd122b[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m debug changes
+[32m|[m * [33mcb1f8e2[m tet 4
+[32m|[m * [33mbcf7cae[m http request 2
+[32m|[m * [33m74f4d05[m test students
+[32m|[m * [33m6b8b572[m test n
+[32m|[m * [33m2ee459e[m test n
+[32m|[m * [33m44b4e0c[m test n
+* [33m|[m   [33m85007b7[m Merge branch 'main' of github.com:Massiccio1/swe
+[34m|[m[35m\[m [33m\[m  
+[34m|[m * [33m\[m   [33mf85e69d[m Merge branch 'main' of https://github.com/Massiccio1/swe
+[34m|[m [36m|[m[1;31m\[m [33m\[m  
+[34m|[m [36m|[m * [33m|[m [33m0caf136[m api changement 2
+[34m|[m * [1;31m|[m [33m|[m [33md0808af[m Prenotation api documentation update
+[34m|[m [1;31m|[m[1;31m/[m [33m/[m  
+[34m|[m * [33m|[m   [33mc5389f5[m Merge branch 'main' of https://github.com/Massiccio1/swe
+[34m|[m [1;32m|[m[1;33m\[m [33m\[m  
+[34m|[m [1;32m|[m * [33m|[m [33m5922de7[m Prenotation api documentation
+[34m|[m [1;32m|[m * [33m|[m [33m4827718[m Course api documentation
+[34m|[m * [1;33m|[m [33m|[m [33mc272ef8[m changement on api
+[34m|[m [1;33m|[m[1;33m/[m [33m/[m  
+[34m|[m * [33m|[m [33m1a187e6[m new student check
+[34m|[m * [33m|[m [33ma1e67f7[m Checking if an email already exists
+* [1;33m|[m [33m|[m [33m0b6cec5[m Merge branch 'main' of github.com:Massiccio1/swe
+[33m|[m[1;33m\[m[1;33m|[m [33m|[m 
+[33m|[m [1;33m|[m[33m/[m  
+[33m|[m[33m/[m[1;33m|[m   
+[33m|[m * [33m953f92f[m Ban user
+[33m|[m * [33mcba70f0[m added view
+[33m|[m * [33m2655044[m TeachingMaterials
+* [1;35m|[m [33me08d967[m test 4
+[1;35m|[m[1;35m/[m  
+* [33m8fbf7a6[m testing 2
+* [33m1ebabbb[m testing part 1
+* [33m2d6c615[m tutor/me/slot
+* [33mda03e6d[m fix debug reset courses and prenotations
+* [33m65ef2cd[m fix debug reset courses and prenotations
+* [33m3192150[m course get id check delete check post id check
+* [33mfe75695[m tetsing course delete
+* [33m959281e[m stable course wip
+* [33mad66004[m course/deelte/:id
+* [33m99de36c[m added course/new and post
+* [33m113c25f[m modificato modello course aggiunto metodo creazione corsi all'endpoint tutor
+* [33mdc20acf[m metodo delete slot rivisto e revisione degli altri metodi in tutor.js
+* [33md603c81[m metodo post per creazione di slot,è ancora da testare
+* [33m88824ea[m creazione del metodo delete per tutor,così il tutor potrà cancellare l'account
+*   [33mc51454f[m Merge branch 'main' of https://github.com/Massiccio1/swe
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33m0de80b5[m tutor post correct
+[1;36m|[m * [33mb2015e8[m tutor/id
+[1;36m|[m * [33m512d2ab[m tutor/me
+* [31m|[m [33m11c769a[m sistemato schema utenti,tutor e admin
+[31m|[m[31m/[m  
+* [33m9aeecae[m debug courses + courses7
+* [33mc3077e1[m tutor/me e tutor
+* [33m11ea97d[m auth tutors wip
+* [33m5de487c[m toket tutor + students/me
+* [33m95c94b0[m toket tutor + students/me
+* [33mdb74cd4[m definizione admin
+* [33mf3437f1[m tst deploy 1
+* [33m98374bb[m prenotation. tutor and student models updated
+* [33mc1f4cd2[m tutor and timeslot
+* [33m3e68553[m tutor table part 2
+* [33me61ddf5[m starting updating tutor table
+* [33mb9e568c[m test4
+*   [33m1a5e917[m Merge branch 'main' of https://github.com/Massiccio1/swe
+[32m|[m[33m\[m  
+[32m|[m * [33m7a9b07a[m documentazione api da finire
+* [33m|[m [33md04bef1[m test3
+[33m|[m[33m/[m  
+* [33m28bf9ac[m first commit
+*   [33md980fa0[m Merge branch 'main' of https://github.com/Massiccio1/swe
+[34m|[m[35m\[m  
+[34m|[m * [33m50eae50[m prenotation post fix + status
+[34m|[m * [33mcc1ae9c[m prenotation post
+[34m|[m * [33md72ae2a[m prenotations token return and student/tutor matching
+[34m|[m * [33mf77bb63[m debug/hook
+[34m|[m * [33ma4c7aed[m prenotation with token checker
+[34m|[m * [33m186074f[m C:/Programmi pcie/git/debug/hook part 2
+[34m|[m * [33m996096d[m C:/Programmi pcie/git/debug/hook
+[34m|[m * [33mc732b61[m token checker with logs
+[34m|[m * [33mb34dfa6[m wip token for different users
+[34m|[m * [33m639aeae[m debug reset prenotation finito, prenotation get vuoto e get id fatto, manca post
+[34m|[m * [33m585491b[m wip for debug/reset_prenotations
+[34m|[m * [33m2863747[m course by id
+[34m|[m * [33m70e4af3[m courses added, debug/reset_courses
+[34m|[m * [33mce9dda4[m login token, tutor token, reset accounts
+[34m|[m * [33m1c8ab0b[m testing debug
+[34m|[m * [33mba7dae3[m funziona in localhost:8080 collegato a mongo su internet
+[34m|[m * [33m0ec2b80[m aggiunto timeslot e tutor model
+[34m|[m * [33mc30e7f6[m aggiunto debug
+[34m|[m * [33mdce11ef[m[33m ([m[1;32mlist[m[33m)[m env privato
+[34m|[m * [33mbebcb12[m update con reference repo
+[34m|[m * [33m9729796[m -env test
+[34m|[m * [33ma27f0c1[m[33m ([m[1;31morigin/bak[m[33m)[m project works, .env pubblic for now
+[34m|[m * [33m4b22e3f[m copy da robol
+[34m|[m * [33mcfa62e3[m Transferring API Description file from Apiary.io
+[34m|[m * [33m12c86c2[m Initial commit
+* [33mc85e135[m[33m ([m[1;31morigin/master[m[33m)[m just a try
