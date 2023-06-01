@@ -9,6 +9,8 @@ servers:
 paths:
   /prenotations:
     get:
+      tags:
+        - prenotation
       summary: Retrieve prenotations
       parameters:
         - in: query
@@ -24,49 +26,17 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    self:
-                      type: string
-                      description: URL of the prenotation resource.
-                    course:
-                      type: string
-                      description: URL of the associated course resource.
-                    tutor:
-                      type: string
-                      description: URL of the associated tutor resource.
-                    student:
-                      type: string
-                      description: URL of the associated student resource.
-                    timeslot:
-                      type: string
-                      description: URL of the associated timeslot resource.
+                  $ref: '#/components/schemas/Prenotation'
     post:
+      tags:
+        - prenotation
       summary: Create a new prenotation
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                student:
-                  type: string
-                  description: ID of the student for the prenotation
-                course:
-                  type: string
-                  description: ID of the course for the prenotation
-                tutor:
-                  type: string
-                  description: ID of the tutor for the prenotation
-                timeslot:
-                  type: string
-                  description: Timeslot for the prenotation
-              required:
-                - student
-                - course
-                - tutor
-                - timeslot
+              $ref: '#/components/schemas/Prenotation'
       responses:
         '201':
           description: Prenotation created successfully
@@ -84,9 +54,11 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: Error message indicating the reason for the bad request      
+                    description: Error message indicating the reason for the bad request
   /prenotations/{id}:
     get:
+      tags:
+        - prenotation
       summary: Get a prenotation by ID
       parameters:
         - in: path
@@ -120,8 +92,9 @@ paths:
                     description: URL of the associated timeslot resource.
         '400':
           description: Token doesn't match student or tutor
-    
     delete:
+      tags:
+        - prenotation
       summary: Delete prenotation
       parameters:
         - in: path
@@ -134,4 +107,4 @@ paths:
         '204':
           description: Prenotation deleted successfully
         '404':
-          description: Prenotation not found                                      
+          description: Prenotation not found
