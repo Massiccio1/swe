@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  version: '1.0'
-  title: "EasyLib OpenAPI 3.0"
+  version: 1.0.0
+  title: "Students API"
   description: API for managing TutorMe.
   license:
     name: MIT
@@ -11,11 +11,12 @@ servers:
 paths:
   /students:
     get:
-      description: >-
-        Ottiene una lista degli studenti iscritti al sito.
+      tags:
+        - student
+      description: Ottiene una lista degli studenti iscritti al sito.
       responses:
         '200':
-          description: 'Collection of students'
+          description: Collection of students
           content:
             application/json:
               schema:
@@ -23,12 +24,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Student'
         '404':
-          description: 'Students not founded.'
+          description: Students not found.
     post:
       tags:
-        - studente
-      description: >-
-        Creates a new student in the system.
+        - student
+      description: Creates a new student in the system.
       summary: Register a new student
       requestBody:
         content:
@@ -41,78 +41,71 @@ paths:
               properties:
                 email:
                   type: string
-                  description: 'Email address of the student'
+                  description: Email address of the student
                 password:
                   type: string
-                  description: 'password of the student'
+                  description: password of the student
       responses:
         '201':
-          description: 'Student created. Link in the Location header'
+          description: Student created. Link in the Location header
           headers:
-            'Location':
+            Location:
               schema:
                 type: string
               description: Link to the newly created student.
-student/me:
-  get:
-    description: 'return the info of the logged student'
-      responses: 
+        default:
+          description: Unexpected error
+  /students/me:
+    get:
+      tags:
+        - student
+      parameters:
+        - name: token
+          in: query
+          description: student token
+          required: true
+          schema:
+            type: string
+      description: return the info of the logged student
+      responses:
         '200':
+          description: Student sees all prenotations made
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Student'
-/student/{id}:
-  get:
-    parameters:
-      -name: id 
-      in: path
-      description: 'ID of the student'
-      required: true
-      schema:
-        type: integer
-    responses: 
-    '200':
-      content:
-        application/json:
+  /students/{id}:
+    get:
+      tags:
+        - student
+      parameters:
+        - name: id
+          in: path
+          description: ID of the student
+          required: true
           schema:
-            $ref: '#/components/schemas/Student'
-/studenti/ban:
-  post:
-    description: 'ban the student'
-    requestBody: 
-      content:
-        application/json:
-          schema:
-            properties:
-              isBanned:
-                type: boolean
-          required:
-          - isBanned
-    responses:
-      '200':
-        description: 'Success'
-components:
-  schemas:
-    Student:
-      type: object
-      required:
-        - id
-        - email
-        - password
-        - isBanned
-      properties:
-        id:
-          type: integer
-          description: 'ID of the Student'
-        email:
-          type: string
-          description: 'Email address of the Student'
-        password:
-          type: string
-          description: 'Password  of the Student'
-        isBanned:
-          type: Boolean
-          default: false
+            type: integer
+      responses:
+        '200':
+          description: Checks the existance of the student and returns the email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+  /students/ban:
+    post:
+      tags:
+        - student
+      description: ban the student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                isBanned:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
 
     

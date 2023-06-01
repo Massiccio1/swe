@@ -1,166 +1,166 @@
 openapi: 3.0.0
 info:
-  version: '1.0'
-  title: "TutorMe OpenAPI 3.0"
+  version: 1.0.0
+  title: "Tutors API"
   description: API for managing TutorMe.
 servers:
-  - url: http://localhost:8000/api/v1
-    description: Localhost
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
+  - url: https://tutor-me.onrender.com/api/v1
+    description: render hosted site
  paths:   
-/Tutors:
-  get:
-  description:  Gets the list of tutors.
-  summary: View all the tutors.
-     responses:
-      '200':
-      description: 'Collection of tutors'
+/tutors:
+    get:
+      tags:
+        - tutor
+      description: Gets the list of tutors, requires token of tutor in the body
+      summary: View all the tutors.
+      responses:
+        '200':
+          description: Collection of tutors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tutor'
+    post:
+      tags:
+        - tutor
+      description: Create a new tutor.
+      requestBody:
         content:
           application/json:
             schema:
-              type: array
-               $ref: '#/components/schemas/Tutor'
-  post:
-  tags:
-    - tutor
-  description: "Create a new tutor."
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - email
-            - password
-            - username
-          properties:
-            email:
-              type: string
-              description: "Email address of the tutor."
-            username:
-              type: string
-              description: "Username of the tutor."
-            password:
-              type: string
-              description: "Password of the tutor."
+              $ref: '#/components/schemas/Tutor'
       responses:
         '201':
-          description: 'tutor created. Link in the Location header'
+          description: tutor created. Link in the Location header
           headers:
-            'Location':
+            Location:
               schema:
                 type: string
               description: Link to the newly created tutor.
-  /tutor/me:
+  /tutors/me:
     get:
-      description: 'if i am logged as a tutor return my information'    
-        responses:
-          '200':
-            description: 'Success'
-            content:
-              application/json:
-                schema:
-                    $ref: '#/components/schemas/Tutor'
+      tags:
+          - tutor
+      description: if I am logged as a tutor return my information
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutor'
     delete:
       tags:
         - tutor
-      description: 'Delete a tutor if is logged-in'
+      description: Delete a tutor if is logged-in
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          schema:
+            type: string
       responses:
-       '204' :
-        description: Tutore deleted.
-  /{id}:
+        '204':
+          description: Tutor deleted.
+  /tutors/{id}:
     get:
       tags:
-       - tutor
-      description: 'Get a tutor by his ID'
+        - tutor
+      description: Get a tutor by his ID
       parameters:
-        - id: id
+        - name: id
           in: path
-          description: 'ID of the tutor to return'
+          description: ID of the tutor to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutor'
+  /tutors/me/slot:
+    post:
+      description: Enters a date indicating its availability
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
+      tags:
+        - tutor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - slot
+              properties:
+                slot:
+                  type: array
+                  description: Array of available slot to reserve this tutor
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: "Success"
+  /tutors/me/slot/{date}:
+    delete:
+      description: Delete a slot
+      tags:
+        - tutor
+      parameters:
+        - name: date
+          in: path
+          description: Date equal to slot
           required: true
           schema:
             type: integer
-          responses:
-           '200':
-            description: 'Success'
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Tutor'       
-tutor/me/slot:
-  post:
-    tags:
-     - slot
-    description: 'enters a date indicating its availability'
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema: 
-            type: object
-            properties:
-              slot:
-                type: integer
-tutor/me/slot/{date}:
-  delete:
-    description: 'delete a slot'
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Slot deleted.
+  /tutors/me/teaching-material:
+    get:
       tags:
-      - slot
-    parameters:
-    - name: date
-      in: path
-      description: "date equal to slot"
-      required: true
-        schema: integer
-    responses:
-      '200':
-        description: 'Slot deleted.'
-tutor/me/teaching-material:
-  get:
-    responses: 
-      '200':
+        - tutor
+      responses:
+        '200':
+          description: Student created. Link in the Location header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeachingMaterial'
+    post:
+      responses:
+        '200':
+          description: html with the resources uploaded
+      tags:
+        - tutor
+      requestBody:
         content:
           application/json:
-            $ref: '#/component/schemas/TeachingMaterial'
-  post:
-    tags:
-      - tutor
-    requestBody:
-      content:
-        application/json:
-          schema:
-          $ref: '#/component/schemas/TeachingMaterial'
-components:
-  schemas:
-     Tutor:
-      type: object
-      required:
-        - id
-        - email
-        - password
-        - name
-        - desc
-      properties:
-        id:
-         type: integer
-         description: 'ID of the Tutor,unique'
-        email:
-          type: string
-          description: 'Email address of the Tutor,unique'
-        password:
-          type: string
-          description: 'Password  of the Tutor'
-        name:
-          type: string
-          description: 'Name and surname of the Tutor'
-        desc:
-          type: string
-          description: 'Tutor presentation'
-        slot: 
-          type: array
-          description: 'array of available slot to reserve this tutor'
-        items:
-          type: integer
-          uniqueItems: true
-   TeachingMaterial:
-      $ref: 'teachingMaterial.yaml#/components/schemas/TeachingMaterial'
+            schema:
+              $ref: '#/components/schemas/TeachingMaterial'

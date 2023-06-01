@@ -43,7 +43,7 @@ paths:
     get:
       tags:
         - student
-      description: Ottiene una lista degli studenti iscritti al sito.
+      description: Retrieves a list of students registered on the website
       responses:
         '200':
           description: Collection of students

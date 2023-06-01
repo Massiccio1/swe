@@ -1,21 +1,21 @@
 openapi: 3.0.0
 info:
-  version: '1.0'
+  version: 1.0.0
   title: Course API
   description: API for managing TutorMe.
 servers:
-  - url: http://localhost:8000/api/v1
-    description: Localhost
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
+  - url: https://tutor-me.onrender.com/api/v1
+    description: render hosted site
 paths:
   /courses:
     get:
+      tags:
+        - course
       summary: Retrieve courses
-      parameters:
-        - in: query
-          name: studentId
-          description: Optional. Filter courses by studentId.
-          schema:
-            type: string
       responses:
         '200':
           description: Successful response. Returns an array of courses.
@@ -38,8 +38,10 @@ paths:
                     price:
                       type: number
                       description: Course price.
-  /courses/{id}:
+  /course/{id}:
     get:
+      tags:
+        - course
       summary: Get a course by ID
       parameters:
         - in: path
@@ -80,8 +82,10 @@ paths:
                     description: Error message indicating that the course does not exist.
         '406':
           description: Invalid course ID.
-  /courses/new:
+  /course/new:
     post:
+      tags:
+        - course
       summary: Create a new course
       requestBody:
         required: true
@@ -131,9 +135,11 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: Error message indicating that the tutor does not exist.     
-  /courses/delete/{id}:
+                    description: Error message indicating that the tutor does not exist.
+  /course/delete/{id}:
     delete:
+      tags:
+        - course
       summary: Delete a course
       parameters:
         - in: path
@@ -145,10 +151,6 @@ paths:
       responses:
         '204':
           description: Successful response. Course deleted.
-        '405':
-          description: Course not found.
-        '406':
-          description: Invalid course ID.
         '401':
           description: Unauthorized. Token and course tutor do not match.
           content:
@@ -158,4 +160,8 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: Error message indicating a mismatch between the token and course tutor.                                         
+                    description: Error message indicating a mismatch between the token and course tutor.
+        '405':
+          description: Course not found.
+        '406':
+          description: Invalid course ID.

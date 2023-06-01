@@ -99,8 +99,8 @@ router.post('', async (req, res) => {
      * https://www.restapitutorial.com/lessons/httpmethods.html
      */
     res.location("/api/v1/students/" + studentId).status(201).json({
-        self: '/api/v1/students/' + studentId,
-        email: student.email
+        self: '/api/v1/students/' + new_student.id,
+        email: new_student.email
     }).send();
 });
 

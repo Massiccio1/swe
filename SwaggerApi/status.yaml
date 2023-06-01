@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Status API
+  description: API for managing TutorMe.
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
+  - url: https://tutor-me.onrender.com/api/v1
+    description: render hosted site
+paths:
+  /status:
+    get:
+      tags:
+        - tools
+      responses:
+        '200':
+          description: status of server
+          
+components:
+  schemas:
+    Student:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - isBanned
+      properties:
+        id:
+          type: integer
+          description: ID of the Student
+        email:
+          type: string
+          description: Email address of the Student
+        password:
+          type: string
+          description: Password of the Student
+        isBanned:
+          type: boolean
+          default: false
+    TeachingMaterial:
+      type: object
+      properties:
+        CourseId:
+          type: string
+        name:
+          type: string
+        content:
+          type: string
+        materialType:
+          type: string
+          enum:
+            - presentation
+            - movie
+            - article
+    Tutor:
+      type: object
+      required:
+        - id
+        - email
+        - password
+        - name
+        - desc
+        - slot
+      properties:
+        id:
+          type: integer
+          description: ID of the Tutor, unique
+        email:
+          type: string
+          description: Email address of the Tutor, unique
+        password:
+          type: string
+          description: Password of the Tutor
+        name:
+          type: string
+          description: Name and surname of the Tutor
+        desc:
+          type: string
+          description: Tutor presentation
+        slot:
+          type: array
+          description: Array of available slot to reserve this tutor
+          items:
+            type: integer
+    Prenotation:
+      type: object
+      properties:
+        CourseId: 
+          type: string
+        TutorId:
+          type: string
+        StudentId: 
+          type: string
+        date:
+          type: number
