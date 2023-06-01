@@ -70,7 +70,7 @@ router.post('', async (req, res) => {
         password: req.body.password
     });
 
-    console.log("about to create student: ",student)
+    console.log("about to create student: ",new_student)
 
     let student = await Student.findOne({name: req.body.email}).exec();
     if (student) {
