@@ -128,7 +128,8 @@ router.post('/me/slot',(req,res) => {
         res.status(400).json({ error: 'no slot in body' });
         return;
     }
-
+    let tutor_check =tutor.findOne({email: req.loggedUser.email})
+    console.log("tutor check: ",tutor_check);
     //tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
     tutor.updateOne({email: req.loggedUser.email}, {slot:newSlot}) //inserisce la data all'interno dell'array di date(slot)
 
@@ -136,6 +137,7 @@ router.post('/me/slot',(req,res) => {
         res.status(201).send.json("slot creata con successo");
     })
     .catch((err) => {
+        console.log("errore: ",err);
         res.status(500).json({err:"errore nella creazione",errcode: err});
     })
     
