@@ -73,6 +73,7 @@ router.post('', async (req, res) => {
         console.log('student with the same email already exists')
         return;
     }
+    console.log("students with same email found: ",student);
 
     let new_student = new Student({
         email: req.body.email,
