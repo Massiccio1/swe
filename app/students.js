@@ -89,6 +89,8 @@ router.post('', async (req, res) => {
     console.log("creating with email: ",new_student.email," password: ",new_student.password);
     
 	new_student = await new_student.save();
+
+    console.log("created: ", new_student);
     
     let studentId = new_student.id;
 
