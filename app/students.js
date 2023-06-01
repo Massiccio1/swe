@@ -65,12 +65,7 @@ router.post('', async (req, res) => {
         return;
     }
     
-	let new_student = new Student({
-        email: req.body.email,
-        password: req.body.password
-    });
 
-    console.log("about to create student: ",new_student)
 
     let student = await Student.findOne({name: req.body.email}).exec();
     if (student) {
@@ -78,6 +73,13 @@ router.post('', async (req, res) => {
         console.log('student with the same email already exists')
         return;
     }
+
+    let new_student = new Student({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    console.log("about to create student: ",new_student)
 
     if (!new_student.email || typeof new_student.email != 'string' || !checkIfEmailInString(new_student.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
