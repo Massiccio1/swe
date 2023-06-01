@@ -186,7 +186,7 @@ router.delete('/me/slot/:date',(req,res) =>{
 
 
 //metodo per cancellare il proprio account
-router.delete('/tutor/me', function(req, res) {
+router.delete('/me', function(req, res) {
 
     if(!req.loggedUser) {return;} //controlla che l'utente sia loggato
 
