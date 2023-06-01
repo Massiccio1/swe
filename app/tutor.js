@@ -118,9 +118,9 @@ router.post('', async (req, res) => {
 });
 
 //crea slot in cui sarà disponibile per far prenotare lo studente
-router.post('/me/slot',(req,res) => {
+router.post('/me/slot',async (req,res) => {
                                             
-    const newSlot = req.body.slot;
+    let newSlot = req.body.slot;
 
     console.log("[update slot tutor] got slot: ", newSlot);
 
@@ -128,7 +128,7 @@ router.post('/me/slot',(req,res) => {
         res.status(400).json({ error: 'no slot in body' });
         return;
     }
-    let tutor_check =tutor.findOne({email: req.loggedUser.email})
+    let tutor_check = await Tutor.findOne({email: req.loggedUser.email}).exec();
     console.log("tutor check: ",tutor_check);
     //tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
     tutor.updateOne({email: req.loggedUser.email}, {slot:newSlot}) //inserisce la data all'interno dell'array di date(slot)
