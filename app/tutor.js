@@ -69,7 +69,28 @@ router.get('/:id', async (req, res) => {
 
 //METODI POST
 router.post('', async (req, res) => {
+
+    if(!req.body.email || !req.body.password || !req.body.name || !req.body.desc || !req.body.slot){
+        res.status(401).json({ error: 'missing parameters in body' });
+        return;
+    }
+
+    let check_tutor = await Tutor.findOne({email: req.body.email}).exec();
+    if (check_tutor) {
+        res.status(409).json({status: 'tutor with the same email already exists'}).send()
+        console.log('tutor with the same email already exists')
+        return;
+    }
     
+	let tutor = new Tutor({
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name,
+        desc: req.body.desc,
+        slot: req.body.slot
+    });
+
+    console.log("creating with email: ",tutor.email," password: ",tutor.password, " name: ", tutor.name, " desc: ", tutor.desc, "slots: ", tutor.slot);
 
     if (!tutor.email || typeof tutor.email != 'string' || !checkIfEmailInString(tutor.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
@@ -91,6 +112,11 @@ router.post('', async (req, res) => {
 router.post('/me/slot',(req,res) => {
                                             
     const newSlot = req.body.slot;
+
+    if(!newSlot){
+        res.status(400).json({ error: 'no slot in body' });
+        return;
+    }
 
     //tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
     tutor.updateOne({email: req.loggedUser.email}, {slot:newSlot}) //inserisce la data all'interno dell'array di date(slot)
