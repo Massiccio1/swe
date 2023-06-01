@@ -84,7 +84,7 @@ router.post('', async (req, res) => {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
         return;
     }
-    console.log("creating with email: ",student.email," password: ",student.password);
+    console.log("creating with email: ",req.body.email," password: ",req.body.password);
     
 	student = await student.save();
     
