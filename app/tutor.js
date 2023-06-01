@@ -61,6 +61,11 @@ router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
 
     let tutor = await Tutor.findById(req.params.id);
+
+    if(!tutor){
+        res.status(401).json({ error: 'tutor doesnt exists' });
+        return;
+    }
     console.log("searched for tutor id: ", req.params.id);
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
@@ -116,6 +121,8 @@ router.post('', async (req, res) => {
 router.post('/me/slot',(req,res) => {
                                             
     const newSlot = req.body.slot;
+
+    console.log("[update slot tutor] got slot: ", newSlot);
 
     if(!newSlot){
         res.status(400).json({ error: 'no slot in body' });
