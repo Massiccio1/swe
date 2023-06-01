@@ -53,7 +53,8 @@ router.get('/:id', async (req, res) => {
 router.post('', async (req, res) => {
 
     console.log("request to new student with: ",req.body, req.params,req.url);
-
+    console.log("email: ",req.body.email);
+    console.log("password: ",req.body.password);
 
     if(!req.body.email){ 
         res.status(401).send('no email in body');
@@ -69,6 +70,8 @@ router.post('', async (req, res) => {
         password: req.body.password
     });
 
+    console.log("about to create student: ",student)
+
     student = await Student.findOne({name: req.body.email}).exec();
     if (student) {
         res.status(409).send()
@@ -76,12 +79,12 @@ router.post('', async (req, res) => {
         return;
     }
 
-    console.log("creating with email: ",student.email," password: ",student.password)
 
     if (!student.email || typeof student.email != 'string' || !checkIfEmailInString(student.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
         return;
     }
+    console.log("creating with email: ",student.email," password: ",student.password);
     
 	student = await student.save();
     
