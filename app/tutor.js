@@ -193,18 +193,22 @@ router.delete('/me/slot/:date',async (req,res) =>{
     //     res.json({error:"Slot non cancellata"});
     // });
     //     //----------------------
-    let newSlot = req.params.date;
+    let slotToDelete = req.params.date;
 
-    console.log("[update slot tutor] got slot: ", newSlot);
+    console.log("[update slot tutor] got slot: ", slotToDelete);
 
-    if(!newSlot){
+    if(!slotToDelete){
         res.status(400).json({ error: 'no slot in body' });
         return;
     }
     let tutor_check = await Tutor.findOne({email: req.loggedUser.email}).exec();
+    if(!tutor_check){
+        res.status(401).json({ error: 'tutor doesnt exists' });
+        return;
+    }
     console.log("tutor check: ",tutor_check);
     //tutor.updateOne({email: req.loggedUser.email}, {$push: {slot:newSlot}}) //inserisce la data all'interno dell'array di date(slot)
-    await tutor.deleteOne({email:req.loggedUser.email},{$pull: {slot:slotToDelete}}).exec() //inserisce la data all'interno dell'array di date(slot)
+    await tutor.updateOne({email:req.loggedUser.email},{$pull: {slot:slotToDelete}}).exec() //inserisce la data all'interno dell'array di date(slot)
 
     .then(() =>{
         res.status(201).json("correctly removed").send();

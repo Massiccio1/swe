@@ -14,7 +14,7 @@ paths:
   /authentications:
     post:
       tags:
-        - studente
+        - student
       description: returns a token in case email and password match the database
       summary: Log in a student
       requestBody:
@@ -81,8 +81,17 @@ paths:
               schema:
                 type: string
               description: Link to the newly created student.
+        default:
+          description: Unexpected error
   /students/me:
     get:
+      parameters:
+        - name: token
+          in: query
+          description: student token
+          required: true
+          schema:
+            type: string
       description: return the info of the logged student
       responses:
         '200':
@@ -215,7 +224,7 @@ paths:
           description: Prenotation not found
   /course:
     get:
-      summary: Retrieve all courses available
+      summary: Retrieve courses
       responses:
         '200':
           description: Successful response. Returns an array of courses.
@@ -361,6 +370,8 @@ paths:
           description: Invalid course ID.
   /tutors:
     get:
+      tags:
+        - tutor
       description: Gets the list of tutors, requires token of tutor in the body
       summary: View all the tutors.
       responses:
@@ -377,25 +388,10 @@ paths:
         - tutor
       description: Create a new tutor.
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - email
-                - password
-                - username
-              properties:
-                email:
-                  type: string
-                  description: Email address of the tutor.
-                username:
-                  type: string
-                  description: Username of the tutor.
-                password:
-                  type: string
-                  description: Password of the tutor.
+              $ref: '#/components/schemas/Tutor'
       responses:
         '201':
           description: tutor created. Link in the Location header
@@ -406,7 +402,15 @@ paths:
               description: Link to the newly created tutor.
   /tutors/me:
     get:
+      tags:
+          - tutor
       description: if I am logged as a tutor return my information
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          schema:
+            type: string
       responses:
         '200':
           description: Success
@@ -418,6 +422,12 @@ paths:
       tags:
         - tutor
       description: Delete a tutor if is logged-in
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          schema:
+            type: string
       responses:
         '204':
           description: Tutor deleted.
@@ -432,7 +442,7 @@ paths:
           description: ID of the tutor to return
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Success
@@ -443,23 +453,35 @@ paths:
   /tutors/me/slot:
     post:
       description: Enters a date indicating its availability
+      parameters:
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       tags:
         - slot
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               type: object
+              required:
+                - slot
               properties:
                 slot:
-                  type: integer
+                  type: array
+                  description: Array of available slot to reserve this tutor
+                  items:
+                    type: integer
       responses:
         '200':
           description: "Success"
   /tutors/me/slot/{date}:
     delete:
       description: Delete a slot
+      
       tags:
         - slot
       parameters:
@@ -469,6 +491,12 @@ paths:
           required: true
           schema:
             type: integer
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Slot deleted.
@@ -537,6 +565,7 @@ components:
         - password
         - name
         - desc
+        - slot
       properties:
         id:
           type: integer
@@ -558,7 +587,6 @@ components:
           description: Array of available slot to reserve this tutor
           items:
             type: integer
-            uniqueItems: true
     Prenotation:
       type: object
       properties:
