@@ -21,6 +21,10 @@ router.get('/me', async (req, res) => {
     let courses = await Course.find({TutorId: req.loggedUser.id});
     let prenotations = await Prenotation.find({TutorId: req.loggedUser.id});
 
+    if(!tutor){
+        res.status(401).json({ error: 'tutor doesnt exists' });
+        return;
+    }
     res.status(200).json({
         self: '/api/v1/tutors/' + tutor.id,
         email: tutor.email,
