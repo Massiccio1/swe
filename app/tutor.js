@@ -70,15 +70,6 @@ router.get('/:id', async (req, res) => {
 //METODI POST
 router.post('', async (req, res) => {
     
-	let tutor = new Tutor({
-        email: req.body.email,
-        password: req.body.password,
-        name: req.body.name,
-        desc: req.body.desc,
-        slot: req.body.slot
-    });
-
-    console.log("creating with email: ",tutor.email," password: ",tutor.password, " name: ", tutor.name, " desc: ", tutor.desc, "slots: ", tutor.slot);
 
     if (!tutor.email || typeof tutor.email != 'string' || !checkIfEmailInString(tutor.email)) {
         res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
