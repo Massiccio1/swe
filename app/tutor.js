@@ -193,7 +193,7 @@ router.delete('/me/slot/:date',async (req,res) =>{
     //     res.json({error:"Slot non cancellata"});
     // });
     //     //----------------------
-    let newSlot = req.body.slot;
+    let newSlot = req.params.date;
 
     console.log("[update slot tutor] got slot: ", newSlot);
 
