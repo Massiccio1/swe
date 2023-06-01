@@ -136,7 +136,7 @@ router.post('/me/slot',(req,res) => {
         res.status(201).send.json("slot creata con successo");
     })
     .catch((err) => {
-        res.status(500).json({err:"errore nella creazione"});
+        res.status(500).json({err:"errore nella creazione",errcode: err});
     })
     
 });
