@@ -244,6 +244,12 @@ paths:
           schema:
             type: string
           description: ID of prenotation to delete
+        - name: token
+          in: query
+          description: tutor token
+          required: true
+          schema:
+            type: string
       responses:
         '204':
           description: Prenotation deleted successfully
@@ -325,6 +331,12 @@ paths:
       tags:
         - course
       summary: Create a new course
+      parameters:
+        - in: query
+          name: token
+          description: Tutor token
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -386,6 +398,11 @@ paths:
           schema:
             type: string
           required: true
+        - in: query
+          name: token
+          description: Tutor token
+          schema:
+            type: string
       responses:
         '204':
           description: Successful response. Course deleted.
