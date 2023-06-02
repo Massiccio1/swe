@@ -198,7 +198,7 @@ router.post('/new', async (req, res) => {
     
     let courseId = course.id;
     
-    res.location("/api/v1/course/" + courseId).status(201).send();
+    res.location("/api/v1/course/" + courseId).status(201).json({status: 'course ' + course.id + ' created'}).send();
 });
 
 router.delete('/delete/:id', async (req, res) => {
@@ -230,7 +230,7 @@ router.delete('/delete/:id', async (req, res) => {
 
     await courses.deleteOne();
     console.log('course ', courses, ' removed');
-    res.status(204).send()
+    res.status(200).json({ status: 'course deleted' });
 });
 
 

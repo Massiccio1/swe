@@ -70,20 +70,20 @@ router.post('', async (req, res) => {
     let timeslot = req.body.timeslot;
 
     if (!studentId){
-        res.status(400).json({ error: 'Student id not specified' });
+        res.status(400).json({ error: 'Student id not specified' }).send();
         return;
     };
     
     if (!courseId) {
-        res.status(400).json({ error: 'course id not specified' });
+        res.status(400).json({ error: 'course id not specified' }).send();
         return;
     };
     if (!tutorId) {
-        res.status(400).json({ error: 'tutor id not specified' });
+        res.status(400).json({ error: 'tutor id not specified' }).send();
         return;
     };
     if (!timeslot) {
-        res.status(400).json({ error: 'timeslot not specified' });
+        res.status(400).json({ error: 'timeslot not specified' }).send();
         return;
     };
 
@@ -94,7 +94,7 @@ router.post('', async (req, res) => {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
         console.log("This catch CastError when course cannot be casted to mongoose ObjectId")
-        res.status(401).json({ error: 'Error in casting' });
+        res.status(401).json({ error: 'Error in casting' }).send()
     }
 
     let student = null;
@@ -105,7 +105,7 @@ router.post('', async (req, res) => {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
         console.log("This catch CastError when student cannot be casted to mongoose ObjectId")
-        res.status(401).json({ error: 'Error in casting' });
+        res.status(401).json({ error: 'Error in casting' }).send();
     }
 
     let tutor = null;
@@ -116,7 +116,7 @@ router.post('', async (req, res) => {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
         console.log("This catch CastError when tutor cannot be casted to mongoose ObjectId")
-        res.status(401).json({ error: 'Error in casting' });
+        res.status(401).json({ error: 'Error in casting' }).send();
     }
     
 	let prenotation = new Prenotation({
@@ -138,13 +138,14 @@ router.post('', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     let prenotation = await Prenotation.findById(req.params.id).exec();
     if (!prenotation) {
-        res.status(404).send()
+        res.status(400).json({ error: 'no prenotation found in database' }).send();
         console.log('prenotation not found')
         return;
     }
     await prenotation.deleteOne()
     console.log('prenotation removed')
-    res.status(204).send()
+    
+    res.status(204).json({ status: "prenotation deleted" }).send();
 });
 
 module.exports = router;
