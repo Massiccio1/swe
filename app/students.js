@@ -9,10 +9,16 @@ router.get('/me', async (req, res) => {
     if(!req.loggedUser) {
         return;
     }
+    
 
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let student = await Student.findOne({email: req.loggedUser.email});
     let prenotations = await Prenotation.find({StudentId: req.loggedUser.id});
+
+    if(!student){
+        res.status(401).json({ error: 'student doesnt exists' });
+        return;
+    }
 
     res.status(200).json({
         self: '/api/v1/students/' + student.id,
@@ -43,6 +49,10 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     let student = await Student.findById(req.params.id);
+    if(!student){
+        res.status(401).json({ error: 'student doesnt exists' });
+        return;
+    }
     console.log("searched for student id: ", req.params.id);
     res.status(200).json({
         self: '/api/v1/students/' + student.id,

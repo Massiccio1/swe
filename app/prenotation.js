@@ -16,16 +16,14 @@ const Course = require('./models/course'); // get our mongoose model
 
 
 router.get('', async (req, res) => {
-    let prenotations;
+    let prenotations = await Prenotation.find({
+        studentId: req.loggedUser.id
+    }).exec();
 
-    if ( req.query.studentId )
-    prenotations = await Prenotation.find({
-            studentId: req.query.studentId
-        }).exec();
-    
-    else
-        prenotations = await Prenotation.findById(req.loggedUser.id).exec();
-
+    if(!prenotations){
+        res.status(200).json({});
+        return;
+    }
     prenotations = prenotations.map( (dbEntry) => {
         return {
             self: '/api/v1/prenotations/' + dbEntry.id,
