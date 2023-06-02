@@ -17,7 +17,7 @@ const Course = require('./models/course'); // get our mongoose model
 
 router.get('', async (req, res) => {
     let prenotations = await Prenotation.find({
-        studentId: req.loggedUser.id
+        StudentId: req.loggedUser.id
     }).exec();
 
     console.log("prenotations found: ",prenotations);
