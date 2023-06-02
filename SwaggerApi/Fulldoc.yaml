@@ -114,7 +114,7 @@ paths:
           description: ID of the student
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Checks the existance of the student and returns the email
@@ -144,8 +144,8 @@ paths:
       summary: Retrieve prenotations
       parameters:
         - in: query
-          name: studentId
-          description: Optional student ID to filter prenotations.
+          name: token
+          description: Student token
           schema:
             type: string
       responses:
@@ -161,6 +161,12 @@ paths:
       tags:
         - prenotation
       summary: Create a new prenotation
+      parameters:
+        - in: query
+          name: token
+          description: Student token
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -197,6 +203,11 @@ paths:
           schema:
             type: string
           description: ID of the prenotation to retrieve
+        - in: query
+          name: token
+          description: Student token
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -476,7 +487,7 @@ paths:
                 $ref: '#/components/schemas/Tutor'
   /tutors/me/slot:
     post:
-      description: Enters a date indicating its availability
+      description: Enters a slot indicating its availability
       parameters:
         - name: token
           in: query
@@ -502,15 +513,15 @@ paths:
       responses:
         '200':
           description: "Success"
-  /tutors/me/slot/{date}:
+  /tutors/me/slot/{timeslot}:
     delete:
       description: Delete a slot
       tags:
         - tutor
       parameters:
-        - name: date
+        - name: timeslot
           in: path
-          description: Date equal to slot
+          description: timeslot selected
           required: true
           schema:
             type: integer
@@ -633,5 +644,5 @@ components:
           type: string
         StudentId: 
           type: string
-        date:
+        timeslot:
           type: number

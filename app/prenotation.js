@@ -32,7 +32,7 @@ router.get('', async (req, res) => {
             course: '/api/v1/students/' + dbEntry.CourseId,
             tutor: '/api/v1/tutors/' + dbEntry.TutorId,
             student: '/api/v1/students/' + dbEntry.StudentId,
-            timeslot: dbEntry.date
+            timeslot: dbEntry.timeslot
         };
     });
 
@@ -50,7 +50,7 @@ router.get('/:id', async (req, res) => {
             course: '/api/v1/students/' + prenotations.CourseId,
             tutor: '/api/v1/students/' + prenotations.TutorId,
             student: '/api/v1/students/' + prenotations.StudentId,
-            timeslot: '/api/v1/books/' + prenotations.timeslot
+            timeslot: prenotations.timeslot
         });
     }else{
         res.status(400).json({ error: 'token doesnt match student or tutor' });
@@ -94,6 +94,7 @@ router.post('', async (req, res) => {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
         console.log("This catch CastError when course cannot be casted to mongoose ObjectId")
+        res.status(401).json({ error: 'Error in casting' });
     }
 
     let student = null;
@@ -104,6 +105,7 @@ router.post('', async (req, res) => {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
         console.log("This catch CastError when student cannot be casted to mongoose ObjectId")
+        res.status(401).json({ error: 'Error in casting' });
     }
 
     let tutor = null;
@@ -113,7 +115,8 @@ router.post('', async (req, res) => {
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
-        console.log("This catch CastError when student cannot be casted to mongoose ObjectId")
+        console.log("This catch CastError when tutor cannot be casted to mongoose ObjectId")
+        res.status(401).json({ error: 'Error in casting' });
     }
     
 	let prenotation = new Prenotation({
