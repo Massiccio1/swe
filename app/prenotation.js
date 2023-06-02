@@ -20,6 +20,8 @@ router.get('', async (req, res) => {
         studentId: req.loggedUser.id
     }).exec();
 
+    console.log("prenotations found: ",prenotations);
+
     if(!prenotations){
         res.status(200).json({});
         return;
