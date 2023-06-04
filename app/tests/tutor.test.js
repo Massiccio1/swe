@@ -4,7 +4,7 @@ const app     = require('../app');
 const { options } = require('../authentication');
 const tutor = require('../models/tutor');
 
-describe('GET /api/v1/students/me',() => {
+describe('GET /api/v1/tutors/me',() => {
 
 let tutorSpy;
 
@@ -60,7 +60,7 @@ test('GET /api/v1/tutors/me with token', async () => {
 });
 });
 
-describe('/api/v1/students', () => {
+describe('/api/v1/tutors', () => {
 
     let tutorSpy;
 
@@ -76,9 +76,9 @@ afterAll(() => {
     tutorSpy.mockRestore();
 });
 
-test('GET /api/v1/students', () => {
+test('GET /api/v1/tutors', () => {
 
-    
+
 
 });
 
