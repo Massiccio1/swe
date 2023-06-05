@@ -70,7 +70,7 @@ describe('GET /api/v1/students/me', () => {
 	  var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
     console.log("token created");
     var url = '/api/v1/students/me?token='+token;
-
+    console.log("url created: ", url)
     const response = await request(app).get(url);
 
     console.log("request returned a response");
