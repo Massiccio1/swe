@@ -54,7 +54,7 @@ var token = jwt.sign(payload, process.env.SUPER_SECRET, options)
 test('GET /api/v1/tutors/me with token', async () => {
 
     const response = await request(app)
-    .get('/api/v1/tutors/me?token=token')
+    .get('/api/v1/tutors/me?token='+token)
     expect(response.statusCode).toBe(200);
 
 });
