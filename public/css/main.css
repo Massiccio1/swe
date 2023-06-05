@@ -1,0 +1,228 @@
+@font-face {
+    font-family: "Alice";
+    src: url(Alice-Regular.ttf);
+  }
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Alice";
+}
+
+button{
+    border-color: #001d20;
+    background: #68d1db;
+    color: #001d20;
+    transition: transform 500ms ease;
+}
+
+body {
+    background: #f7f2f8;
+    color: #000000;
+}
+
+header{
+    height: 30px;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    background:#f7f2f8;
+    border-bottom: #fcfcfc;
+}
+
+header span{
+    font-size: 25px;
+    font-weight: bold;
+    color: #fcfcfc;
+}
+
+header nav a {
+    color: #1d1d1d;
+    text-decoration: none;
+    margin-right: 20px;
+    float: right;
+}
+
+header nav a:hover{
+    text-decoration: underline;
+}
+
+header input{
+    border: 1px solid silver;
+    border-radius: 5px;
+    background: transparent;
+    color: #fff;
+    padding: 7px 10px;
+    margin-right: 10px;
+    outline: none;
+}
+
+header input:focus{
+    border-color: #dd5353;
+}
+
+header button{
+    border: 1;
+    border-width: thin;
+    padding: 12px 16px;
+    margin-right: 16px;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: transform 300ms ease;
+}
+
+button:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.UpperPartOfPage{
+    height: 412px;
+    margin-left: 50px;
+}
+
+/* left div tag */
+.LeftPart{
+    float: left;
+}
+
+/* right dive tag */
+.RightPart{
+    margin-left: 60%;
+}
+
+
+/* h1 work on terms */
+.wrkOnTrms{
+    margin-top: 50px;
+    margin-bottom: 8px;
+    font-size: 32px;
+    font-weight: 599;
+    line-height: 32px;
+}
+
+/* h1 Become a tutor */
+.BcmATtr{
+    margin-bottom: 10px;
+    font-size: 96px;
+    font-weight: 500;
+    line-height: 88px;
+}
+
+main p{
+    margin-bottom: 40px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+
+/* button ApplyNow */
+.ApplyNow{ 
+    border: 1;
+    border-width: thin;
+    padding: 20px 24px;
+    margin-right: 16px;
+    font-size: 20px;
+    transition: transform 300ms ease;
+}
+
+
+/* first image in body on the right side  .RightPart*/
+.ImgInBody1{
+    width: 412px;
+    height:412px;
+    text-align: right;
+}
+
+
+
+.SecondPartofPage {
+    height: 400px;
+margin-top: 100px;
+display: flex;
+justify-content: space-between;
+}
+
+.LeftSecondPart h1 {
+font-size: 45px;
+}
+
+.LeftSecondPart p {
+font-size: 18px;
+}
+
+.LeftSecondPart {
+    height: 100px;
+    text-align: center;
+    display: flex;
+    /* align-items: baseline; */
+    flex:1;
+    /* float: left; */
+}
+
+.item {
+margin-left: 50px;
+margin-right: 50px;
+/* display: flex; */
+/* flex-direction: column; */
+/* align-items: center; */
+white-space: nowrap;
+}
+
+/* .two-line {
+    line-height: 1.2;
+} */
+
+.ImageSection{
+    /* display: block; */
+    margin-top: 170px;
+    margin-left: -45%;
+}
+
+.ImageSection img{
+    width: 400px;
+    height: 200px;
+    margin-left: 0;
+}
+
+.ReviewPhoto {
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.RightSecondPart {
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    margin-left: -20%;
+}
+    
+.RightSecondPart p{
+    margin-left: 30px;
+}
+    
+.RightSecondPart img{
+    width: 50px;
+    height: 50px;
+}
+
+.ReviewPhoto img {
+margin-right: 10px;
+}
+
+.ReviewPhoto .text-container {
+display: flex;
+flex-direction: column;
+}
+
+.ReviewPhoto p {
+margin: 0;
+}
+
+.ReviewPhoto p:last-child {
+margin-top: 10px;
+}
+
