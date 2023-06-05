@@ -69,8 +69,9 @@ describe('GET /api/v1/students/me', () => {
     }
 	  var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
     console.log("token created");
+    var url = '/api/v1/students/me?token='+token;
 
-    const response = await request(app).get('/api/v1/students/me?token='+token);
+    const response = await request(app).get(url);
 
     console.log("request returned a response");
 
@@ -99,8 +100,11 @@ describe('GET /api/v1/students/me', () => {
       expiresIn: 86400 // expires in 24 hours
     }
     var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-    const response = await request(app).get('/api/v1/students/me?token='+token);
+    const response = await request(app).get('/api/v1/students/me?token='+token).catch(function(error){
+      console.log("error: ",error); // Failure
+    });
     const user_body = response.body;
+    console.log("response:",response);
     expect(user_body).toBeDefined();
     expect(user_body.email).toBe('e1@mail.com');
     //done();

@@ -7,6 +7,7 @@ const Admin = require('./models/admin')
 
 router.get('/me', async (req, res) => {
     if(!req.loggedUser) {
+        res.status(400).json({ error: 'no logged user' });
         return;
     }
     
