@@ -36,7 +36,7 @@ test('GET /api/v1/tutors/me with wrong token', async () => {
 
     const response = await request(app)
     .get('/api/v1/tutors/me?token=2234557')
-    expect(response.statusCode).toBe(401);
+    expect(response.statusCode).toBe(403);
 
 });
 
@@ -49,7 +49,7 @@ var options = {
     expiresIn: 86400
 }
 
-var token = jwt.sign(payload,process.env.SUPER_SECRET,options)
+var token = jwt.sign(payload, process.env.SUPER_SECRET, options)
 
 test('GET /api/v1/tutors/me with token', async () => {
 
