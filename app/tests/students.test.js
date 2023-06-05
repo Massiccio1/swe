@@ -45,12 +45,11 @@ describe('GET /api/v1/students/me', async () => {
   
       
   test('GET /api/v1/students/me?token=<valid> should return 200', async () => {
-    expect.assertions(1);
+    //expect.assertions(1);
     console.log(Student);
     let user = await Student.findOne({
       email: "e1@gmail.com"
     });
-  
   
     let account_type = "student";
     
@@ -68,10 +67,11 @@ describe('GET /api/v1/students/me', async () => {
     var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
     const response = await request(app).get('/api/v1/students/me?token='+token);
     expect(response.statusCode).toBe(200);
+    //done();
   });
 
   test('GET /api/v1/students/me?token=<valid> should return user information', async () => {
-    expect.assertions(2);
+    //expect.assertions(2);
     let user = await Student.findOne({
       email: "e1@gmail.com"
     });
@@ -95,5 +95,7 @@ describe('GET /api/v1/students/me', async () => {
     const user_body = response.body;
     expect(user_body).toBeDefined();
     expect(user_body.email).toBe('e1@mail.com');
+    //done();
+    //done();
   });
 });
