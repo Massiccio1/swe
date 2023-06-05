@@ -44,14 +44,14 @@ describe('GET /api/v1/students/me', () => {
       
   it('GET /api/v1/students/me?token=<valid> should return 200', async () => {
     //expect.assertions(1);
-    console.log("testing: ", "GET /api/v1/students/me?token=<valid> should return 200");
-    console.log(Student);
+    //console.log("testing: ", "GET /api/v1/students/me?token=<valid> should return 200");
+    //console.log(Student);
     let user = await Student.findOne({
       email: "e1@gmail.com"
     });
 
-    console.log("student found");
-    console.log(user);
+    //console.log("student found");
+    //console.log(user);
 
   
     let account_type = "student";
