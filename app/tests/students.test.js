@@ -15,6 +15,7 @@ describe('GET /api/v1/students/me', async () => {
   beforeAll( async () => {
     const User = require('../models/student');
     const Student = require('../models/student'); // get our mongoose model
+    var mongoose    = require('mongoose');
 
     mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
       .then ( () => {
@@ -26,7 +27,6 @@ describe('GET /api/v1/students/me', async () => {
 
     userSpy = jest.spyOn(User, 'findOne').mockImplementation((criterias) => {
       return {
-        id: 1212,
         email: 'e1@mail.com'
       };
     });
