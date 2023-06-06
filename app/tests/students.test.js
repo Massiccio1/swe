@@ -28,7 +28,9 @@ describe('GET /api/v1/students/me', () => {
     //   };
     // });
     await mongoose.connection.close();
-    await mongoose.connect(process.env.DB_URL);
+    await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then ( () => {
+      console.log("Connected to Database")
+    });
   });
 
   afterAll(async () => {
