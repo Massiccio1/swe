@@ -7,7 +7,6 @@ const app     = require('../app');
 const Student = require('../models/student'); // get our mongoose model
 const {MongoClient} = require('mongodb');
 const mongoose = require("mongoose");
-const request = require("supertest");
 
 require("dotenv").config();
 
