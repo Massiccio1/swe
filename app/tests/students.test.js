@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 
-describe('GET /api/v1/students/me', () => {
+describe('GET /api/v1/students/me', async () => {
 
   // Moking User.findOne method
   let userSpy;
@@ -40,8 +40,6 @@ describe('GET /api/v1/students/me', () => {
   });
   
   test('GET /api/v1/students/me with no token should return 401', async () => {
-    let students = await Student.find({email: "e1@gmail.com"});
-    console.log("students found: ",students);
     const response = await request(app).get('/api/v1/students/me');
     expect(response.statusCode).toBe(401);
   });
@@ -50,15 +48,23 @@ describe('GET /api/v1/students/me', () => {
     const response = await request(app).get('/api/v1/students/me?token=123456');
     expect(response.statusCode).toBe(403);
   });
-
+  
+  let students = await Student.find({email: "e1@gmail.com"});
+    console.log("students found: ",students);
   // create a valid token
-  var payload = {
-    email: 'John@mail.com'
-  }
-  var options = {
-    expiresIn: 86400 // expires in 24 hours
-  }
-  var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+  let account_type = "student";
+	
+	// if user is found and password is right create a token
+	var payload = {
+		email: students.email,
+		id: students._id,
+		type: account_type
+		// other data encrypted in the token	
+	}
+	var options = {
+		expiresIn: 86400 // expires in 24 hours
+	}
+	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
       
   test('GET /api/v1/students/me?token=<valid> should return 200', async () => {
     const response = await request(app).get('/api/v1/students/me?token=' + token);
@@ -70,7 +76,8 @@ describe('GET /api/v1/students/me', () => {
     const response = await request(app).get('/api/v1/students/me?token='+token);
     const user = response.body
     .expect(user).toBeDefined()
-    .expect(user.email).toBe('John@mail.com');
+    console.log("recived response body: ", user);
+    .expect(user.email).toBe('e1@mail.com');
 
   });
 });
