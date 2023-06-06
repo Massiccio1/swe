@@ -1,12 +1,18 @@
 
 # Created by https://www.gitignore.io/api/node,windows,linux,visualstudiocode
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9aba9c946bcc47fdaeb834ca5cfd954cbcf2059b
 ###tutor me project
 .env
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9aba9c946bcc47fdaeb834ca5cfd954cbcf2059b
 ### Linux ###
 *~
 
