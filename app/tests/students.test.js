@@ -7,8 +7,6 @@ const app     = require('../app');
 const Student = require('../models/student'); // get our mongoose model
 const {MongoClient} = require('mongodb');
 const mongoose = require('mongoose');
-
-
 describe('GET /api/v1/students/me', () => {
 
   // Moking User.findOne method
@@ -25,13 +23,10 @@ describe('GET /api/v1/students/me', () => {
     //     password: ''
     //   };
     // });
-    console.log("connecting to: ",process.env.DB_URL);
-    app.locals.db = mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then ( () => {
-        
-        console.log("Connected to Database");
-       
-    });
+    let uri = process.env.DB_URL;
+    uri.replace("\"","");
+    console.log("connecting to: ",uri);
+    await mongoose.connect(uri);
   });
 
   afterAll(async () => {
