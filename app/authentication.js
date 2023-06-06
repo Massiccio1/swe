@@ -11,28 +11,29 @@ router.post('', async function(req, res) {
 	
 	// find the user
 	if (!req.body.email) {
-		res.json({ success: false, message: 'Authentication failed. no email given.' });
+		res.status(401).json({ success: false, message: 'Authentication failed. no email given.' });
 		return;
 	}
 	if (!req.body.password) {
-		res.json({ success: false, message: 'Authentication failed. no password given.' });
+		res.status(401).json({ success: false, message: 'Authentication failed. no password given.' });
 		return;
 	}
 
 	let user = await Student.findOne({
 		email: req.body.email
-	}).exec();
+	});
 	
 	
 	// user not found
 	if (!user) {
-		res.json({ success: false, message: 'Authentication failed. User not found.' });
+		res.status(401).json({ success: false, message: 'Authentication failed. User not found.' });
 		return;
 	}
 	
 	// check if password matches
 	if (user.password != req.body.password) {
-		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+		res.status(401).json({ success: false, message: 'Authentication failed. Wrong password.' });
+		return;
 	}
 
 	let account_type = "student";
@@ -50,7 +51,7 @@ router.post('', async function(req, res) {
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
-	res.json({
+	res.status(200).json({
 		success: true,
 		message: 'Enjoy your token!',
 		token: token,

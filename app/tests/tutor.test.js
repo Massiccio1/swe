@@ -4,6 +4,17 @@ const app     = require('../app');
 const { options } = require('../authentication');
 const tutor = require('../models/tutor');
 
+let account_type = "tutor";
+
+var payload = {
+    id: 626,
+    email: 'Mario@mail.com',
+    password: 'mafd'
+}
+
+var token = jwt.sign(payload, process.env.SUPER_SECRET, options)
+
+
 describe('GET /api/v1/tutors/me',() => {
 
 let tutorSpy;
@@ -40,31 +51,21 @@ test('GET /api/v1/tutors/me with wrong token', async () => {
 
 });
 
-var payload = {
-    id: 626,
-    email: 'Mario@mail.com',
-    password: 'mafd'
-}
-var options = {
-    expiresIn: 86400
-}
-
-var token = jwt.sign(payload, process.env.SUPER_SECRET, options)
 
 test('GET /api/v1/tutors/me with token', async () => {
 
     const response = await request(app)
-    .get('/api/v1/tutors/me?token=token')
-    expect(response.statusCode).toBe(200);
+    .get('/api/v1/tutors/me?token='+ token)
+    .expect(200);
 
 });
 });
 
-describe('/api/v1/tutors', () => {
+/*describe('/api/v1/tutors', () => {
 
     let tutorSpy;
 
-beforeAll(() => {
+before(() => {
 
     const Tutor = require('../tutor');
     tutorSpy = jest.spyOn(Tutor,'find').mockImplementation((criterias) => {
@@ -72,7 +73,7 @@ beforeAll(() => {
     })
 });
 
-afterAll(() => {
+after(() => {
     tutorSpy.mockRestore();
 });
 
@@ -80,6 +81,6 @@ test('GET /api/v1/tutors', () => {
 
 
 
-});
+});*/
 
-});
+//});

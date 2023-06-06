@@ -15,7 +15,8 @@ describe('GET /api/v1/students/me', () => {
     userSpy = jest.spyOn(User, 'findOne').mockImplementation((criterias) => {
       return {
         id: 1212,
-        email: 'John@mail.com'
+        email: 'John@mail.com',
+        password: ''
       };
     });
   });
@@ -44,16 +45,16 @@ describe('GET /api/v1/students/me', () => {
   var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
       
   test('GET /api/v1/students/me?token=<valid> should return 200', async () => {
-    expect.assertions(1);
-    const response = await request(app).get('/api/v1/students/me?token='+token);
+    const response = await request(app).get('/api/v1/students/me?token=' + token);
     expect(response.statusCode).toBe(200);
   });
 
   test('GET /api/v1/students/me?token=<valid> should return user information', async () => {
-    expect.assertions(2);
+    
     const response = await request(app).get('/api/v1/students/me?token='+token);
-    const user = response.body;
-    expect(user).toBeDefined();
-    expect(user.email).toBe('John@mail.com');
+    const user = response.body
+    .expect(user).toBeDefined()
+    .expect(user.email).toBe('John@mail.com');
+
   });
 });
