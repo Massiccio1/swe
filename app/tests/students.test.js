@@ -6,7 +6,12 @@ const jwt     = require('jsonwebtoken'); // used to create, sign, and verify tok
 const app     = require('../app');
 const Student = require('../models/student'); // get our mongoose model
 const {MongoClient} = require('mongodb');
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const request = require("supertest");
+
+require("dotenv").config();
+
+
 describe('GET /api/v1/students/me', () => {
 
   // Moking User.findOne method
@@ -23,15 +28,14 @@ describe('GET /api/v1/students/me', () => {
     //     password: ''
     //   };
     // });
-    let uri = process.env.DB_URL;
-    uri.replace("\"","");
-    console.log("connecting to: ",uri);
-    await mongoose.connect(uri);
+    await mongoose.connection.close();
+    await mongoose.connect(process.env.DB_URL);
   });
 
   afterAll(async () => {
-    userSpy.mockRestore();
-    await connection.close();
+    //userSpy.mockRestore();
+    //await connection.close();
+    await mongoose.connection.close();
   });
   
   test('GET /api/v1/students/me with no token should return 401', async () => {
