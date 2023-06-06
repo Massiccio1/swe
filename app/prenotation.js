@@ -16,6 +16,7 @@ const Course = require('./models/course'); // get our mongoose model
 
 
 router.get('', async (req, res) => {
+    
     let prenotations = await Prenotation.find({
         StudentId: req.loggedUser.id
     }).exec();
@@ -61,7 +62,7 @@ router.get('/:id', async (req, res) => {
 
 
 router.post('', async (req, res) => {
-
+    //if accounttype = tutor return;
     console.log("POST prenotation: ",req.url,req.body,req.params);
 
     let studentId = req.body.student;
@@ -88,6 +89,7 @@ router.post('', async (req, res) => {
     };
 
     let course = null;
+    
     try {
         course = await Course.findById(courseId);
     } catch (error) {
