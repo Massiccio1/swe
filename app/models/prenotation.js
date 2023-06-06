@@ -7,5 +7,5 @@ module.exports = mongoose.model('Prenotation', new Schema({
 	CourseId: String,
 	TutorId: String,
 	StudentId: String,
-	timeslot: Number,
+	timeslot: Number
 }));

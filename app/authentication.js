@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 // route to authenticate and get a new token
 // ---------------------------------------------------------
 router.post('', async function(req, res) {
-	
+	console.log(req.url,req.body,req.params);
 	// find the user
 	if (!req.body.email) {
 		res.status(401).json({ success: false, message: 'Authentication failed. no email given.' });
@@ -50,6 +50,8 @@ router.post('', async function(req, res) {
 		expiresIn: 86400 // expires in 24 hours
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+	 
+	console.log(user);
 
 	res.status(200).json({
 		success: true,

@@ -8,6 +8,7 @@ describe('POST /api/v1/authentications', () => {
     const User = require('../models/student')
    beforeAll(() => { let userSpy = jest.spyOn(User,'findOne').mockImplementation(() => {
         return {
+            _id: 123,
             email: "studente1@gmail.com",
             password: "1234"
         };
@@ -48,7 +49,7 @@ describe('POST /api/v1/authentications', () => {
         //valutazione risposta incompleta dell'api
         expect(response.body.success).toBe(true);
         expect(response.body.message).toEqual('Enjoy your token!');
-        //expect(response.body.id).toBeDefined(); problema qua
+        expect(response.body.id).toBeDefined();
 
     });
 
@@ -60,14 +61,16 @@ describe('POST /api/v1/authentications', () => {
         .expect(401);
     });
 
+
   
 
     test('return 401 if email is wrong', async () => {
         const response = await request(app)
         .post('/api/v1/authentications')
-        .send({email:"marino@mail.com",password:"1234"})
+        .send({email:"m@mail.com",password:"1234"})
         .expect(401)
     });
+
     //corretto ma controllare l'output di errore per tutti
     test('return 401 if password is wrong', async () => {
         const res = await request(app)

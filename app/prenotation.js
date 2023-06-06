@@ -19,7 +19,7 @@ router.get('', async (req, res) => {
     
     let prenotations = await Prenotation.find({
         StudentId: req.loggedUser.id
-    }).exec();
+    });
 
     console.log("prenotations found: ",prenotations);
 
