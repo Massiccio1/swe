@@ -74,9 +74,9 @@ describe('GET /api/v1/students/me', async () => {
   test('GET /api/v1/students/me?token=<valid> should return user information', async () => {
     
     const response = await request(app).get('/api/v1/students/me?token='+token);
-    const user = response.body
-    .expect(user).toBeDefined()
+    const user = response.body;
     console.log("recived response body: ", user);
+    .expect(user).toBeDefined()
     .expect(user.email).toBe('e1@mail.com');
 
   });
