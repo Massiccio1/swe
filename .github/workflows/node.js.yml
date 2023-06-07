@@ -34,6 +34,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: curl https://tutor-me.onrender.com/api/v1/status
     - run: npm install
     - run: npm ci
     - run: npm run build --if-present
