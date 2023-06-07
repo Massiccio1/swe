@@ -38,15 +38,19 @@ header span{
     color: #fcfcfc;
 }
 
-header nav a {
+header nav a{
     color: #1d1d1d;
-    text-decoration: none;
     margin-right: 20px;
+    text-decoration: none;
     float: right;
 }
 
+header nav{
+    margin-right: -30%;
+}
+
 header nav a:hover{
-    text-decoration: underline;
+    color: #1fbac8;
 }
 
 header input{
@@ -136,47 +140,37 @@ main p{
     text-align: right;
 }
 
-
+/*------------------------------------------------------- */
 
 .SecondPartofPage {
     height: 400px;
-margin-top: 100px;
-display: flex;
-justify-content: space-between;
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .LeftSecondPart h1 {
-font-size: 45px;
+    font-size: 45px;
 }
 
 .LeftSecondPart p {
-font-size: 18px;
+    font-size: 18px;
 }
 
 .LeftSecondPart {
     height: 100px;
     text-align: center;
     display: flex;
-    /* align-items: baseline; */
     flex:1;
-    /* float: left; */
 }
 
 .item {
-margin-left: 50px;
-margin-right: 50px;
-/* display: flex; */
-/* flex-direction: column; */
-/* align-items: center; */
-white-space: nowrap;
+    margin-left: 50px;
+    margin-right: 50px;
+    white-space: nowrap;
 }
 
-/* .two-line {
-    line-height: 1.2;
-} */
-
 .ImageSection{
-    /* display: block; */
     margin-top: 170px;
     margin-left: -45%;
 }
@@ -194,7 +188,6 @@ white-space: nowrap;
 }
 
 .RightSecondPart {
-    display: flex;
     flex-direction: column;
     flex:1;
     margin-left: -20%;
@@ -210,19 +203,155 @@ white-space: nowrap;
 }
 
 .ReviewPhoto img {
-margin-right: 10px;
+    margin-right: 10px;
 }
 
 .ReviewPhoto .text-container {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .ReviewPhoto p {
-margin: 0;
+    margin: 0;
 }
 
 .ReviewPhoto p:last-child {
-margin-top: 10px;
+    margin-top: 10px;
 }
 
+/*------------------------------------------------------- */
+
+.TutorsReviews{
+    display: flex;
+}
+
+.LeftReview, .RightReview{
+    margin-left: 40px;
+    position: relative;
+}
+
+
+.EvgeniaM, .OlivierS{
+    margin-top: 80px;
+    margin-left: 100px;
+    margin-bottom: 30px;
+    border-radius: 0 0 0 70px;
+    background-color: #c5e9ed;
+    height: 220px;
+    width: 400px;   
+}
+
+.EvgeniaImg, .OlivierImg{
+    position: absolute;
+    padding-top: 100px;
+    width: 100px;
+    height: 104px;
+    margin-left: 50px;
+}
+
+.EvgeniaM p, .OlivierS p{
+    margin-left: 100px;
+    padding-top: 20px;
+    font-size: 13px;
+}
+
+.EvgeniaM img, .OlivierS img{
+    position: absolute;
+    width: 83px;
+    height: 30px;
+    margin-top: -7%;
+    margin-left: 100px;
+}
+
+.br{
+    display: block;
+    margin-bottom: -0.5em;
+}
+
+/*------------------------------------------------------- */
+
+
+.footer {
+    height: 400px;
+    background: #dfd9e0;
+    display: flex;
+    margin-top: 100px;
+    border-top: 1px solid #d8d8d8;
+  }
+
+  .bottom-column-left, .bottom-column-right{
+    margin-left: 50px;
+    float:left;
+    font-size: 15px;
+    width: 33%;
+    height: 160px;
+    padding-top: 80px;
+    padding-left: 20px;
+    
+  }
+
+  footer p{
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .bottom-column-left a, .bottom-column-right a{
+    margin-bottom: 20px;
+    display: block;
+    color: #1d1d1d;
+    text-decoration: none;
+  }
+
+  .bottom-column-left nav,
+.bottom-column-right nav {
+  display: inline-block;
+}
+
+  footer nav a:hover{
+    color: #1fbac8;
+}
+
+
+.ThirdFooterPart{
+    text-align: center;
+    width: 33%;
+    float: left;
+    padding-right: 70px;
+    padding-top: 80px;
+}
+
+.ThirdFooterPart p{
+    margin-bottom: 35px;
+}
+
+.ContactUs{ 
+    border: 1;
+    border-width: thin;
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-size: 17px;
+    transition: transform 300ms ease;
+}
+
+.Media{
+    display:flex;
+    float: left;
+    align-items: center;
+}
+.Inst, .FaceBook, .Twitter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 48px;
+    border: 1px solid;
+    margin-top: 30px;
+    margin-left: 90px;
+    transition: transform 300ms ease;
+  }
+  
+  .Inst img, .FaceBook img, .Twitter img{
+    height: 40px;
+    width: 40px;
+  }

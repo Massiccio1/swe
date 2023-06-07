@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorMe</title>
+    <link rel ="stylesheet" href="/css/studentSignup.css">
+</head>
+<body>
+    <header>
+        <a href="/signup/"><img class="ArrowImg" src="/images/row_left.png" style="width: 60px; height: 10px;"></a>
+        <h1 class="startOfPage">Tutor sign up</h1>
+        <a href="/"><img src="/images/cross_mark.png" style="width: 50px; height: 50px;"></a>
+    </header>
+
+        <div class="studentLogin">
+            <div class="LeftPart">
+                <img src="/images/studentSignup.png" style="width: 250px; height: 250px;">
+                <h2>I want to be a Student</h2>
+                <p>Have lessons, message your tutor or watch your lessons back</p>
+            </div>
+            <div class="vl"></div>
+            
+
+            <form class="RightPart" action="/api/v1/students/signup" method="post">
+              <h2 style="text-align: center;">Welcome to TutorMe!</h2>
+              <p class="register" style="text-align: right;">Register your account</p>
+              <p>Email address</p>
+              <span class="br"></span>
+              <input class="email" name="email" placeholder="Type your email address">
+              <p>Password</p>
+              <span class="br"></span>
+              <input class="passw" name="password" type="password" value="" id="myInput"><br><br>
+              <label class="showPassw">
+                  <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
+              </label>
+              
+              <br>
+              <button type="submit">Sign up</button>
+            </form>
+
+        </div>
+
+        <script>
+            function myFunction() {
+              var x = document.getElementById("myInput");
+              if (x.type === "password") {
+                x.type = "text";
+              } else {
+                x.type = "password";
+              }
+            }
+            </script>
+  
+</body>
+<div class="vl"></div>
+<footer>
+      <p class="endOfPage">Need help? Call us on +39 123 456 78 90 or email us</p>
+      <p style="text-align: right;">Already have an account?
+        <a href="/login/"><button type="button">Log in</button></a></p>
+  </footer>
+</html>

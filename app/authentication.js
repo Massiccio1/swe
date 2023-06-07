@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 // ---------------------------------------------------------
 // route to authenticate and get a new token
 // ---------------------------------------------------------
-router.post('', async function(req, res) {
+router.post('/login', async function(req, res) {
 	console.log(req.url,req.body,req.params);
 	// find the user
 	if (!req.body.email) {
@@ -50,19 +50,29 @@ router.post('', async function(req, res) {
 		expiresIn: 86400 // expires in 24 hours
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+	
+
 	 
 	console.log(user);
-
-	res.status(200).json({
-		success: true,
-		message: 'Enjoy your token!',
-		token: token,
-		email: user.email,
-		id: user._id,
-		type: account_type,
-		self: "api/v1/" + user._id
-	});
+	res.set('Authorization', 'Bearer ' + token);
+	res.redirect('/students/secure/home');
+	// res.status(200).json({
+	// 	success: true,
+	// 	message: 'Enjoy your token!',
+	// 	token: token,
+	// 	email: user.email,
+	// 	id: user._id,
+	// 	type: account_type,
+	// 	self: "api/v1/" + user._id
+	// });
 });
+
+router.get('/logout', function (req, res) {
+	// Clear the token from the client-side storage
+	res.clearCookie('token');
+
+	res.redirect('/');
+  });
 
 
 

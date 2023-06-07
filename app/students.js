@@ -60,7 +60,7 @@ router.get('/:id', async (req, res) => {
     });
 });
 
-router.post('', async (req, res) => {
+router.post('/signup', async (req, res) => {
 
     console.log("request to new student with: ",req.body, req.params,req.url);
     console.log("email: ",req.body.email);
@@ -108,10 +108,12 @@ router.post('', async (req, res) => {
      * Link to the newly created resource is returned in the Location header
      * https://www.restapitutorial.com/lessons/httpmethods.html
      */
-    res.location("/api/v1/students/" + studentId).status(201).json({
-        self: '/api/v1/students/' + new_student.id,
-        email: new_student.email
-    }).send();
+
+    res.redirect('/students/secure/home');
+    // res.location("/api/v1/students/" + studentId).status(201).json({
+    //     self: '/api/v1/students/' + new_student.id,
+    //     email: new_student.email
+    // }).send();
 });
 
 

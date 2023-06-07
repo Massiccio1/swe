@@ -62,7 +62,8 @@ const FRONTEND = process.env.FRONTEND || Path.join( __dirname, '..', 'node_modul
 app.use('/EasyLibApp/', express.static( FRONTEND ));
 
 // If process.env.FRONTEND folder does not contain index.html then use the one from static
-app.use('/', express.static('static')); // expose also this folder
+!!!!!!!!!!!//app.use('/', express.static('static')); // expose also this folder
+
 
 
 
@@ -71,6 +72,46 @@ app.use((req,res,next) => {
     next()
 })
 
+app.get('/', (req, res)=>{
+    res.render('index')
+})
+
+app.get('/about/', (req, res)=>{
+    res.render('about')
+})
+
+app.get('/login/', (req, res)=>{
+    res.render('ChooseLogin')
+})
+
+app.get('/students/login/', (req, res)=>{
+    res.render('studentLogin')
+})
+
+app.get('/tutors/login/', (req, res)=>{
+    res.render('tutorLogin')
+})
+
+app.get('/signup/', (req, res)=>{
+    res.render('signUpChoosing')
+})
+
+
+app.get('/students/signup/', (req, res)=>{
+    res.render('studentSignup')
+})
+
+app.get('/tutors/signup/', (req, res)=>{
+    res.render('tutorSignup')
+})
+
+app.get('/students/secure/home/', (req, res)=>{
+    res.render('studentHomePage')
+})
+
+app.get('/tutors/secure/home/', (req, res)=>{
+    res.render('tutorHomePage')
+})
 
 /**
  * Authentication routing and middleware
@@ -97,6 +138,8 @@ app.use('/api/v1/course/delete', tokenChecker);
 /**
  * Resource routing
  */
+
+//app.use('/api/students/signup', students);
 
 app.use('/api/v1/books', books);
 app.use('/api/v1/students', students);

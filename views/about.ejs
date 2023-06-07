@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express</title>
+    <link rel ="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <%- include('blocks/header') -%>
+    <main>
+        <h1>Page about us</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, excepturi illum. Blanditiis ea fugit suscipit ex alias illo ducimus, esse assumenda! Ullam impedit qui placeat natus ipsam. Est, ducimus aut?</p>
+    </main>
+
+    <div>
+        <span>my test button</span>
+        <button id="myButton" style="margin-left: 30px;">test</button>
+    </div>
+
+    <script>
+        console.log('my script is executing');
+
+
+const button = document.getElementById("myButton");
+button.addEventListener('click', function(el){
+    console.log('hello, im tanya');
+    fetch('/mongodb/users', {method: 'GET'})
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Users response');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
+    </script>
+
+</body>
+</html>

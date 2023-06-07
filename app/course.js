@@ -38,6 +38,21 @@ router.get('', async (req, res) => {
     res.status(200).json(courses);
 });
 
+// API endpoint to fetch courses by subject
+router.get('/api/courses/:subject', (req, res) => {
+    const subject = req.params.subject;
+  
+    // Query courses based on the subject
+    Course.find({ type: subject })
+      .then((courses) => {
+        res.json(courses);
+      })
+      .catch((error) => {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      });
+  });
+
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     let course = null;
