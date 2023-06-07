@@ -13,21 +13,6 @@ describe('GET /api/v1/students/me', async () => {
   let db;
 
   beforeAll( async () => {
-<<<<<<< HEAD
-    const User = require('../models/student');
-    const Student = require('../models/student'); // get our mongoose model
-
-
-    // console.log("waiting for render");
-    // const response = await request(app).get('/api/v1/status');
-    // console.log("render is online");
-
-    userSpy = jest.spyOn(User, 'findOne').mockImplementation((criterias) => {
-      return {
-        id: 1212,
-        email: 'e1@mail.com'
-      };
-=======
     // const User = require('../models/student');
     // userSpy = jest.spyOn(User, 'findOne').mockImplementation((criterias) => {
     //   return {
@@ -39,7 +24,6 @@ describe('GET /api/v1/students/me', async () => {
     await mongoose.connection.close();
     await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then ( () => {
       console.log("Connected to Database")
->>>>>>> 9aba9c946bcc47fdaeb834ca5cfd954cbcf2059b
     });
   });
 
