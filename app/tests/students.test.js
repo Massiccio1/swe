@@ -5,6 +5,7 @@ const request = require('supertest');
 const jwt     = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const app     = require('../app');
 const Student = require('../models/student'); // get our mongoose model
+const mongoose = require('mongoose');
 describe('GET /api/v1/students/me', async () => {
 
   // Moking User.findOne method
