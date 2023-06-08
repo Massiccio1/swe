@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="/login"><img class="ArrowImg" src="/images/row_left.png" style="width: 60px; height: 10px;"></a>
+        <a href="/login/"><img class="ArrowImg" src="/images/row_left.png" style="width: 60px; height: 10px;"></a>
         <h1 class="startOfPage">Tutor log in</h1>
         <a href="/"><img src="/images/cross_mark.png" style="width: 50px; height: 50px;"></a>
     </header>
@@ -23,16 +23,16 @@
             <div class="vl"></div>
             
 
-            <form class="RightPart">
+            <form class="RightPart" action='/api/v1/authentications_tutor/login' method="post">
                 <p>Email address</p>
                 <span class="br"></span>
-                <input class="email" placeholder="Type your email address">
+                <input class="email" name="email" placeholder="Type your email address">
                 <p>Password</p>
                 <span class="br"></span>
-                <input class="passw" type="password" value="" id="myInput"><br><br>
+                <input class="passw" name="password" type="password" value="" id="myInput"><br><br>
                 <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
                 <br>
-                <a href=""><button type="button">Log in</button></a>
+                <button type="submit">Log in</button>
             </form>
 
         </div>
@@ -52,6 +52,6 @@
 <div class="vl"></div>
 <footer>
       <p class="endOfPage">Need help? Call us on +39 123 456 78 90 or email us</p>
-      <a href="/signup"><button type="button">Sign up</button></a>
+      <a href="/signup/"><button type="button">Sign up</button></a>
   </footer>
 </html>
