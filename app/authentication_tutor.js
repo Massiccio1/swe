@@ -45,19 +45,19 @@ router.post('', async function(req, res) {
 	 
 	console.log(tutor);
 
-	res.redirect('/tutors/secure/home/');
-	// res.json({
-	// 	success: true,
-	// 	message: 'Enjoy your token!',
-	// 	token: token,
-	// 	email: tutor.email,
-	// 	id: tutor._id,
-	// 	type: account_type,
-	// 	self: "api/v1/" + tutor._id,
-	// 	name: tutor.name,
-	// 	desc: tutor.desc,
-	// 	slot: tutor.slot
-	// });
+	/*res.redirect('/tutors/secure/home/');*/
+	res.status(200).json({
+		success: true,
+		message: 'Enjoy your token!',
+		token: token,
+		email: tutor.email,
+		id: tutor._id,
+		type: account_type,
+		self: "api/v1/" + tutor._id,
+		name: tutor.name,
+		desc: tutor.desc,
+		slot: tutor.slot
+	});
 });
 
 module.exports = router;

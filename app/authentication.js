@@ -56,16 +56,16 @@ router.post('/login', async function(req, res) {
 	 
 	console.log(user);
 
-	res.redirect('/students/secure/home/');
-	// res.status(200).json({
-	// 	success: true,
-	// 	message: 'Enjoy your token!',
-	// 	token: token,
-	// 	email: user.email,
-	// 	id: user._id,
-	// 	type: account_type,
-	// 	self: "api/v1/" + user._id
-	// });
+	//res.redirect('/students/secure/home/');
+	res.status(200).json({
+		success: true,
+		message: 'Enjoy your token!',
+		token: token,
+		email: user.email,
+		id: user._id,
+		type: account_type,
+		self: "api/v1/" + user._id
+	});
 });
 
 router.get('/logout', function (req, res) {
