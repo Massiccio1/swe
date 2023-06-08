@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorMe</title>
+    <link rel ="stylesheet" href="/css/tutorSignup.css">
+</head>
+<body>
+    <header>
+        <a href="/signup/"><img class="ArrowImg" src="/images/row_left.png" style="width: 60px; height: 10px;"></a>
+        <h1 class="startOfPage">Tutor sign up</h1>
+        <a href="/"><img src="/images/cross_mark.png" style="width: 50px; height: 50px;"></a>
+    </header>
+
+        <div class="studentLogin">
+            <div class="LeftPart">
+                <img src="/images/tutorSignup.png" style="width: 300px; height: 300px;">
+                <h2>I want to be a Tutor</h2>
+                <p>Give lessons or manage bookings with your customers</p>
+            </div>
+            <div class="vl"></div>
+            
+
+            <form class="RightPart" action="/api/v1/tutors/signup" method="post">
+                <h2 style="text-align: center;">Welcome to TutorMe!</h2>
+                <p class="register" style="text-align: right;">Register your account</p>
+                <p>Name & Surname</p>
+                <input class="nameSurn" name="name" placeholder="What's your name?">
+                <p>Email address</p>
+                <span class="br"></span>
+                <input class="email" name="email" placeholder="Type your email address">
+                <p>Password</p>
+                <span class="br"></span>
+                <input class="passw" name="password" type="password" value="" id="myInput"><br><br>
+                <label class="showPassw">
+                    <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
+                    <!-- <label for="checkbox"></label> -->
+                </label>
+                
+                <br>
+                <button type="submit">Sign up</button>
+            </form>
+
+        </div>
+
+        <script>
+            function myFunction() {
+              var x = document.getElementById("myInput");
+              if (x.type === "password") {
+                x.type = "text";
+              } else {
+                x.type = "password";
+              }
+            }
+            </script>
+  
+</body>
+<div class="vl"></div>
+<footer>
+      <p class="endOfPage">Need help? Call us on +39 123 456 78 90 or email us</p>
+      <p style="text-align: right;">Already have an account?
+        <a href="/login/"><button type="button">Log in</button></a></p>
+  </footer>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorMe</title>
+    <link rel ="stylesheet" href="/css/tutorHomePage.css">
+</head>
+
+<header>
+    
+    <a href="/tutors/secure/home/"><img src="/images/TutorMe_logo.png" style="width:250px;height:50px;"> </a>
+    <nav>
+        <a href="/tutors/secure/home/">Home</a>
+        <a href="#view-tutors/">Teaching materials</a>
+        <a href="#students/secure/messages/">Messages</a>
+        <a href="#students/secure/bookings/">Upcoming lessons</a>
+    </nav>
+
+    <p class="myProfile">My Profile</p>
+    <img class="myProfile" src="/images/arrow_prof.png" style="width:48px;height:15px;">
+
+    <div class="dropdown" style="float:right;">
+      <a href="#tutors/secure/profile/"><img class="dropbtn" src="/images/tutorProfile.png"  style="width:60px;height:55px;"></a>
+      <div class="dropdown-content">
+        <a href="/api/v1/authentications_tutor/logout">Log-out</a>
+      </div>
+    </div>
+
+</header>
+<body>
+    <h1>Hi there!<img src="/images/waving.png" style="width:35px;height:38px;"></h1>
+    <main class="firstMain">
+        <body>
+            <div class="form-container">
+              <div class="form-field">
+                <select name="select" id="course-id">
+                  <option value="first-course-id">First Course</option>
+                  <option value="second-course-id">Second Course</option>
+                  <option value="third-course-id">Third Course</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <input
+                  id="material-name"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <input id="file-input" type="file" />
+              </div>
+              <div class="form-field">
+                <button id="upload-btn">Upload</button>
+              </div>
+            </div>
+        </main>
+        
+        <script>
+            var request = {
+              files: FormData, // Object to hold the uploaded file(s)
+              name: String, // Name of the teaching material
+              courseId: String, // ID of the course
+              loggedUser: {
+              email: "e5@gmail.com" // Email of the logged-in user
+            }
+            };
+
+            // Event listener for input changes in the "material-name" element
+            document.getElementById("material-name").addEventListener("input", function(e) {
+            request.name = e.target.value; // Assign the input value to the 'name' property of 'request'
+            });
+
+            // Event listener for file changes in the "file-input" element
+            document.getElementById("file-input").addEventListener("change", function(e) {
+            if (!request.name) {
+              alert("Input course name first!"); // Display an alert if the name is not provided
+              return;
+            }
+
+            if (e.target.files[0]) {
+              request.files = new FormData(); // Create a new FormData object to hold the file
+              request.files.append(request.name, e.target.files[0]); // Add the file to the FormData object using the 'name' as the key
+            }
+            });
+
+            // Event listener for click events on the "upload-btn" element
+            document.getElementById("upload-btn").addEventListener("click", upload);
+
+            // Function to handle the upload process
+            function upload() {
+            if (!request.name) {
+              alert("Validation failed. Input teaching material name!"); // Display an alert if the name is not provided
+            }
+
+            if (request.files.length == 0) {
+              alert("Validation failed. Choose teaching material file!"); // Display an alert if no file is chosen
+            }
+
+            request.courseId = document.getElementById("course-id").value; // Assign the value of the "course-id" element to the 'courseId' property of 'request'
+
+            fetch("/api/v1/tutors/me/teaching-material/upload", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json" // Set the content type to JSON
+              },
+              body: JSON.stringify(request) // Convert 'request' object to JSON string and send it as the request body
+            })
+              .then(function(response) {
+                if (response.ok) {
+                  console.log("Material has been uploaded"); // Log a success message if the response is successful
+                  return;
+                }
+                throw new Error("Upload failed."); // Throw an error if the response is not successful
+              })
+              .catch(function(error) {
+                console.log(error); // Catch and log any errors that occur during the request
+              });
+            }
+          </script>
+        <!-- <script src="/scripts/teachingMaterial.js"></script> -->
+        <!-- <div class="Search">
+            <img src="/images/magnGl.png" style="width:50px;height:45px;">
+            <p><b>Find a Tutor</b><br>
+         Browse tutor profiles and message a few you'd like to meet.</p>
+
+        <p class="Subj"  style="margin-left: 500px;margin-top: -40px;">Subject</p>
+         <div class="custom-select" style="width:200px;">
+            
+            <select  id="subjectSelect">
+              <option value="0">All subjects</option>
+              <option value="Biology">Biology</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="English">English</option>
+              <option value="Math">Math</option>
+              <option value="Physics">Physics</option>
+            </select>
+          </div>
+          <button id="findTutorsButton"type="button">Find tutors</button>
+         </div>
+</main>
+          <main class="secondMain">
+            <div id="tutorList">
+            Tutor information will be dynamically added here
+            </div>
+
+          </main>
+          
+          <script src="/scripts/my-script.js"></script>
+         <script src="/scripts/selectedCourse.js"></script> -->
+        
+
+
+</body>
+
+
+<!-- <%- include('blocks/footer') -%> -->
+</html>

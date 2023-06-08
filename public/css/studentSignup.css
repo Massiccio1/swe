@@ -1,0 +1,206 @@
+@font-face {
+  font-family: "Alice";
+  src: url(Alice-Regular.ttf);
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  font-family: "Alice";
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+
+header h1 {
+  font-size: 3em;
+  font-weight: 700;
+  line-height: 1.25em;
+  padding-top: 50px;
+  text-align: center;
+  margin-left: -100px;
+  flex: 1;
+}
+
+header img {
+  padding-top: 50px;
+  padding-right: 100px;
+}
+
+.ArrowImg{
+padding-left: 100px;
+}
+
+body {
+  background: #f7f2f8;
+  color: #000000;
+}
+
+body h2{
+  font-size: 1.75em;
+  font-weight: 700;
+  line-height: 1.25em;
+  padding-top: 30px;
+}
+
+body p{
+  font-size: 1em;
+  font-weight: 400;
+  text-align: center;
+  padding: 20px;
+}
+
+.chooseLogin button{
+  border: 1;
+  border-width: thin;
+  border-color: #bc9dc2;
+  background: #f7f2f8;
+  color: #26012d;
+  cursor: pointer;
+  font-size: 1.125em;
+  height: 2.445em;
+  padding: 0.555em 1em 0.666em;
+  border-radius: 5px;
+  transition: transform 500ms ease;
+}
+
+button:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+
+.studentLogin {
+width: 900px;
+height: 570px;
+margin: auto;
+margin-top: 50px;
+display: flex;
+align-items: center;
+background-color: #fff;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.LeftPart {
+max-width: 40%;
+text-align: center;
+display:inline-block;
+}
+
+.vl {
+border-left: 1px solid rgb(218, 218, 218);
+height: 80%;
+}
+
+.RightPart {
+width: 60%;
+text-align: center;
+}
+
+.register{
+  margin-right: 30px;
+  color: #c2c2c2;
+}
+
+.RightPart input{
+font-size: 1em;
+height: 3em;
+font-weight: 400;
+border-radius: 4px;
+padding-left: 5px;
+border: 1px solid rgb(218, 218, 218);
+}
+
+.email, .passw, .nameSurn{
+width: 60%;
+}
+
+.checkbox{
+  display: inline-block;
+width: auto;
+}
+
+.RightPart p{
+font-size: 15 px;
+text-align: left;
+margin-left: 90px;
+}
+
+.br{
+display: block;
+margin-bottom: -0.5em;
+}
+
+.p_login{
+  float: right;
+  color: #919191;
+}
+
+.RightPart button{
+  margin-top: 40px;
+  width: 60%;
+  border: 1;
+  border-width: thin;
+  border-color: #001d20;
+  background: #68d1db;
+  color: #001d20;
+  cursor: pointer;
+  font-size: 1.125em;
+  height: 2.445em;
+  padding: 0.555em 1em 0.666em;
+  border-radius: 5px;
+  transition: transform 500ms ease;
+}
+
+.showPassw{
+  float: left;
+  display: inline;
+  padding-left: 120px;
+  text-indent: -15px;
+}
+
+.showPassw input {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+}
+
+footer {
+margin-top: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+height: 100px;
+padding: 0 20px;
+}
+
+.endOfPage {
+  margin-left: 110px;
+  text-align: left;
+}
+
+footer button {
+  text-align: right;
+  margin-right: 132px;
+  margin-left: 10px;
+  border: 1;
+  border-width: thin;
+  border-color: #001d20;
+  background: #68d1db;
+  color: #001d20;
+  cursor: pointer;
+  font-size: 1.125em;
+  height: 2.445em;
+  padding: 0.555em 1em 0.666em;
+  border-radius: 5px;
+  transition: transform 500ms ease;
+}
+
