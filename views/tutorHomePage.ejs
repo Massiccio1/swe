@@ -36,7 +36,7 @@
             <div class="form-container">
               <div class="form-field">
                 <select name="select" id="course-id">
-                  <option value="first-course-id">First Course</option>
+                  <option value="64725a0ef5e3c714f89aa1a3">First Course</option>
                   <option value="second-course-id">Second Course</option>
                   <option value="third-course-id">Third Course</option>
                 </select>
@@ -102,7 +102,7 @@
 
             request.courseId = document.getElementById("course-id").value; // Assign the value of the "course-id" element to the 'courseId' property of 'request'
 
-            fetch("/api/v1/tutors/me/teaching-material/upload", {
+            fetch("/api/v1/tutors/me/teaching-material", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json" // Set the content type to JSON

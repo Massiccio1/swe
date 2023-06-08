@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
-const tokenChecker = function(req, res, next) {
+const tokenChecker = (role) => {
+	return(req, res, next) => {
 	
+	//const token = req.cookies.token;
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	var token = req.cookies.token || req.body.token || req.query.token || req.headers['x-access-token'];
 
 	// if there is no token
 	if (!token) {
@@ -27,9 +29,21 @@ const tokenChecker = function(req, res, next) {
 			// if everything is good, save to request for use in other routes
 			req.loggedUser = decoded;
 			console.log("[from token checker] logged user: ",decoded);
-			next();
+			if((role=='student'&&decoded.type=='student')||
+			(role=='tutor'&&decoded.type=='tutor')){
+				next();
+			} else{
+				return res.status(403).send({
+				success: false,
+				message: 'Failed to authenticate token.'
+			});	
+			}
+			
+				
 		}
 	});
+};
+
 };
 
 module.exports = tokenChecker

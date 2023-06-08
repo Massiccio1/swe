@@ -253,6 +253,7 @@ router.get('/me/teaching-material', (req, res) => {
 });
 
 router.post('/me/teaching-material', async(req, res) => {
+    
     if(!req.body.loggedUser){ 
         res.status(401).send('Unauthorized');
         return;
@@ -263,7 +264,8 @@ router.post('/me/teaching-material', async(req, res) => {
         return;
     }
 
-    const course = await Course.findById(req.courseId);
+        console.log(req.body.courseId);
+    const course = await Course.findById(req.body.courseId);
     if(!course) {
         res.status(404).send('Not Found. Provided course does not exist.');
         return;

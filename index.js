@@ -11,7 +11,8 @@ const port = process.env.PORT || 8080;
  * Configure mongoose
  */
 // mongoose.Promise = global.Promise;
-
+process.env.DB_URL = "mongodb://127.0.0.1:27017/TutorMe";
+process.env.SUPER_SECRET="bff9653c-8757-4bc4-ad72-76a164dae6f";
 
 
 app.locals.db = mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})

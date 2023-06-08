@@ -40,19 +40,24 @@ router.post('', async function(req, res) {
 		expiresIn: 86400 // expires in 24 hours
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+	res.cookie('token', token);
 
-	res.json({
-		success: true,
-		message: 'Enjoy your token!',
-		token: token,
-		email: tutor.email,
-		id: tutor._id,
-		type: account_type,
-		self: "api/v1/" + tutor._id,
-		name: tutor.name,
-		desc: tutor.desc,
-		slot: tutor.slot
-	});
+	 
+	console.log(tutor);
+
+	res.redirect('/tutors/secure/home/');
+	// res.json({
+	// 	success: true,
+	// 	message: 'Enjoy your token!',
+	// 	token: token,
+	// 	email: tutor.email,
+	// 	id: tutor._id,
+	// 	type: account_type,
+	// 	self: "api/v1/" + tutor._id,
+	// 	name: tutor.name,
+	// 	desc: tutor.desc,
+	// 	slot: tutor.slot
+	// });
 });
 
 module.exports = router;
