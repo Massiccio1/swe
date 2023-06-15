@@ -21,32 +21,21 @@
                 <p>Give lessons or manage bookings with your customers</p>
             </div>
             <div class="vl"></div>
-            
 
-            <form class="RightPart" action='/api/v1/authentications_tutor/' method="post">
-                <p>Email address</p>
-                <span class="br"></span>
-                <input class="email" name="email" placeholder="Type your email address">
-                <p>Password</p>
-                <span class="br"></span>
-                <input class="passw" name="password" type="password" value="" id="myInput"><br><br>
-                <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
-                <br>
-                <button type="submit">Log in</button>
+            <form id="loginForm" class="RightPart" onsubmit="event.preventDefault(); login();">
+              <p>Email address</p>
+              <span class="br"></span>
+              <input id="loginEmail" class="email" name="email" placeholder="Type your email address">
+              <p>Password</p>
+              <span class="br"></span>
+              <input id="loginPassword" class="passw" name="password" type="password" value=""><br><br>
+              <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
+              <br>
+              <button type="submit">Log in</button>
             </form>
 
         </div>
-
-        <script>
-            function myFunction() {
-              var x = document.getElementById("myInput");
-              if (x.type === "password") {
-                x.type = "text";
-              } else {
-                x.type = "password";
-              }
-            }
-            </script>
+        <script src="/scripts/tutorLogin.js"></script>
   
 </body>
 <div class="vl"></div>

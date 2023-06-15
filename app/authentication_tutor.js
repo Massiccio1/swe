@@ -26,38 +26,40 @@ router.post('', async function(req, res) {
 		res.json({ success: false, message: 'Authentication failed for tutor.. Wrong password.' });
 	}
 
-	let account_type = "tutor";
+	else{
+		let account_type = "tutor";
 	
-	// if user is found and password is right create a token
-	var payload = {
-		email: tutor.email,
-		id: tutor._id,
-		type: account_type
-		// other data encrypted in the token	
-	}
-	
-	var options = {
-		expiresIn: 86400 // expires in 24 hours
-	}
-	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-	res.cookie('token', token);
+		// if user is found and password is right create a token
+		var payload = {
+			email: tutor.email,
+			id: tutor._id,
+			type: account_type
+			// other data encrypted in the token	
+		}
 
-	 
-	console.log(tutor);
+		var options = {
+			expiresIn: 86400 // expires in 24 hours
+		}
+		var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+		res.cookie('token', token);
 
-	/*res.redirect('/tutors/secure/home/');*/
-	res.status(200).json({
-		success: true,
-		message: 'Enjoy your token!',
-		token: token,
-		email: tutor.email,
-		id: tutor._id,
-		type: account_type,
-		self: "api/v1/" + tutor._id,
-		name: tutor.name,
-		desc: tutor.desc,
-		slot: tutor.slot
-	});
+			
+		console.log(tutor);
+
+		// res.redirect('/tutors/secure/home/');
+		res.status(200).json({
+			success: true,
+			message: 'Enjoy your token!',
+			token: token,
+			email: tutor.email,
+			id: tutor._id,
+			type: account_type,
+			self: "api/v1/" + tutor._id,
+			name: tutor.name,
+			desc: tutor.desc,
+			slot: tutor.slot
+		});
+	}
 });
 
 module.exports = router;

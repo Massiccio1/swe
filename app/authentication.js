@@ -56,7 +56,7 @@ router.post('/login', async function(req, res) {
 	 
 	console.log(user);
 
-	//res.redirect('/students/secure/home/');
+	// res.redirect('/students/secure/home/');
 	res.status(200).json({
 		success: true,
 		message: 'Enjoy your token!',

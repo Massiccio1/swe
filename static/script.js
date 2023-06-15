@@ -31,6 +31,7 @@ function login()
         // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
         document.getElementById("loggedUser").textContent = loggedUser.email;
         loadLendings();
+        //redirect('');
         return;
     })
     .catch( error => console.error(error) ); // If there is any error you will catch them here
