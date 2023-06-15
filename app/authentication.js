@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 // ---------------------------------------------------------
 // route to authenticate and get a new token
 // ---------------------------------------------------------
-router.post('/login', async function(req, res) {
+router.post('', async function(req, res) {
 	console.log(req.url,req.body,req.params);
 	// find the user
 	if (!req.body.email) {
@@ -36,7 +36,8 @@ router.post('/login', async function(req, res) {
 		return;
 	}
 
-	let account_type = "student";
+	else{
+		let account_type = "student";
 	
 	// if user is found and password is right create a token
 	var payload = {
@@ -66,6 +67,7 @@ router.post('/login', async function(req, res) {
 		type: account_type,
 		self: "api/v1/" + user._id
 	});
+	}
 });
 
 router.get('/logout', function (req, res) {
