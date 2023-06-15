@@ -62,4 +62,10 @@ router.post('', async function(req, res) {
 	}
 });
 
+router.get('/logout', function (req, res) {
+	// Clear the token from the client-side storage
+	res.clearCookie('token');
+	res.redirect('/');
+  });
+
 module.exports = router;
