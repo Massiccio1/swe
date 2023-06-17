@@ -156,6 +156,10 @@ app.get('/tutors/secure/home/', (req, res)=>{
     res.render('tutorHomePage')
 })
 
+app.get('/welcome/', (req, res)=>{
+    res.render('welcome')
+})
+
 /* Default 404 handler */
 app.use((req, res) => {
     console.log(req.url,req.body,req.params);

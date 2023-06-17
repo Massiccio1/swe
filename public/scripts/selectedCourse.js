@@ -61,7 +61,7 @@ findTutorsButton.addEventListener('click', function () {
 
   tutorList.innerHTML = '';
 
-  fetch('/api/v1/course/' + selectedSubject, { method: 'GET' })
+  fetch('/api/v1/course/subject/' + selectedSubject, { method: 'GET' })
     .then(function (response) {
       if (response.ok) {
         return response.json();
@@ -69,10 +69,10 @@ findTutorsButton.addEventListener('click', function () {
         throw new Error('Error fetching courses');
       }
     })
-    .then(function (courses) {
+    .then(function (data) {
       // Process the retrieved courses
-      console.log(courses);
-      courses.forEach(function (course) {
+      console.log(data);
+      data.courses.forEach(function (course) {
         var tutorInfo = document.createElement('div');
         tutorInfo.textContent =
           course.TutorId + ' - ' + course.desc + ' - ' + course.price;

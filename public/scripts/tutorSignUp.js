@@ -1,5 +1,5 @@
 function myFunction() {
-    var x = document.getElementById("loginPassword");
+    var x = document.getElementById("signUpPassword");
       if (x.type === "password") {
         x.type = "text";
       } else {
@@ -7,12 +7,12 @@ function myFunction() {
       }
     }
     
-    function login() {
+    function signUp() {
   
-      var email = document.getElementById("loginEmail").value;
-      var password = document.getElementById("loginPassword").value;
+      var email = document.getElementById("signUpEmail").value;
+      var password = document.getElementById("signUpPassword").value;
     
-      fetch('/api/v1/authentications/', {
+      fetch('/api/v1/tutors/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, password: password }),
@@ -21,7 +21,7 @@ function myFunction() {
         .then(function (data) {
           if (data.success) {
             // Redirect to the desired page
-            window.location.href = '/students/secure/home/';
+            window.location.href = '/welcome/';
           } else {
             // Display the error message from the server-side
             alert(data.message);

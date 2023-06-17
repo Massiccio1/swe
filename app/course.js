@@ -140,6 +140,34 @@ router.delete('/:id', async (req, res) => {
 
 */
 
+router.get('/subject/:subject', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+    let courses = null;
+    try {
+        courses = await Course.find({
+            Subject: req.params.subject
+        }).exec();
+    } catch (error) {
+        // This catch CastError when studentId cannot be casted to mongoose ObjectId
+        // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
+        console.log("This catch CastError when course subject cannot be casted to mongoose ObjectId");
+        res.status(406).send()
+        console.log('subject incorrect');
+        return;
+    }
+
+    if(!courses) {
+        res.status(402).json({ error: 'Course does not exist' });
+        return;
+    };
+
+    res.status(200).json({
+        courses: courses
+    });
+});
+
+
+
 router.post('/new', async (req, res) => {
     
 

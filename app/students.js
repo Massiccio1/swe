@@ -69,11 +69,11 @@ router.post('', async (req, res) => {
     console.log("password: ",req.body.password);
 
     if(!req.body.email){ 
-        res.status(401).send('no email in body');
+        res.status(401).json({ success: false, message: 'no email in body'});
         return;
     }
     if(!req.body.password){ 
-        res.status(401).send('no password in body');
+        res.status(401).json({ success: false, message: 'no password in body'});
         return;
     }
     
@@ -81,39 +81,46 @@ router.post('', async (req, res) => {
 
     let student = await Student.findOne({email: req.body.email}).exec();
     if (student) {
-        res.status(409).json({status: 'student with the same email already exists'}).send()
+        res.status(409).json({ success: false, message: 'student with the same email already exists'})
         console.log('student with the same email already exists')
+        console.log("students with same email found: ",student);
         return;
     }
-    console.log("students with same email found: ",student);
-
-    let new_student = new Student({
-        email: req.body.email,
-        password: req.body.password
-    });
-
-    console.log("about to create student: ",new_student)
-
-    if (!new_student.email || typeof new_student.email != 'string' || !checkIfEmailInString(new_student.email)) {
-        res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
-        return;
+    
+    else{
+        let new_student = new Student({
+            email: req.body.email,
+            password: req.body.password
+        });
+    
+        console.log("about to create student: ",new_student)
+    
+        if (!new_student.email || typeof new_student.email != 'string' || !checkIfEmailInString(new_student.email)) {
+            res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
+            return;
+        }
+        console.log("creating with email: ",new_student.email," password: ",new_student.password);
+        
+        new_student = await new_student.save();
+    
+        console.log("created: ", new_student);
+        
+        let studentId = new_student.id;
+    
+        /**
+         * Link to the newly created resource is returned in the Location header
+         * https://www.restapitutorial.com/lessons/httpmethods.html
+         */
+        // res.location("/api/v1/students/" + studentId).status(201).json({
+        //     self: '/api/v1/students/' + new_student.id,
+        //     email: new_student.email
+        // }).send();
+        res.status(201).json({
+            success: true,
+            // self: '/api/v1/students/' + new_student.id,
+            // email: new_student.email
+        });
     }
-    console.log("creating with email: ",new_student.email," password: ",new_student.password);
-    
-	new_student = await new_student.save();
-
-    console.log("created: ", new_student);
-    
-    let studentId = new_student.id;
-
-    /**
-     * Link to the newly created resource is returned in the Location header
-     * https://www.restapitutorial.com/lessons/httpmethods.html
-     */
-    res.location("/api/v1/students/" + studentId).status(201).json({
-        self: '/api/v1/students/' + new_student.id,
-        email: new_student.email
-    }).send();
 });
 
 

@@ -22,39 +22,25 @@
             </div>
             <div class="vl"></div>
             
-
-            <form class="RightPart" action="/api/v1/tutors/signup" method="post">
-                <h2 style="text-align: center;">Welcome to TutorMe!</h2>
-                <p class="register" style="text-align: right;">Register your account</p>
-                <p>Name & Surname</p>
-                <input class="nameSurn" name="name" placeholder="What's your name?">
-                <p>Email address</p>
-                <span class="br"></span>
-                <input class="email" name="email" placeholder="Type your email address">
-                <p>Password</p>
-                <span class="br"></span>
-                <input class="passw" name="password" type="password" value="" id="myInput"><br><br>
-                <label class="showPassw">
-                    <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
-                    <!-- <label for="checkbox"></label> -->
-                </label>
-                
-                <br>
-                <button type="submit">Sign up</button>
+            <form id="signUpForm" class="RightPart" onsubmit="event.preventDefault(); signUp();">
+              <h2 style="text-align: center;">Welcome to TutorMe!</h2>
+              <p class="register" style="text-align: right;">Register your account</p>
+              <p>Name & Surname</p>
+              <input class="nameSurn" name="name" placeholder="What's your name?">
+              <p>Email address</p>
+              <span class="br"></span>
+              <input id="signUpEmail" class="email" name="email" placeholder="Type your email address">
+              <p>Password</p>
+              <span class="br"></span>
+              <input id="signUpPassword" class="passw" name="password" type="password" value=""><br><br>
+              <label class="showPassw">
+                <input class="checkbox" type="checkbox" onclick="myFunction()">Show Password
+              </label>
+              <br>
+              <button type="submit">Sign up</button>
             </form>
-
         </div>
-
-        <script>
-            function myFunction() {
-              var x = document.getElementById("myInput");
-              if (x.type === "password") {
-                x.type = "text";
-              } else {
-                x.type = "password";
-              }
-            }
-            </script>
+        <script  src="/scripts/tutorSignUp.js"></script>
   
 </body>
 <div class="vl"></div>
