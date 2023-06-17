@@ -8,14 +8,15 @@ function myFunction() {
     }
     
     function signUp() {
-  
+      
+      var name = document.getElementById("signUpName").value;
       var email = document.getElementById("signUpEmail").value;
       var password = document.getElementById("signUpPassword").value;
     
       fetch('/api/v1/tutors/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, password: password }),
+        body: JSON.stringify({ email: email, password: password, name: name }),
       })
         .then((resp) => resp.json())
         .then(function (data) {

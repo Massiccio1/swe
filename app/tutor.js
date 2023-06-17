@@ -79,42 +79,52 @@ router.get('/:id', async (req, res) => {
 //METODI POST
 router.post('', async (req, res) => {
 
-    if(!req.body.email || !req.body.password || !req.body.name || !req.body.desc || !req.body.slot){
-        res.status(401).json({ error: 'missing parameters in body' });
+    // if(!req.body.email || !req.body.password || !req.body.name || !req.body.desc || !req.body.slot){
+    //     res.status(401).json({ success: false, message: 'missing parameters in body' });
+    //     return;
+    // }
+
+    if(!req.body.email || !req.body.password || !req.body.name){
+        res.status(401).json({ success: false, message: 'missing parameters in body' });
         return;
     }
 
     let check_tutor = await Tutor.findOne({email: req.body.email}).exec();
     if (check_tutor) {
-        res.status(409).json({status: 'tutor with the same email already exists'}).send()
+        res.status(409).json({ success: false, message: 'tutor with the same email already exists'})
         console.log('tutor with the same email already exists')
         return;
     }
     
-	let tutor = new Tutor({
-        email: req.body.email,
-        password: req.body.password,
-        name: req.body.name,
-        desc: req.body.desc,
-        slot: req.body.slot
-    });
-
-    console.log("creating with email: ",tutor.email," password: ",tutor.password, " name: ", tutor.name, " desc: ", tutor.desc, "slots: ", tutor.slot);
-
-    if (!tutor.email || typeof tutor.email != 'string' || !checkIfEmailInString(tutor.email)) {
-        res.status(400).json({ error: 'The field "email" must be a non-empty string, in email format' });
-        return;
+    else{
+        let tutor = new Tutor({
+            email: req.body.email,
+            password: req.body.password,
+            name: req.body.name,
+            // desc: req.body.desc,
+            // slot: req.body.slot
+        });
+    
+        console.log("creating with email: ",tutor.email," password: ",tutor.password, " name: ", tutor.name, " desc: ", tutor.desc, "slots: ", tutor.slot);
+    
+        if (!tutor.email || typeof tutor.email != 'string' || !checkIfEmailInString(tutor.email)) {
+            res.status(400).json({ success: false, message: 'The field "email" must be a non-empty string, in email format' });
+            return;
+        }
+        
+        tutor = await tutor.save();
+        
+        let tutorID = tutor.id;
+    
+        /**
+         * Link to the newly created resource is returned in the Location header
+         * https://www.restapitutorial.com/lessons/httpmethods.html
+         */
+        // res.location("/api/v1/tutors/" + tutorID).status(201).json(tutor).send();
+        res.status(201).json({
+            success: true,
+        });
     }
-    
-	tutor = await tutor.save();
-    
-    let tutorID = tutor.id;
-
-    /**
-     * Link to the newly created resource is returned in the Location header
-     * https://www.restapitutorial.com/lessons/httpmethods.html
-     */
-    res.location("/api/v1/tutors/" + tutorID).status(201).json(tutor).send();
 });
 
 //crea slot in cui sarà disponibile per far prenotare lo studente

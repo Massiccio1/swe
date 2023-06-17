@@ -9,6 +9,16 @@
     font-family: "Alice";
 }
 
+header{
+    height: 100px;
+}
+
+header img {
+    padding-top: 50px;
+    float: right;
+    padding-right: 250px;
+  }
+
 body {
     background: #f7f2f8;
     color: #000000;
