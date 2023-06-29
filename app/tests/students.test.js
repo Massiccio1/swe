@@ -93,8 +93,8 @@ describe('GET /api/v1/students/me', () => {
     
     const response = await request(app).get('/api/v1/students/me?token='+token);
     const user = response.body
-    .expect(user).toBeDefined()
-    .expect(user.email).toBe('e1@mail.com');
+    expect(user).toBeDefined()
+    expect(user.email).toBe('e1@mail.com');
     console.log("recived response body: ", user);
 
   });
