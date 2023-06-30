@@ -12,6 +12,7 @@ describe('GET /api/v1/students/me', () => {
   let userSpy;
   let connection;
   let db;
+  let valid_token;
 
   beforeAll( async () => {
     // const User = require('../models/student');
@@ -28,8 +29,22 @@ describe('GET /api/v1/students/me', () => {
       console.log("Connected to Database");
 
     });
-    let students = await Student.find({email: "e1@gmail.com"});
-    console.log("students found 1: ",students);
+    let student = await Student.findOne({email: "e1@gmail.com"});
+    console.log("students found before all: ",student);
+    // create a valid token
+    let account_type = "student";
+    
+    // if user is found and password is right create a token
+    var payload = {
+      email: student.email,
+      id: student._id,
+      type: account_type
+      // other data encrypted in the token	
+    }
+    var options = {
+      expiresIn: 86400 // expires in 24 hours
+    }
+    valid_token = jwt.sign(payload, process.env.SUPER_SECRET, options);
   });
 
   afterAll(async () => {
@@ -51,49 +66,17 @@ describe('GET /api/v1/students/me', () => {
 
       
   test('GET /api/v1/students/me?token=<valid> should return 200', async () => {
-    let students = await Student.findOne({email: "e1@gmail.com"});
-    console.log("students found 3: ",students);
-    // create a valid token
-    let account_type = "student";
-    
-    // if user is found and password is right create a token
-    var payload = {
-      email: students.email,
-      id: students._id,
-      type: account_type
-      // other data encrypted in the token	
-    }
-    var options = {
-      expiresIn: 86400 // expires in 24 hours
-    }
-    var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-
+  
     const preliminary = await request(app).post('/api/v1/students');
     
-    const response = await request(app).get('/api/v1/students/me?token=' + token);
+    const response = await request(app).get('/api/v1/students/me?token=' + valid_token);
     expect(response.statusCode).toBe(200);
     //done();
   });
 
   test('GET /api/v1/students/me?token=<valid> should return user information', async () => {
-    let students = await Student.findOne({email: "e1@gmail.com"});
-    console.log("students found 4: ",students);
-    // create a valid token
-    let account_type = "student";
     
-    // if user is found and password is right create a token
-    var payload = {
-      email: students.email,
-      id: students._id,
-      type: account_type
-      // other data encrypted in the token	
-    }
-    var options = {
-      expiresIn: 86400 // expires in 24 hours
-    }
-    var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-    
-    const response = await request(app).get('/api/v1/students/me?token='+token);
+    const response = await request(app).get('/api/v1/students/me?token='+valid_token);
     const user = response.body
     expect(user).toBeDefined()
     expect(user.email).toBe('e1@gmail.com');
