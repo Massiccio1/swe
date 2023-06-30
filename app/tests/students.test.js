@@ -51,7 +51,7 @@ describe('GET /api/v1/students/me', () => {
 
       
   test('GET /api/v1/students/me?token=<valid> should return 200', async () => {
-    let students = await Student.find({email: "e1@gmail.com"});
+    let students = await Student.findOne({email: "e1@gmail.com"});
     console.log("students found: ",students);
     // create a valid token
     let account_type = "student";
@@ -67,6 +67,8 @@ describe('GET /api/v1/students/me', () => {
       expiresIn: 86400 // expires in 24 hours
     }
     var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+
+    const preliminary = await request(app).post('/api/v1/students');
     
     const response = await request(app).get('/api/v1/students/me?token=' + token);
     expect(response.statusCode).toBe(200);
