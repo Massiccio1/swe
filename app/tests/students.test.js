@@ -77,7 +77,7 @@ describe('GET /api/v1/students/me', () => {
 
   test('GET /api/v1/students/me?token=<valid> should return user information', async () => {
     let students = await Student.findOne({email: "e1@gmail.com"});
-    console.log("students found: ",students);
+    console.log("students found 4: ",students);
     // create a valid token
     let account_type = "student";
     
@@ -96,7 +96,7 @@ describe('GET /api/v1/students/me', () => {
     const response = await request(app).get('/api/v1/students/me?token='+token);
     const user = response.body
     expect(user).toBeDefined()
-    expect(user.email).toBe('e1@mail.com');
+    expect(user.email).toBe('e1@gmail.com');
     console.log("recived response body: ", user);
 
   });
