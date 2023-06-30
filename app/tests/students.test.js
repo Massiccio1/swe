@@ -52,7 +52,7 @@ describe('GET /api/v1/students/me', () => {
       
   test('GET /api/v1/students/me?token=<valid> should return 200', async () => {
     let students = await Student.findOne({email: "e1@gmail.com"});
-    console.log("students found: ",students);
+    console.log("students found 3: ",students);
     // create a valid token
     let account_type = "student";
     
