@@ -39,6 +39,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - run: echo tesing hook ${{ secrets.HOOK }}
     - run: curl ${{ secrets.HOOK }}
   
   # release:
