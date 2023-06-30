@@ -76,7 +76,7 @@ describe('GET /api/v1/students/me', () => {
   });
 
   test('GET /api/v1/students/me?token=<valid> should return user information', async () => {
-    let students = await Student.find({email: "e1@gmail.com"});
+    let students = await Student.findOne({email: "e1@gmail.com"});
     console.log("students found: ",students);
     // create a valid token
     let account_type = "student";
