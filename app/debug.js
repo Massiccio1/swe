@@ -218,37 +218,36 @@ router.get('/reset_courses', async (req, res) => {
         }).catch(function(error){
             console.log(error); // Failure
         });
-
+        
         let tutors = await Tutor.find();
+        let dim_t = Object.keys(tutors).length;
 
-        console.log("courses deleted");
+        let subj = ['Biology','Chemistry','English','Math','Physics'];
+        let dim_s = subj.length;
 
-        //res.status(200).json(Student);
+        let num_c = 40;
 
-        let course1 = new Course({
-            TutorId: tutors[0].id,
-            desc: "corso in materia 1",
-            price: 11
-        });
-        let course2 = new Course({
-            TutorId: tutors[1].id,
-            desc: "corso in materia 2",
-            price: 22
-        });        
-        let course3 = new Course({
-            TutorId: tutors[0].id,
-            desc: "corso in materia 3",
-            price: 33
-        });        
-        let course4 = new Course({
-            TutorId: tutors[1].id,
-            desc: "corso in materia 4",
-            price: 44
-        });
-        await course1.save();
-        await course2.save();
-        await course3.save();
-        await course4.save();
+        let course_list = [];
+        for(let i = 0; i < num_c; i++){
+            let randt = Math.floor(Math.random() * dim_t);
+            let rands = Math.floor(Math.random() * dim_s);
+            let uni = Math.floor(Math.random() * 9999);
+            let pri = Math.floor(Math.random() * 50);
+            let pren = new Course({
+                Subject: subj[rands],
+                TutorId: tutors[randt],
+                desc: subj[rands]+" template " + uni,
+                price: pri,
+            });
+            course_list.push(pren);
+
+        }
+    
+        for (let i = 0; i < course_list.length; i++) {
+            //console.log(scores[i]);
+            await course_list[i].save();
+        }
+       
 
         courses = await Course.find({});
         res.status(200).json(courses);
