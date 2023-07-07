@@ -228,22 +228,26 @@ router.get('/reset_courses', async (req, res) => {
         let course1 = new Course({
             TutorId: tutors[0].id,
             desc: "corso in materia 1",
-            price: 11
+            price: 11,
+            Subject: "Math"
         });
         let course2 = new Course({
             TutorId: tutors[1].id,
             desc: "corso in materia 2",
-            price: 22
+            price: 22,
+            Subject: "Biology"
         });        
         let course3 = new Course({
             TutorId: tutors[0].id,
             desc: "corso in materia 3",
-            price: 33
+            price: 33,
+            Subject: "Chemistry"
         });        
         let course4 = new Course({
             TutorId: tutors[1].id,
             desc: "corso in materia 4",
-            price: 44
+            price: 44,
+            Subject: "English"
         });
         await course1.save();
         await course2.save();
