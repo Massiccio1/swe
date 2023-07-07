@@ -140,6 +140,7 @@ app.get('/signup/', (req, res)=>{
 })
 
 app.get('/students/secure/bookings', (req,res) => {
+    loadBookings();
     res.render('bookings')
 })
 
