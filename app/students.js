@@ -3,6 +3,7 @@ const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
 const Admin = require('./models/admin')
+var mongoose = require('mongoose');
 
 
 router.get('/me', async (req, res) => {
@@ -50,9 +51,13 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        res.status(402).json({ error: 'not a valid id: '+ req.params.id});
+        return;
+    }
     let student = await Student.findById(req.params.id);
     if(!student){
-        res.status(401).json({ error: 'student doesnt exists' });
+        res.status(401).json({ error: 'student doesnt exists with id: '+ req.params.id});
         return;
     }
     console.log("searched for student id: ", req.params.id);
@@ -122,6 +127,22 @@ router.post('', async (req, res) => {
         });
     }
 });
+
+router.delete('/me', async (req, res) => {
+    if(!req.loggedUser) {return;} //controlla che l'utente sia loggato
+
+    const email = req.loggedUser.email; // prende l'email associata alla richiesta
+
+    Student.deleteOne({ email: email }) //cancella il tutor con l'email associata
+    .then(() => {
+      //res.redirect('/api/v1/authentications_tutor'); //non so se ha senso
+      return res.status(200).json({ message: 'Studente eliminato con successo.' });
+    }) //se la cancellazione è andata a buon fine manda un messaggio di conferma
+    .catch ((err) => {
+      console.error(err);
+      return res.status(500).json({ error: 'Errore nell\'eliminazione' });
+    })} // se la cancellazione è andata male manda un messaggio di errore
+  );
 
 
 

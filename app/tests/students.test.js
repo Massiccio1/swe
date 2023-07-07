@@ -94,11 +94,70 @@ describe('GET /api/v1/students/me', () => {
   });
   test('GET /api/v1/students/{id} <invalid>', async () => {
     
-    const response = await request(app).get('/api/v1/students/64654');
+    const response = await request(app).get('/api/v1/students/64654a');
     const user = response.body
-    expect(user).toBeDefined()
+    //expect(user).toBeDefined()
+    expect(response.statusCode).toBe(402);
+
+  });
+  test('GET /api/v1/students/{id} <valid but for another item>', async () => {
+    
+    const response = await request(app).get('/api/v1/students/74a817d8f973956b54d2056b');
+    const user = response.body
+    //expect(user).toBeDefined()
     expect(response.statusCode).toBe(401);
 
   });
+  test('POST /api/v1/students <valid>', async () => {
+    const body = {
+      email: "e99@gmail.com",
+      password: "p99"
+    };
+    const response = await request(app).post('/api/v1/students').send(body);
+    const user = response.body
+    //expect(user).toBeDefined()
+    expect(response.statusCode).toBe(201);
+  });
+  test('DELETE /api/v1/students <valid>', async () => {
+    const body = {
+      email: "e99@gmail.com",
+      password: "p99"
+    };
+    const r1 = await request(app).delete('/api/v1/students/me').send(body);
+    const u1 = r1.body
+    let token = u1.token;
+    console.log("token to delete: ", token);
+    const body2 = {
+      token: token
+    };
+    const response = await request(app).delete('/api/v1/students/me').send(body2);
+    const user = response.body
+    //expect(user).toBeDefined()
+    expect(response.statusCode).toBe(200);
+  });
+
+  test('POST /api/v1/students <invalid>', async () => {
+    const body = {
+      email: "e99",
+      password: "p99"
+    };
+    const response = await request(app).post('/api/v1/students').send(body);
+    const user = response.body
+    //expect(user).toBeDefined()
+    expect(response.statusCode).toBe(400);
+  });
+
+  test('POST /api/v1/students <already existing>', async () => {
+    const body = {
+      email: "e1@gmail.com",
+      password: "p1"
+    };
+    const response = await request(app).post('/api/v1/students').send(body);
+    const user = response.body
+    //expect(user).toBeDefined()
+    expect(response.statusCode).toBe(409);
+
+  });
+
 
 });
