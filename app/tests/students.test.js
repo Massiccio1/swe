@@ -13,6 +13,7 @@ describe('GET /api/v1/students/me', () => {
   let connection;
   let db;
   let valid_token;
+  let std1;
 
   beforeAll( async () => {
     // const User = require('../models/student');
@@ -24,13 +25,14 @@ describe('GET /api/v1/students/me', () => {
     //   };
     // });
     await mongoose.connection.close();
-    console.log("mongo: ", process.env.DB_URL);
+    //console.log("mongo: ", process.env.DB_URL);
     await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then ( () => {
-      console.log("Connected to Database");
-
+      //console.log("Connected to Database");
+      let asdasdas=0;
     });
     let student = await Student.findOne({email: "e1@gmail.com"});
-    console.log("students found before all: ",student);
+    std1=student;
+    //console.log("students found before all: ",student);
     // create a valid token
     let account_type = "student";
     
@@ -80,7 +82,23 @@ describe('GET /api/v1/students/me', () => {
     const user = response.body
     expect(user).toBeDefined()
     expect(user.email).toBe('e1@gmail.com');
-    console.log("recived response body: ", user);
 
   });
+  test('GET /api/v1/students/{id} <valid> should return email of the first student', async () => {
+    
+    const response = await request(app).get('/api/v1/students/'+std1._id);
+    const user = response.body
+    expect(user).toBeDefined()
+    expect(user.email).toBe('e1@gmail.com');
+
+  });
+  test('GET /api/v1/students/{id} <invalid>', async () => {
+    
+    const response = await request(app).get('/api/v1/students/64654');
+    const user = response.body
+    expect(user).toBeDefined()
+    expect(response.statusCode).toBe(401);
+
+  });
+
 });

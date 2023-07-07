@@ -25,13 +25,13 @@ describe('GET /api/v1/tutors/me',() => {
       //   };
       // });
       await mongoose.connection.close();
-      console.log("mongo: ", process.env.DB_URL);
+      //console.log("mongo: ", process.env.DB_URL);
       await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then ( () => {
-        console.log("Connected to Database");
-  
+        //console.log("Connected to Database");
+        let eweqweq=0;
       });
       let Tutor = await tutor.findOne({email: "t1@gmail.com"});
-      console.log("students found before all: ",Tutor);
+      //console.log("students found before all: ",Tutor);
       // create a valid token
       let account_type = "tutor";
       
