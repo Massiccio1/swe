@@ -7,4 +7,4 @@ module.exports = mongoose.model('Course', new Schema({
 	TutorId: { type: Schema.Types.ObjectId, ref: 'tutor' },
 	desc: String,
     price: Number
-},{ collection : 'Course' }));
+},{ collection : 'courses' }));

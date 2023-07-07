@@ -5,8 +5,10 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    #branches: [ frontend_max  ]
+    branches: [ main  ]
   pull_request:
+    #branches: [ frontend_max ]
     branches: [ main ]
 
 jobs:
