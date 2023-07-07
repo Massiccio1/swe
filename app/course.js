@@ -20,10 +20,10 @@ router.get('', async (req, res) => {
     if ( req.query.studentId )
         courses = await Course.find({
             studentId: req.query.studentId
-        }).exec();
+        });
     
     else
-        courses = await Course.find({}).exec();
+        courses = await Course.find({});
 
     
     courses = courses.map( (dbEntry) => {
@@ -31,7 +31,8 @@ router.get('', async (req, res) => {
             self: '/api/v1/course/' + dbEntry.id,
             tutor: '/api/v1/tutors/' + dbEntry.TutorId,
             desc: dbEntry.desc,
-            price: dbEntry.price
+            price: dbEntry.price,
+            Subject: dbEntry.Subject
         };
     });
 
@@ -61,7 +62,8 @@ router.get('/:id', async (req, res) => {
         self: '/api/v1/course/' + course.id,
         tutor: '/api/v1/students/' + course.TutorId,
         desc: course.desc,
-        price: course.price
+        price: course.price,
+        Subject: course.Subject
     });
 });
 
@@ -146,7 +148,7 @@ router.get('/subject/:subject', async (req, res) => {
     try {
         courses = await Course.find({
             Subject: req.params.subject
-        }).exec();
+        });
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
@@ -174,6 +176,7 @@ router.post('/new', async (req, res) => {
     let TutorId = req.body.TutorId;
     let desc = req.body.desc;
     let price = req.body.price;
+    let subject = req.body.subject;
 
     if(req.loggedUser.id != TutorId){ //tutor A is making a course for tutor B, not good
         res.status(401).json({ error: 'token and course tutor dont match' });
@@ -192,6 +195,10 @@ router.post('/new', async (req, res) => {
 
     if (!price) {
         res.status(400).json({ error: 'price not specified' });
+        return;
+    };
+    if (!subject) {
+        res.status(400).json({ error: 'subject not specified' });
         return;
     };
     
@@ -219,7 +226,8 @@ router.post('/new', async (req, res) => {
 	let course   = new Course({
         TutorId: TutorId,
         desc: desc,
-        price: price
+        price: price,
+        Subject: subject
     });
     
 	course = await course.save();
