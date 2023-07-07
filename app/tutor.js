@@ -27,9 +27,11 @@ router.get('/me', async (req, res) => {
         res.status(401).json({ error: 'tutor doesnt exists' });
         return;
     }
-    tutor[courses]=courses
-    tutor[prenotations]=prenotations
-    console.log("tutor/me completo: ", tutor);
+    console.log("tutor/me completo: ", {
+        tutor: tutor,
+        prenotations: prenotations,
+        courses: courses
+    });
     res.status(200).json({
         tutor: tutor,
         prenotations: prenotations,

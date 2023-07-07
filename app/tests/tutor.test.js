@@ -169,21 +169,25 @@ test('GET /api/v1/tutors/me with token', async () => {
     expect(response.statusCode).toBe(409);
 
   });
-  // test('POST /api/v1/tutors/me/slot update slots', async () => {
-  //   const body = {
-  //     token: valid_token,
-  //     slot: [1]
-  //   };
-  //   const response = await request(app).post('/api/v1/tutors/me/slot').send(body);
-  //   const user = response.body
-  //   //expect(user).toBeDefined()
-  //   const response2 = await request(app).get('/api/v1/tutors/me/slot').send(body);
-  //   const user2 = response.body
-  //   expect(user2).toBeDefined()
-  //   console.log(user2.slot)
-  //   expect(user2.slot).toBe("[ 1 ]");
+  test('POST /api/v1/tutors/me/slot update slots', async () => {
+    const body = {
+      token: valid_token,
+      slot: [1]
+    };
+    const response = await request(app).post('/api/v1/tutors/me/slot').send(body);
+    const user = response.body
+    //expect(user).toBeDefined()
+    const response2 = await request(app).get('/api/v1/tutors/me').send(body);
+    const user2 = response2.body
+    expect(user2).toBeDefined()
+    console.log(user2)
+    //expect(user2.slot).toBe({0:1});
+    console.log(typeof user2.tutor.slot);
+    expect(user2.tutor.slot).toStrictEqual([ 1 ]);
+    //expect(user2.slot).toBe("[1]");
+    //expect(user2.slot).toBe("[ 1 ]");
 
-  // });
+  });
 });
 
 /*describe('/api/v1/tutors', () => {
