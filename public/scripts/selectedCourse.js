@@ -61,6 +61,29 @@ findTutorsButton.addEventListener('click', function () {
 
   tutorList.innerHTML = '';
 
+  if(selectedSubject = "0"){
+    fetch('/api/v1/course')
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error fetching courses');
+      }
+    })
+    .then(function (data) {
+      // Process the retrieved courses
+      console.log(data);
+      data.courses.forEach(function (course) {
+        var tutorInfo = document.createElement('div');
+        tutorInfo.textContent =
+          course.Subject + ' - ' + course.desc + ' - ' + course.price;
+        tutorList.appendChild(tutorInfo);
+      });
+    })
+    .catch(function (error) {
+      console.error(error);
+    });}
+  else{
   fetch('/api/v1/course/subject/' + selectedSubject, { method: 'GET' })
     .then(function (response) {
       if (response.ok) {
@@ -82,7 +105,7 @@ findTutorsButton.addEventListener('click', function () {
     .catch(function (error) {
       console.error(error);
     });
-});
+}});
 
 
 
