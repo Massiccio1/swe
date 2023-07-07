@@ -227,36 +227,6 @@ router.get('/reset_courses', async (req, res) => {
 
         let num_c = 40;
 
-<<<<<<< HEAD
-        let course1 = new Course({
-            TutorId: tutors[0].id,
-            desc: "corso in materia 1",
-            price: 11,
-            Subject: "Math"
-        });
-        let course2 = new Course({
-            TutorId: tutors[1].id,
-            desc: "corso in materia 2",
-            price: 22,
-            Subject: "Biology"
-        });        
-        let course3 = new Course({
-            TutorId: tutors[0].id,
-            desc: "corso in materia 3",
-            price: 33,
-            Subject: "Chemistry"
-        });        
-        let course4 = new Course({
-            TutorId: tutors[1].id,
-            desc: "corso in materia 4",
-            price: 44,
-            Subject: "English"
-        });
-        await course1.save();
-        await course2.save();
-        await course3.save();
-        await course4.save();
-=======
         let course_list = [];
         for(let i = 0; i < num_c; i++){
             let randt = Math.floor(Math.random() * dim_t);
@@ -278,7 +248,6 @@ router.get('/reset_courses', async (req, res) => {
             await course_list[i].save();
         }
        
->>>>>>> frontend_max
 
         courses = await Course.find({});
         res.status(200).json(courses);

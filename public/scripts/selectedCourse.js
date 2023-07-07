@@ -61,32 +61,6 @@ findTutorsButton.addEventListener('click', function () {
 
   tutorList.innerHTML = '';
 
-<<<<<<< HEAD
-  // if(selectedSubject = "0"){
-  //   fetch('/api/v1/course')
-  //   .then(function (response) {
-  //     if (response.ok) {
-  //       return response.json();
-  //     } else {
-  //       throw new Error('Error fetching courses');
-  //     }
-  //   })
-  //   .then(function (data) {
-  //     // Process the retrieved courses
-  //     console.log(data);
-  //     data.courses.forEach(function (course) {
-  //       var tutorInfo = document.createElement('div');
-  //       tutorInfo.textContent =
-  //         course.Subject + ' - ' + course.desc + ' - ' + course.price;
-  //       tutorList.appendChild(tutorInfo);
-  //     });
-  //   })
-  //   .catch(function (error) {
-  //     console.error(error);
-  //   });}
-  // else
-  fetch('/api/v1/course/subject/' + selectedSubject, { method: 'GET' })
-=======
   var fetch_url='/api/v1/course/subject/';
   if(selectedSubject=="0"){
     fetch_url = '/api/v1/course'
@@ -94,7 +68,6 @@ findTutorsButton.addEventListener('click', function () {
     fetch_url = fetch_url + selectedSubject;
   }
   fetch(fetch_url, { method: 'GET' })
->>>>>>> frontend_max
     .then(function (response) {
       if (response.ok) {
         return response.json();
@@ -105,14 +78,6 @@ findTutorsButton.addEventListener('click', function () {
     .then(function (data) {
       // Process the retrieved courses
       console.log(data);
-<<<<<<< HEAD
-      data.courses.forEach(function (course) {
-        var tutorInfo = document.createElement('div');
-        tutorInfo.textContent =
-          course.Subject + ' - ' + course.desc + ' - ' + course.price;
-        tutorList.appendChild(tutorInfo);
-      });
-=======
       data.forEach(function (course) {
         console.log("single course: ",course)
         tutorName = fetch('api/v1/tutors/'+ course.tutorId, { method: 'GET' })
@@ -135,7 +100,6 @@ findTutorsButton.addEventListener('click', function () {
       //     course.TutorId + ' - ' + course.desc + ' - ' + course.price;
       //   tutorList.appendChild(tutorInfo);
       // });
->>>>>>> frontend_max
     })
     .catch(function (error) {
       console.error(error);
