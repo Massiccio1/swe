@@ -3,7 +3,7 @@ const router = express.Router();
 const Student = require('./models/student'); // get our mongoose model
 const Prenotation = require('./models/prenotation'); // get our mongoose model
 const Admin = require('./models/admin')
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 router.get('/me', async (req, res) => {

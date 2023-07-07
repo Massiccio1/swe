@@ -7,6 +7,8 @@ const Prenotation = require('./models/prenotation'); // get our mongoose model
 //const { app_features } = require('mongoose/models'); //????
 const tutor = require('./models/tutor');
 const TeachingMaterial = require('./models/teachingMaterial')
+const mongoose = require('mongoose');
+
 
 
 //METODI GET
@@ -25,14 +27,9 @@ router.get('/me', async (req, res) => {
         res.status(401).json({ error: 'tutor doesnt exists' });
         return;
     }
-    res.status(200).json({
-        self: '/api/v1/tutors/' + tutor.id,
-        email: tutor.email,
-        name: tutor.name,
-        desc: tutor.desc,
-        courses: courses,
-        prenotations: prenotations
-    });
+    tutor[courses]=courses
+    tutor[prenotations]=prenotations
+    res.status(200).json(tutor);
 });
 
 router.get('', async (req, res) => {
