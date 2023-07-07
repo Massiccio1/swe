@@ -59,7 +59,10 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        res.status(402).json({ error: 'not a valid id: '+ req.params.id});
+        return;
+    }
     let tutor = await Tutor.findById(req.params.id);
 
     if(!tutor){

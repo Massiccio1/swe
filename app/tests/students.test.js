@@ -118,31 +118,31 @@ describe('GET /api/v1/students/me', () => {
     //expect(user).toBeDefined()
     expect(response.statusCode).toBe(201);
   });
-  // test('DELETE /api/v1/students <valid>', async () => {
-  //   let student = await Student.findOne({email: "e99@gmail.com"});
-  //   //console.log("students found before all: ",student);
-  //   // create a valid token
-  //   let account_type = "student";
+  test('DELETE /api/v1/students <valid>', async () => {
+    let student = await Student.findOne({email: "e99@gmail.com"});
+    //console.log("students found before all: ",student);
+    // create a valid token
+    let account_type = "student";
     
-  //   // if user is found and password is right create a token
-  //   var payload = {
-  //     email: student.email,
-  //     id: student._id,
-  //     type: account_type
-  //     // other data encrypted in the token	
-  //   }
-  //   var options = {
-  //     expiresIn: 86400 // expires in 24 hours
-  //   }
-  //   tk = jwt.sign(payload, process.env.SUPER_SECRET, options);
-  //   const body = {
-  //     token: tk
-  //   };
-  //   const response = await request(app).delete('/api/v1/students/me').send(body);
-  //   const user = response.body
-  //   //expect(user).toBeDefined()
-  //   expect(response.statusCode).toBe(200);
-  // });
+    // if user is found and password is right create a token
+    var payload = {
+      email: student.email,
+      id: student._id,
+      type: account_type
+      // other data encrypted in the token	
+    }
+    var options = {
+      expiresIn: 86400 // expires in 24 hours
+    }
+    tk = jwt.sign(payload, process.env.SUPER_SECRET, options);
+    const body = {
+      token: tk
+    };
+    const response = await request(app).delete('/api/v1/students/me').send(body);
+    const user = response.body
+    //expect(user).toBeDefined()
+    expect(response.statusCode).toBe(200);
+  });
 
   test('POST /api/v1/students <invalid>', async () => {
     const body = {
