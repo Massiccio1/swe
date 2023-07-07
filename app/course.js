@@ -26,15 +26,15 @@ router.get('', async (req, res) => {
         courses = await Course.find({});
 
     
-    courses = courses.map( (dbEntry) => {
-        return {
-            self: '/api/v1/course/' + dbEntry.id,
-            tutor: '/api/v1/tutors/' + dbEntry.TutorId,
-            desc: dbEntry.desc,
-            price: dbEntry.price,
-            Subject: dbEntry.Subject
-        };
-    });
+    // courses = courses.map( (dbEntry) => {
+    //     return {
+    //         self: '/api/v1/course/' + dbEntry.id,
+    //         tutor: '/api/v1/tutors/' + dbEntry.TutorId,
+    //         desc: dbEntry.desc,
+    //         price: dbEntry.price,
+    //         Subject: dbEntry.Subject
+    //     };
+    // });
 
     res.status(200).json(courses);
 });
