@@ -30,7 +30,11 @@ router.get('/me', async (req, res) => {
     tutor[courses]=courses
     tutor[prenotations]=prenotations
     console.log("tutor/me completo: ", tutor);
-    res.status(200).json(tutor);
+    res.status(200).json({
+        tutor: tutor,
+        prenotations: prenotations,
+        courses: courses
+    });
 });
 
 router.get('', async (req, res) => {
