@@ -162,10 +162,8 @@ router.get('/subject/:subject', async (req, res) => {
         res.status(402).json({ error: 'Course does not exist' });
         return;
     };
-
-    res.status(200).json({
-        courses: courses
-    });
+    console.log("course by csubject: ",courses);
+    res.status(200).json(courses);
 });
 
 
@@ -261,8 +259,6 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(401).json({ error: 'token and course tutor dont match' });
         return;
     }
-
-
 
     await courses.deleteOne();
     console.log('course ', courses, ' removed');
