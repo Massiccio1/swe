@@ -139,6 +139,10 @@ app.get('/signup/', (req, res)=>{
     res.render('signUpChoosing')
 })
 
+app.get('/students/secure/bookings', (req,res) => {
+    res.render('bookings')
+})
+
 
 app.get('/students/signup/', (req, res)=>{
     res.render('studentSignup')
