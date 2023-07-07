@@ -75,7 +75,7 @@ findTutorsButton.addEventListener('click', function () {
       data.courses.forEach(function (course) {
         var tutorInfo = document.createElement('div');
         tutorInfo.textContent =
-          course.TutorId + ' - ' + course.desc + ' - ' + course.price;
+          course.Subject + ' - ' + course.desc + ' - ' + course.price;
         tutorList.appendChild(tutorInfo);
       });
     })
