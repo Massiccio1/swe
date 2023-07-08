@@ -2,7 +2,10 @@ function loadBookings() {
     var prenotations = document.getElementById("bookings");
     const url = "/api/v1/prenotations";
   
-    fetch(url)
+    fetch(url,{
+      'x-access-token': loggedUser.token,
+      'X-User-Id': loggedUser.id
+    })
       .then((resp) => resp.json())
       .then((prenotazioni) => {
         prenotazioni.forEach((prenotazione) => {

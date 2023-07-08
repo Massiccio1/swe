@@ -1,3 +1,7 @@
+
+var loggedUser = {}
+
+
 function myFunction() {
     var x = document.getElementById("loginPassword");
       if (x.type === "password") {
@@ -20,6 +24,7 @@ function myFunction() {
         .then((resp) => resp.json())
         .then(function (data) {
           if (data.success) {
+            loggedUser = data;
             // Redirect to the desired page
             window.location.href = '/students/secure/home/';
           } else {

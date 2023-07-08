@@ -95,7 +95,7 @@ app.use('/tutors/secure/home/',tokenChecker('tutor'));
 //app.use('/api/v1/tutors', tokenChecker);
 app.use('/api/v1/course/new', tokenChecker);
 app.use('/api/v1/course/delete', tokenChecker);
-//app.use('/api/v1/prenotations', tokenChecker); //da aggiungere
+//app.use('/api/v1/prenotations', tokenChecker); 
 
 
 
