@@ -44,7 +44,7 @@ function test() {
   .then((data) => {
     data.forEach(item => {
       let li = document.createElement('li');
-      li.textContent = item.email;
+      li.textContent = "ciao" + item.email;
       prenotations.appendChild(li);
     });
   })
