@@ -37,18 +37,19 @@
   
 
 function test() {
-  var prenotations = document.getElementById('bookings');
+  const prenotations = document.getElementById('bookings');
 
-  fetch('api/v1/students')
+  fetch('/api/v1/students')
   .then((resp) => resp.json())
   .then((data) => {
+    console.log(data);
     data.forEach(item => {
-      let li = document.createElement('li');
-      li.textContent = "ciao" + item.email;
+      const li = document.createElement('li');
+      li.textContent = item.email;
       prenotations.appendChild(li);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   })
 }
