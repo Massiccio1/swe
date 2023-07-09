@@ -29,7 +29,24 @@
       <ul id="bookings">
       </ul>
     </main>
-    <script src="scripts/booking.js"></script>
+    <script> function test() {
+        const prenotations = document.getElementById('bookings');
+      
+        fetch('/api/v1/students')
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data);
+          data.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.email;
+            prenotations.appendChild(li);
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+      }
+      test();</script>
     
 </body>
 </html>

@@ -53,3 +53,4 @@ function test() {
     console.error(error);
   })
 }
+test();
