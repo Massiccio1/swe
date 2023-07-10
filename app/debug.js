@@ -275,7 +275,7 @@ router.get('/reset_prenotations', async (req, res) => {
     let dim_c = Object.keys(courses).length
     let dim_s = Object.keys(students).length
 
-    let num = 10;
+    let num = 30;
 
 
     console.log("all courses: ",courses);

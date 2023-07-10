@@ -30,7 +30,9 @@ const tokenChecker = (role) => {
 			req.loggedUser = decoded;
 			console.log("[from token checker] logged user: ",decoded);
 			if((role=='student'&&decoded.type=='student')||
-			(role=='tutor'&&decoded.type=='tutor')){
+			(role=='tutor'&&decoded.type=='tutor') ||
+			(role=='s-t'&&decoded.type=='tutor') || 
+			(role=='s-t'&&decoded.type=='student')){
 				next();
 			} else{
 				return res.status(403).send({
@@ -38,8 +40,6 @@ const tokenChecker = (role) => {
 				message: 'Failed to authenticate token.'
 			});	
 			}
-			
-				
 		}
 	});
 };

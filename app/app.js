@@ -85,16 +85,16 @@ app.use('/api/v1/status', status);
 // a valid token must be provided in the request
 app.use('/api/v1/booklendings', tokenChecker);
 app.use('/api/v1/students/me', tokenChecker('student'));
-app.use('/api/v1/students/ban', tokenChecker);
+app.use('/api/v1/students/ban', tokenChecker('admin'));
 app.use('/api/v1/tutors/me', tokenChecker('tutor'));
 app.use('/api/v1/tutors/me/teaching-material', tokenChecker('tutor'));
-app.use('/api/v1/prenotations', tokenChecker);//('student')?
+app.use('/api/v1/prenotations', tokenChecker('s-t'));//('student')?//student and tutor
 app.use('/students/secure/home/',tokenChecker('student'));
 app.use('/tutors/secure/home/',tokenChecker('tutor'));
 //app.use('/api/v1/tutors/me/teaching-material/upload',tokenChecker);
 //app.use('/api/v1/tutors', tokenChecker);
-app.use('/api/v1/course/new', tokenChecker);
-app.use('/api/v1/course/delete', tokenChecker);
+app.use('/api/v1/course/new', tokenChecker('tutor'));
+app.use('/api/v1/course/delete', tokenChecker('tutor'));
 //app.use('/api/v1/prenotations', tokenChecker); 
 
 

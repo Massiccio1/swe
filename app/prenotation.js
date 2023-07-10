@@ -43,6 +43,10 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     let prenotations = await Prenotation.findById(req.params.id);
+    if (!prenotations){
+        res.status(400).json({ error: 'no prenotations' }).send();
+        return;
+    };
     // console.log("[from prenotation.js] logged user is: ",req.loggedUser.id, "but request was for: ",prenotations.StudentId )
     if(req.loggedUser.id == prenotations.StudentId || req.loggedUser.id == prenotations.TutorId){
         console.log("[from prenotation.js] token matches request");
@@ -138,16 +142,20 @@ router.post('', async (req, res) => {
 
 
 router.delete('/:id', async (req, res) => {
+    if (!req.params.id){
+        res.status(400).json({ error: 'id not specified' }).send();
+        return;
+    };
     let prenotation = await Prenotation.findById(req.params.id).exec();
     if (!prenotation) {
         res.status(400).json({ error: 'no prenotation found in database' }).send();
         console.log('prenotation not found')
         return;
     }
-    await prenotation.deleteOne()
-    console.log('prenotation removed')
+    await prenotation.deleteOne();
+    console.log('prenotation removed');
     
-    res.status(204).json({ status: "prenotation deleted" }).send();
+    res.status(204).send("success");
 });
 
 module.exports = router;
