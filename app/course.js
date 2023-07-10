@@ -17,14 +17,22 @@ router.get('', async (req, res) => {
     console.log("courses: ",req.url,req.body,req.params);
 
 
-    if ( req.query.studentId )
+    if ( req.query.studentId ){
+    try{
         courses = await Course.find({
             studentId: req.query.studentId
-        });
-    
-    else
+        })
+        if(courses.length === 0){ 
+            res.status(406).send()
+            return;}
+    }catch(error){
+        res.status(406).send()
+        console.log('id incorrect');
+        return;
+    }}
+    else{
         courses = await Course.find({});
-
+    }
     
     // courses = courses.map( (dbEntry) => {
     //     return {
@@ -149,7 +157,8 @@ router.get('/subject/:subject', async (req, res) => {
         courses = await Course.find({
             Subject: req.params.subject
         });
-    } catch (error) {
+        if (courses.length === 0){ res.status(406).send(); return;
+        }} catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
         console.log("This catch CastError when course subject cannot be casted to mongoose ObjectId");
@@ -162,7 +171,7 @@ router.get('/subject/:subject', async (req, res) => {
         res.status(402).json({ error: 'Course does not exist' });
         return;
     };
-    console.log("course by csubject: ",courses);
+    console.log("course by subject: ",courses);
     res.status(200).json(courses);
 });
 
