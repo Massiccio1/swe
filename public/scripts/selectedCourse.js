@@ -201,7 +201,7 @@ async function convert(jsonData, filter= ['Subject', 'desc', 'price', 'tutorName
         j++;
 		});
     let btn = document.createElement("button");
-    btn.innerHTML= "browsethis course";
+    btn.innerHTML= "browse this course";
 		table.appendChild(tr); // Append the table row to the table
     tr.appendChild(btn); // Append the table cell to the table row
     add_list(btn, jsonData[i]._id);
@@ -215,15 +215,12 @@ function add_list(btn, data){
   btn.addEventListener('click', myFunc, false);
   btn.myParam = data;
   function myFunc(evt){
-    fetch('/api/v1/prenotations', {
-      method: 'POST',
+    fetch('/course/'+data, {
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       //body: JSON.stringify({ email: email, password: password }),
     })
-      .then((resp) => resp.json())
-      .then(function (data) {
-        console.log(data);
-      })
-      .catch(error => console.error(error));
+	.then(location.href = '/course/'+data)
+    .catch(error => console.error(error));
   }
 }
