@@ -91,11 +91,12 @@ app.use('/api/v1/tutors/me/teaching-material', tokenChecker('tutor'));
 app.use('/api/v1/prenotations', tokenChecker('s-t'));//('student')?//student and tutor
 app.use('/students/secure/home/',tokenChecker('student'));
 app.use('/tutors/secure/home/',tokenChecker('tutor'));
+app.use('/course/',tokenChecker('s-t'));
 //app.use('/api/v1/tutors/me/teaching-material/upload',tokenChecker);
 //app.use('/api/v1/tutors', tokenChecker);
 app.use('/api/v1/course/new', tokenChecker('tutor'));
 app.use('/api/v1/course/delete', tokenChecker('tutor'));
-//app.use('/api/v1/prenotations', tokenChecker); 
+app.use('/api/v1/prenotations', tokenChecker('s-t')); 
 
 
 
@@ -164,7 +165,12 @@ app.get('/welcome/', (req, res)=>{
     res.render('welcome')
 })
 
-/* Default 404 handler */
+app.get('/course/:id', (req, res)=>{
+    console.log("redirecting to course: ", req.params.id);
+    res.render('course',{ id: req.params.id })
+})
+
+/* Default handler */
 app.use((req, res) => {
     console.log(req.url,req.body,req.params);
     res.status(404);

@@ -21,7 +21,7 @@ router.get('', async (req, res) => {
         StudentId: req.loggedUser.id
     });
 
-    console.log("prenotations found: ",prenotations);
+    //console.log("prenotations found: ",prenotations);
 
     if(!prenotations){
         res.status(200).json({});
@@ -62,6 +62,19 @@ router.get('/:id', async (req, res) => {
         return;
     }
 
+});
+
+router.get('/tutor/:tutor', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+    //students = await Student.find({email: req.query.email}).exec();
+    let prenotations = await Prenotation.find({TutorId:req.params.tutor});
+    if (!prenotations){
+        res.status(200).json({ error: 'no prenotations for the tutor' }).send();
+        return;
+    };
+    // console.log("[from prenotation.js] logged user is: ",req.loggedUser.id, "but request was for: ",prenotations.StudentId )
+    console.log("prenotations for tutor: ", req.params.tutor, "\n", prenotations)
+    res.status(200).json(prenotations);
 });
 
 
@@ -136,7 +149,7 @@ router.post('', async (req, res) => {
     
     let prenotationId = prenotation.id;
     
-    res.location("/api/v1/prenotations/" + prenotationId).status(201).send();
+    res.status(201).json(prenotation);
 });
 
 
