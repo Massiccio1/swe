@@ -50,9 +50,9 @@ describe('course tests',() => {
       });
 
 
-      test('test /api/v1/course', async () => {
+      test('test /api/v1/coursegit add', async () => {
         const response = await request(app)
-        .get('/api/v1/course?studentId=' + std1._id)
+        .get('/api/v1/course')
         .expect(200)
         expect(response.body).toBeDefined()
       })
