@@ -115,6 +115,11 @@ router.get('/token', async (req, res) => {
         res.status(200).json({"status":"return from degub/token"});
 });
 
+router.get('/void', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.findById
+        return;
+});
+
 router.get('/reset_students', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
         console.log("resetting users: ",req.url,req.body,req.params);
