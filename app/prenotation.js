@@ -42,7 +42,13 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-    let prenotations = await Prenotation.findById(req.params.id);
+    try{
+    var prenotations = await Prenotation.findById(req.params.id);
+    }catch(error){
+        console.error(error);
+        res.status(404).send()
+        return;
+    }
     if (!prenotations){
         res.status(400).json({ error: 'no prenotations' }).send();
         return;
@@ -119,7 +125,6 @@ router.post('', async (req, res) => {
     let student = null;
     try {
         student = await Student.findById(studentId);
-
     } catch (error) {
         // This catch CastError when studentId cannot be casted to mongoose ObjectId
         // CastError: Cast to ObjectId failed for value "11" at path "_id" for model "Student"
