@@ -38,7 +38,10 @@ jobs:
     - run: npm install
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: npm test student
+    - run: npm test tutor
+    - run: npm test course
+    - run: npm test prenotation
     - run: curl ${{ secrets.HOOK }}
   
   # release:

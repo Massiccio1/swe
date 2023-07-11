@@ -170,6 +170,8 @@ router.get('/subject/:subject', async (req, res) => {
 
 router.post('/new', async (req, res) => {
     
+    console.log("new courses: ",req.url,req.body,req.params);
+
 
     let TutorId = req.body.TutorId;
     let desc = req.body.desc;
