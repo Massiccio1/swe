@@ -50,7 +50,7 @@ describe('course tests',() => {
       });
 
 
-      test('test /api/v1/course?studentId= with right Studentid', async () => {
+      test('test /api/v1/course', async () => {
         const response = await request(app)
         .get('/api/v1/course?studentId=' + std1._id)
         .expect(200)

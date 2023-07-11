@@ -75,7 +75,7 @@ router.get('/:id', async (req, res) => {
     });
 });
 
-/*router.post('', async (req, res) => {
+router.post('', async (req, res) => {
     let studentUrl = req.body.student;
     let bookUrl = req.body.book;
 
@@ -148,7 +148,7 @@ router.delete('/:id', async (req, res) => {
     res.status(204).send()
 });
 
-*/
+
 
 router.get('/subject/:subject', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
