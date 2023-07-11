@@ -78,8 +78,7 @@ for (let i = 0; i < cookies.length; i++) {
     fetch('/api/v1/prenotations', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
       }
     })
       .then((resp) => resp.json())

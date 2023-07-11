@@ -25,7 +25,7 @@ describe('GET /api/v1/prenotations',() => {
          std1=student;
         tut1 = tutor;
         let account_type = "tutor";
-        // let account_type_st = "student";
+         let account_type_st = "student";
         
 
         var payload_t = {

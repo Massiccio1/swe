@@ -50,7 +50,7 @@ describe('course tests',() => {
       });
 
 
-      test('test /api/v1/coursegit add', async () => {
+      test('test /api/v1/course git add', async () => {
         const response = await request(app)
         .get('/api/v1/course')
         .expect(200)
