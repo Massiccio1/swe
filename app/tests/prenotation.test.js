@@ -25,7 +25,7 @@ describe('GET /api/v1/prenotations',() => {
          std1=student;
         tut1 = tutor;
         let account_type = "tutor";
-         let account_type_st = "student";
+        let account_type_st = "student";
         
 
         var payload_t = {
@@ -73,6 +73,12 @@ describe('GET /api/v1/prenotations',() => {
                 .get('/api/v1/prenotations/?token=')
                 .expect(401);
             });
+            // test('void',async () => {
+            //   return await request(app)
+            //   .get('/api/v1/debug/void')
+            //   .expect(401);
+            // });
+
  
 });
 
