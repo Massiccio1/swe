@@ -45,6 +45,7 @@ jobs:
     - run: npm test tutor
     - run: npm test course
     - run: npm test prenotation
+    - run: npm test authentication
     - run: curl ${{ secrets.HOOK }}
   
   # release:

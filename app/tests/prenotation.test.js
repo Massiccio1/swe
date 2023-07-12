@@ -7,6 +7,8 @@ const app     = require('../app');
 const Student = require('../models/student'); // get our mongoose model
 const mongoose = require('mongoose');
 const Tutor = require('../models/tutor');
+const Prenotation = require('../models/prenotation');
+const Course = require('../models/course');
 
 describe('GET /api/v1/prenotations',() => {
 
@@ -21,8 +23,8 @@ describe('GET /api/v1/prenotations',() => {
           let asdasdas=0;
         });
         let tutor = await Tutor.findOne({email: "t1@gmail.com"});
-         let student = await Student.findOne({email: "e1@gmail.com"});
-         std1=student;
+        let student = await Student.findOne({email: "e1@gmail.com"});
+        std1=student;
         tut1 = tutor;
         let account_type = "tutor";
         let account_type_st = "student";
@@ -49,6 +51,7 @@ describe('GET /api/v1/prenotations',() => {
       afterAll(async () => {
         await mongoose.connection.close();
       });
+
             test('get /prenotations should return 200',async () => {
                 return await request(app)
                .get('/api/v1/prenotations?token=' + student_token)
@@ -61,24 +64,17 @@ describe('GET /api/v1/prenotations',() => {
                });
                     });
 
-            test('try with wrong token',async () => {
+            test('try GET /api/v1/prenotations with wrong token',async () => {
                 return await request(app)
                 .get('/api/v1/prenotations/?token=1234')
-                .expect(403);
-                
+                .expect(403); 
             });
 
-            test('try with missing token',async () => {
+            test('try GET /api/v1/prenotations with missing token',async () => {
                 return await request(app)
                 .get('/api/v1/prenotations/?token=')
                 .expect(401);
             });
-            // test('void',async () => {
-            //   return await request(app)
-            //   .get('/api/v1/debug/void')
-            //   .expect(401);
-            // });
-
  
 });
 
