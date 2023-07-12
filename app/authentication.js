@@ -39,33 +39,33 @@ router.post('', async function(req, res) {
 	else{
 		let account_type = "student";
 	
-	// if user is found and password is right create a token
-	var payload = {
-		email: user.email,
-		id: user._id,
-		type: account_type
-		// other data encrypted in the token	
-	}
-	
-	var options = {
-		expiresIn: 86400 // expires in 24 hours
-	}
-	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-	
-	res.cookie('token', token);
+		// if user is found and password is right create a token
+		var payload = {
+			email: user.email,
+			id: user._id,
+			type: account_type
+			// other data encrypted in the token	
+		}
+		
+		var options = {
+			expiresIn: 86400 // expires in 24 hours
+		}
+		var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+		
+		res.cookie('token', token);
 
-	 
-	console.log(user);
+		
+		console.log(user);
 
-	res.status(200).json({
-		success: true,
-		message: 'Enjoy your token!',
-		token: token,
-		email: user.email,
-		id: user._id,
-		type: account_type,
-		self: "api/v1/" + user._id
-	});
+		res.status(200).json({
+			success: true,
+			message: 'Enjoy your token!',
+			token: token,
+			email: user.email,
+			id: user._id,
+			type: account_type,
+			self: "api/v1/" + user._id
+		});
 	}
 });
 

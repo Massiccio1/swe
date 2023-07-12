@@ -17,6 +17,9 @@ describe('POST /api/v1/authentications', () => {
     var student_token;
     var token_tutor;
     var tut1;
+    var payload_t;
+    var payload_s;
+
     beforeAll( async () => {
         await mongoose.connection.close();
         await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then ( () => {
@@ -29,18 +32,20 @@ describe('POST /api/v1/authentications', () => {
         tut1 = tutor;
         let account_type = "tutor";
         let account_type_st = "student";
+
+        //console.log("tutor: ",tutor,"\nstudent: ", student)
         
 
-        var payload_t = {
+        payload_t = {
             email:tut1.email,
             id:tut1._id,
             type:account_type
         }
 
-         var payload_s = {
-           email: student.email,
-          id: student._id,
-          type: account_type_st
+        payload_s = {
+            email: student.email,
+            id: student._id,
+            type: account_type_st
          }
         var options = {
           expiresIn: 86400 // expires in 24 hours
@@ -92,6 +97,32 @@ describe('POST /api/v1/authentications', () => {
         expect(response.body.message).toEqual('Enjoy your token!');
         expect(response.body.id).toBeDefined();
         expect(response.body.token).toEqual(student_token);
+        let result=0;
+        let valid;
+        try {
+            // jws.verify return false which let it throw JsonWebTokenError('invalid signature') in below condition.
+            valid = jwt.verify(response.body.token, process.env.SUPER_SECRET)
+            if(valid.email==payload_s.email)
+                result++
+            if(valid.id==payload_s.id.toString())
+                result++
+            if(valid.type==payload_s.type)
+                result++
+        } catch (e) {
+            console.log("result valid: ",valid) 
+            console.log("result created: ",payload_t) 
+            result = 0;
+        }
+            
+            // console.log("result tocken checker: ",result)        
+            // console.log("result tmp: ",tmp)        
+            // console.log("result valid: ",valid)   
+        // console.log("result valid: ",valid) 
+        // console.log("result created: ",payload_t) 
+        // console.log("type get: ", typeof valid.id ,"valid.id: ", valid.id)     
+        // console.log("type make: ", typeof payload_t.id.toString(), "payload_t.id.toString():",payload_t.id.toString())     
+        expect(result).toEqual(3)//3 campi
+
 
     });
 
@@ -131,8 +162,8 @@ describe('POST /api/v1/authentications', () => {
         .expect(200);
 
         //console.log("response1:",response.body)
-        console.log("token mio:",student_token)
-        console.log("tokrn response:",response.body.token)
+        // console.log("token mio:",token_tutor)
+        // console.log("tokrn response:",response.body.token)
 
         expect(response.body).toBeDefined();
         expect(response.body.token).toBeDefined();
@@ -146,7 +177,32 @@ describe('POST /api/v1/authentications', () => {
         expect(response.body.type).toEqual('tutor');
         expect(response.body.name).toEqual('name 1');
         expect(response.body.id).toBeDefined();
-        expect(response.body.token).toEqual(token_tutor);
+        //expect(response.body.token).toEqual(token_tutor);
+        let result=0;
+        let valid;
+        try {
+            // jws.verify return false which let it throw JsonWebTokenError('invalid signature') in below condition.
+            valid = jwt.verify(response.body.token, process.env.SUPER_SECRET)
+            if(valid.email==payload_t.email)
+                result++
+            if(valid.id==payload_t.id.toString())
+                result++
+            if(valid.type==payload_t.type)
+                result++
+        } catch (e) {
+            console.log("result valid: ",valid) 
+            console.log("result created: ",payload_t) 
+            result = 0;
+        }
+            
+            // console.log("result tocken checker: ",result)        
+            // console.log("result tmp: ",tmp)        
+            // console.log("result valid: ",valid)   
+        // console.log("result valid: ",valid) 
+        // console.log("result created: ",payload_t) 
+        // console.log("type get: ", typeof valid.id ,"valid.id: ", valid.id)     
+        // console.log("type make: ", typeof payload_t.id.toString(), "payload_t.id.toString():",payload_t.id.toString())     
+        expect(result).toEqual(3)//3 campi
 
     });
 
