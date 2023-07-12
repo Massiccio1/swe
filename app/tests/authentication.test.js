@@ -48,6 +48,34 @@ describe('POST /api/v1/authentications', () => {
       student_token = jwt.sign(payload_s, process.env.SUPER_SECRET, options);
       token_tutor = jwt.sign(payload_t,process.env.SUPER_SECRET,options);
       });
+      afterAll(async () => {
+        await mongoose.connection.close();
+      });
+
+            test('get /prenotations should return 200',async () => {
+                return await request(app)
+               .get('/api/v1/prenotations?token=' + student_token)
+               .expect('Content-Type', /json/)
+               .expect(200)
+               .then((res) => {
+                if(res.body && res.body[0] && res.body[1]){
+                    console.log(res.body[0]);
+                };
+               });
+                    });
+
+            test('try GET /api/v1/prenotations with wrong token',async () => {
+                return await request(app)
+                .get('/api/v1/prenotations/?token=1234')
+                .expect(403); 
+            });
+
+            test('try GET /api/v1/prenotations with missing token',async () => {
+                return await request(app)
+                .get('/api/v1/prenotations/?token=')
+                .expect(401);
+            });
+ 
 
 //valutare la questione dell'id
     /*let user = {
