@@ -73,6 +73,7 @@ router.get('/logout', function (req, res) {
 	// Clear the token from the client-side storage
 	res.clearCookie('token');
 	res.redirect('/');
+	res.status(302).send();
   });
 
 

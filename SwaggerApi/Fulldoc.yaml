@@ -24,7 +24,7 @@ paths:
               $ref: '#/components/schemas/Student'
       responses:
         '200':
-          description: status of the login and eventually the token
+          description: status of the login and eventually the token  
   /authentications_tutor:
     post:
       tags:
@@ -39,6 +39,30 @@ paths:
       responses:
         '200':
           description: status of the login and eventually the token
+  /authentications/logout:
+    get:
+      tags:
+        - student
+      description: log out that redirects the student to the homepage and clears the cookies
+      summary: log out a student
+       responses:
+        '302':
+          description: Redirect to the home page and clear cookies
+      security:
+        - jwtAuth: []
+      operationId: logoutStudent
+  /authentications/logout:
+    get:
+      tags:
+        - tutor
+      description: log out that redirects the tutor to the homepage and clears the cookies
+      summary: log out a tutor
+       responses:
+        '302':
+          description: Redirect to the home page and clear cookies
+      security:
+        - jwtAuth: []
+      operationId: logoutTutor
   /students:
     get:
       tags:
@@ -86,7 +110,10 @@ paths:
         default:
           description: Unexpected error
   /students/me:
+    delete: #da fareeeeeeeeeeee@@@@@@@@@@@@@
     get:
+        security:
+        - jwtAuth: []
       tags:
         - student
       parameters:
@@ -104,6 +131,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Student'
+  /students/me/teaching-materials:
+    get:
+      summary: send teaching materials to a student
+      description: return the material of the course to a student.
+      security:
+        - jwtAuth: []
+      tags:
+        - student
+      parameters:
+        - name: token
+          in: query
+          description: student token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: material returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeachingMaterial'  
   /students/{id}:
     get:
       tags:
@@ -139,6 +188,8 @@ paths:
           description: Success
   /prenotations:
     get:
+        security:
+        - jwtAuth: []
       tags:
         - prenotation
       summary: Retrieve prenotations
@@ -158,9 +209,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Prenotation'
     post:
+      summary: Create a new prenotation
+      security:
+        - jwtAuth: []
       tags:
         - prenotation
-      summary: Create a new prenotation
       parameters:
         - in: query
           name: token
@@ -191,11 +244,15 @@ paths:
                   error:
                     type: string
                     description: Error message indicating the reason for the bad request
+  /prenotations/tutor/{tutor}:
+    get: #da fareeeee#######@@@@@@@@@@@@@@@@@@@@@@
   /prenotations/{id}:
     get:
+      summary: Get a prenotation by ID
+      security:
+        - jwtAuth: []
       tags:
         - prenotation
-      summary: Get a prenotation by ID
       parameters:
         - in: path
           name: id
@@ -234,9 +291,11 @@ paths:
         '400':
           description: Token doesn't match student or tutor
     delete:
+      summary: Delete prenotation
+      security:
+        - jwtAuth: []
       tags:
         - prenotation
-      summary: Delete prenotation
       parameters:
         - in: path
           name: id
@@ -282,6 +341,9 @@ paths:
                     price:
                       type: number
                       description: Course price.
+                    Subject:
+                      type: string
+                      description: Subject of the course.
   /course/{id}:
     get:
       tags:
@@ -314,6 +376,9 @@ paths:
                   price:
                     type: number
                     description: Course price.
+                  Subject:
+                      type: string
+                      description: Subject of the course.                    
         '402':
           description: Course not found.
           content:
@@ -326,11 +391,13 @@ paths:
                     description: Error message indicating that the course does not exist.
         '406':
           description: Invalid course ID.
-  /course/new:
+  /course/new: 
     post:
+      summary: Create a new course
+      security:
+        - jwtAuth: []
       tags:
         - course
-      summary: Create a new course
       parameters:
         - in: query
           name: token
@@ -353,6 +420,9 @@ paths:
                 price:
                   type: number
                   description: Course price.
+                Subject:
+                  type: string
+                  description: Subject of the course.  
       responses:
         '201':
           description: Successful response. Course created.
@@ -388,9 +458,11 @@ paths:
                     description: Error message indicating that the tutor does not exist.
   /course/delete/{id}:
     delete:
+      summary: Delete a course
+      security:
+        - jwtAuth: []
       tags:
         - course
-      summary: Delete a course
       parameters:
         - in: path
           name: id
@@ -454,9 +526,12 @@ paths:
               description: Link to the newly created tutor.
   /tutors/me:
     get:
+      summary: logged tutor informations
+      description: if I am logged as a tutor return my informations
+      security:
+        - jwtAuth: []
       tags:
           - tutor
-      description: if I am logged as a tutor return my information
       parameters:
         - name: token
           in: query
@@ -471,9 +546,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Tutor'
     delete:
+      summary: delete tutor
+      description: Delete a tutor if is logged-in
+      security:
+        - jwtAuth: []
       tags:
         - tutor
-      description: Delete a tutor if is logged-in
       parameters:
         - name: token
           in: query
@@ -504,7 +582,12 @@ paths:
                 $ref: '#/components/schemas/Tutor'
   /tutors/me/slot:
     post:
+      summary: select a available slot
       description: Enters a slot indicating its availability
+      security:
+        - jwtAuth: []
+      tags:
+        - tutor
       parameters:
         - name: token
           in: query
@@ -532,7 +615,10 @@ paths:
           description: "Success"
   /tutors/me/slot/{timeslot}:
     delete:
+      summary: delete a slot
       description: Delete a slot
+      security:
+        - jwtAuth: []
       tags:
         - tutor
       parameters:
@@ -553,6 +639,10 @@ paths:
           description: Slot deleted.
   /tutors/me/teaching-material:
     get:
+      summary: return teaching-material
+      description: return teaching-material
+      security:
+        - jwtAuth: []
       tags:
         - tutor
       responses:
@@ -563,6 +653,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/TeachingMaterial'
     post:
+      summary: upload teaching material
+      security:
+        - jwtAuth: []      
       responses:
         '200':
           description: html with the resources uploaded
@@ -663,3 +756,8 @@ components:
           type: string
         timeslot:
           type: number
+  securitySchemes:
+    jwtAuth:
+      type: apiKey
+       in: query
+       name: token       

@@ -12,8 +12,6 @@ router.get('/me', async (req, res) => {
 
         return;
     }
-    
-
     // https://mongoosejs.com/docs/api.html#model_Model.find
     let student = await Student.findOne({email: req.loggedUser.email});
     let prenotations = await Prenotation.find({StudentId: req.loggedUser.id});
@@ -28,6 +26,10 @@ router.get('/me', async (req, res) => {
         email: student.email,
         prenotations: prenotations
     });
+});
+
+router.get('/me/teaching-material', (req, res) => {
+    res.sendFile(__dirname + "/views/teaching-material.html");
 });
 
 router.get('', async (req, res) => {
