@@ -17,13 +17,13 @@ router.post('', async function(req, res) {
 	
 	// user not found
 	if (!tutor) {
-		res.json({ success: false, message: 'Authentication failed. Tutor not found.' });
+		res.status(401).json({ success: false, message: 'Authentication failed. Tutor not found.' });
 		return;
 	}
 	
 	// check if password matches5
 	if (tutor.password != req.body.password) { 
-		res.json({ success: false, message: 'Authentication failed for tutor.. Wrong password.' });
+		res.status(401).json({ success: false, message: 'Authentication failed. Wrong password.' });
 	}
 
 	else{
