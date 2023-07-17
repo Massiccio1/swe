@@ -1,0 +1,3 @@
+DB_URL="mongodb+srv://user:passwrod@dbname.dbid.mongodb.net/?param=value"
+FRONTEND="view/index.ejs"
+SUPER_SECRET="super-secret-key"
