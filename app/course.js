@@ -183,7 +183,7 @@ router.post('/new', async (req, res) => {
     let TutorId = req.body.TutorId;
     let desc = req.body.desc;
     let price = req.body.price;
-    let subject = req.body.subject;
+    let subject = req.body.Subject;
 
     if(req.loggedUser.id != TutorId){ //tutor A is making a course for tutor B, not good
         res.status(401).json({ error: 'token and course tutor dont match' });
