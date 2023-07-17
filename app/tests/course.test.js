@@ -94,7 +94,7 @@ describe('course tests',() => {
           TutorId: valid_token._id,
           desc: "corso 1",
           price: 24,
-          subject: "Biology"
+          Subject: "Biology"
         })
         .expect(401)
       })
