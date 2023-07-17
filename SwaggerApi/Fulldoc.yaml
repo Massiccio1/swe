@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 1.0.0-oas3
   title: TutorMe API
   description: API for managing TutorMe.
 servers:
-  # Added by API Auto Mocking Plugin
-  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/FILIPPOMAFFEI2/tutorMe2/1.0.0
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/MASSIMOGIRARDELLI/TutorME/1.0.0
   - url: https://tutor-me.onrender.com/api/v1
@@ -24,7 +24,7 @@ paths:
               $ref: '#/components/schemas/Student'
       responses:
         '200':
-          description: status of the login and eventually the token  
+          description: status of the login and eventually the token
   /authentications_tutor:
     post:
       tags:
@@ -43,26 +43,22 @@ paths:
     get:
       tags:
         - student
-      description: log out that redirects the student to the homepage and clears the cookies
+      description: >-
+        log out that redirects the student to the homepage and clears the
+        cookies
       summary: log out a student
-       responses:
+      responses:
         '302':
           description: Redirect to the home page and clear cookies
-      security:
-        - jwtAuth: []
-      operationId: logoutStudent
-  /authentications/logout:
+  /authentications_tutor/logout:
     get:
       tags:
         - tutor
       description: log out that redirects the tutor to the homepage and clears the cookies
       summary: log out a tutor
-       responses:
+      responses:
         '302':
           description: Redirect to the home page and clear cookies
-      security:
-        - jwtAuth: []
-      operationId: logoutTutor
   /students:
     get:
       tags:
@@ -110,10 +106,24 @@ paths:
         default:
           description: Unexpected error
   /students/me:
-    delete: #da fareeeeeeeeeeee@@@@@@@@@@@@@
+    delete:
+      summary: delete this student account
+      description: delete this account
+      tags:
+        - student
+      parameters:
+        - name: token
+          in: query
+          description: student token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: user deleted
+        '500':
+          description: error
     get:
-        security:
-        - jwtAuth: []
       tags:
         - student
       parameters:
@@ -135,8 +145,6 @@ paths:
     get:
       summary: send teaching materials to a student
       description: return the material of the course to a student.
-      security:
-        - jwtAuth: []
       tags:
         - student
       parameters:
@@ -147,12 +155,12 @@ paths:
           schema:
             type: string
       responses:
-        '200': 
+        '200':
           description: material returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeachingMaterial'  
+                $ref: '#/components/schemas/TeachingMaterial'
   /students/{id}:
     get:
       tags:
@@ -188,8 +196,6 @@ paths:
           description: Success
   /prenotations:
     get:
-        security:
-        - jwtAuth: []
       tags:
         - prenotation
       summary: Retrieve prenotations
@@ -210,8 +216,6 @@ paths:
                   $ref: '#/components/schemas/Prenotation'
     post:
       summary: Create a new prenotation
-      security:
-        - jwtAuth: []
       tags:
         - prenotation
       parameters:
@@ -245,12 +249,50 @@ paths:
                     type: string
                     description: Error message indicating the reason for the bad request
   /prenotations/tutor/{tutor}:
-    get: #da fareeeee#######@@@@@@@@@@@@@@@@@@@@@@
+    get:
+      summary: Get the prenotations done with a specific tutor
+      description: Get prenotation
+      tags:
+        - prenotation
+      parameters:
+        - in: path
+          name: tutor
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: prenotations founded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: URL of the prenotation resource.
+                  course:
+                    type: string
+                    description: URL of the associated course resource.
+                  tutor:
+                    type: string
+                    description: URL of the associated tutor resource.
+                  student:
+                    type: string
+                    description: URL of the associated student resource.
+                  timeslot:
+                    type: string
+                    description: URL of the associated timeslot resource.
+        '404':
+          description: there aren't prenotations with this tutor
   /prenotations/{id}:
     get:
       summary: Get a prenotation by ID
-      security:
-        - jwtAuth: []
       tags:
         - prenotation
       parameters:
@@ -292,8 +334,6 @@ paths:
           description: Token doesn't match student or tutor
     delete:
       summary: Delete prenotation
-      security:
-        - jwtAuth: []
       tags:
         - prenotation
       parameters:
@@ -377,8 +417,8 @@ paths:
                     type: number
                     description: Course price.
                   Subject:
-                      type: string
-                      description: Subject of the course.                    
+                    type: string
+                    description: Subject of the course.
         '402':
           description: Course not found.
           content:
@@ -391,11 +431,9 @@ paths:
                     description: Error message indicating that the course does not exist.
         '406':
           description: Invalid course ID.
-  /course/new: 
+  /course/new:
     post:
       summary: Create a new course
-      security:
-        - jwtAuth: []
       tags:
         - course
       parameters:
@@ -422,7 +460,7 @@ paths:
                   description: Course price.
                 Subject:
                   type: string
-                  description: Subject of the course.  
+                  description: Subject of the course.
       responses:
         '201':
           description: Successful response. Course created.
@@ -445,7 +483,9 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: Error message indicating a mismatch between the token and course tutor.
+                    description: >-
+                      Error message indicating a mismatch between the token and
+                      course tutor.
         '402':
           description: Tutor not found.
           content:
@@ -459,8 +499,6 @@ paths:
   /course/delete/{id}:
     delete:
       summary: Delete a course
-      security:
-        - jwtAuth: []
       tags:
         - course
       parameters:
@@ -487,7 +525,9 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: Error message indicating a mismatch between the token and course tutor.
+                    description: >-
+                      Error message indicating a mismatch between the token and
+                      course tutor.
         '405':
           description: Course not found.
         '406':
@@ -528,10 +568,8 @@ paths:
     get:
       summary: logged tutor informations
       description: if I am logged as a tutor return my informations
-      security:
-        - jwtAuth: []
       tags:
-          - tutor
+        - tutor
       parameters:
         - name: token
           in: query
@@ -548,8 +586,6 @@ paths:
     delete:
       summary: delete tutor
       description: Delete a tutor if is logged-in
-      security:
-        - jwtAuth: []
       tags:
         - tutor
       parameters:
@@ -584,8 +620,6 @@ paths:
     post:
       summary: select a available slot
       description: Enters a slot indicating its availability
-      security:
-        - jwtAuth: []
       tags:
         - tutor
       parameters:
@@ -595,8 +629,6 @@ paths:
           required: true
           schema:
             type: string
-      tags:
-        - tutor
       requestBody:
         content:
           application/json:
@@ -612,13 +644,11 @@ paths:
                     type: integer
       responses:
         '200':
-          description: "Success"
+          description: Success
   /tutors/me/slot/{timeslot}:
     delete:
       summary: delete a slot
       description: Delete a slot
-      security:
-        - jwtAuth: []
       tags:
         - tutor
       parameters:
@@ -641,8 +671,6 @@ paths:
     get:
       summary: return teaching-material
       description: return teaching-material
-      security:
-        - jwtAuth: []
       tags:
         - tutor
       responses:
@@ -654,8 +682,6 @@ paths:
                 $ref: '#/components/schemas/TeachingMaterial'
     post:
       summary: upload teaching material
-      security:
-        - jwtAuth: []      
       responses:
         '200':
           description: html with the resources uploaded
@@ -678,6 +704,34 @@ paths:
               schema:
                 type: string
                 example: pong
+  /debug/reset_students:
+    get:
+      tags:
+        - tools
+      responses:
+        '200':
+          description: resets db with template students
+  /debug/reset_tutors:
+    get:
+      tags:
+        - tools
+      responses:
+        '200':
+          description: resets db with template tutors
+  /debug/reset_courses:
+    get:
+      tags:
+        - tools
+      responses:
+        '200':
+          description: resets db with random courses
+  /debug/reset_prenotations:
+    get:
+      tags:
+        - tools
+      responses:
+        '200':
+          description: resets db with random prenotations
 components:
   schemas:
     Student:
@@ -748,16 +802,11 @@ components:
     Prenotation:
       type: object
       properties:
-        CourseId: 
+        CourseId:
           type: string
         TutorId:
           type: string
-        StudentId: 
+        StudentId:
           type: string
         timeslot:
           type: number
-  securitySchemes:
-    jwtAuth:
-      type: apiKey
-       in: query
-       name: token       
